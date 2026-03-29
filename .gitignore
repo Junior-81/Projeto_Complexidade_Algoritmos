@@ -6,3 +6,9 @@ __pycache__/
 .pyc
 cache/
 data/
+frontend/node_modules/
+frontend/dist/
+backend/.venv/
+.pytest_cache/
+.mypy_cache/
+.DS_Store

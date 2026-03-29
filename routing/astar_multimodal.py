@@ -154,12 +154,13 @@ class AStarMultimodal:
             time_minutes = tempo_final * 60
 
             # Calcula custo
-            custo = cost_calc.calculate_cost(
+            custo_rota = cost_calc.calculate_routing_cost(
                 modal,
                 distance_km,
                 time_minutes=time_minutes,
                 avg_speed_kmh=speed,
                 rain_factor=rain_factor,
+                tide_factor=tide_factor,
             )
 
             # Calcula risco com segurança por modal e fator de clima
@@ -175,7 +176,7 @@ class AStarMultimodal:
             )
 
             custo_norm = Normalizer.normalize_value(
-                custo,
+                custo_rota,
                 self.normalizer_params["cost"]["min"],
                 self.normalizer_params["cost"]["max"],
             )
@@ -202,6 +203,7 @@ class AStarMultimodal:
         tide_factor: float = 1.0,
         speed_getter=None,
         start_modal: str | None = None,
+        allowed_modes: set[str] | None = None,
     ) -> Optional[List[Tuple[int, str]]]:
         """
         Executa A* para encontrar o caminho ótimo.
@@ -224,6 +226,10 @@ class AStarMultimodal:
 
         if start_modal is None:
             start_modal = start[1]
+
+        allowed_modes_norm = None
+        if allowed_modes:
+            allowed_modes_norm = {m.lower() for m in allowed_modes}
 
         self.closed_set = set()
         self.open_set = {start}
@@ -260,6 +266,12 @@ class AStarMultimodal:
             for neighbor in self.graph.neighbors(node_curr):
                 for key, edge_data in self.graph[node_curr][neighbor].items():
                     modal_neighbor = edge_data.get("modal", modal_curr)
+
+                    if (
+                        allowed_modes_norm is not None
+                        and modal_neighbor.lower() not in allowed_modes_norm
+                    ):
+                        continue
 
                     if not self._is_transition_allowed(
                         modal_curr, modal_neighbor, start_modal

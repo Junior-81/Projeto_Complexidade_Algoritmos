@@ -82,12 +82,13 @@ class DijkstraMultimodal:
             tempo_final = tempo_base * rain_factor * tide_factor
             time_minutes = tempo_final * 60
 
-            custo = cost_calc.calculate_cost(
+            custo_rota = cost_calc.calculate_routing_cost(
                 modal,
                 distance_km,
                 time_minutes=time_minutes,
                 avg_speed_kmh=speed,
                 rain_factor=rain_factor,
+                tide_factor=tide_factor,
             )
 
             climate_factor = rain_factor * tide_factor
@@ -100,7 +101,7 @@ class DijkstraMultimodal:
                 self.normalizer_params["time"]["max"],
             )
             custo_norm = Normalizer.normalize_value(
-                custo,
+                custo_rota,
                 self.normalizer_params["cost"]["min"],
                 self.normalizer_params["cost"]["max"],
             )
@@ -125,6 +126,7 @@ class DijkstraMultimodal:
         tide_factor: float = 1.0,
         speed_getter=None,
         start_modal: str | None = None,
+        allowed_modes: set[str] | None = None,
     ) -> Optional[List[Tuple[int, str]]]:
         """Executa Dijkstra para encontrar o caminho otimo."""
 
@@ -133,6 +135,10 @@ class DijkstraMultimodal:
 
         if start_modal is None:
             start_modal = start[1]
+
+        allowed_modes_norm = None
+        if allowed_modes:
+            allowed_modes_norm = {m.lower() for m in allowed_modes}
 
         self.closed_set = set()
         self.open_set = {start}
@@ -161,6 +167,12 @@ class DijkstraMultimodal:
             for neighbor in self.graph.neighbors(node_curr):
                 for _, edge_data in self.graph[node_curr][neighbor].items():
                     modal_neighbor = edge_data.get("modal", modal_curr)
+
+                    if (
+                        allowed_modes_norm is not None
+                        and modal_neighbor.lower() not in allowed_modes_norm
+                    ):
+                        continue
 
                     if not self._is_transition_allowed(
                         modal_curr, modal_neighbor, start_modal

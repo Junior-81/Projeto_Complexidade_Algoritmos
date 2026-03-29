@@ -62,11 +62,17 @@ class PathReconstructor:
         risco_base = self.risk_calc.get_adjusted_risk(modal, climate_factor)
         risco_final = risco_base * distance_km / 10
 
+        esforco = self.cost_calc.calculate_effort_score(
+            modal,
+            distance_km,
+            climate_factor=climate_factor,
+        )
+
         # Uber e cobrado por corrida continua, nao por aresta individual.
         if modal in {"uber", "uber_car", "uber_moto"}:
             custo = 0.0
         else:
-            custo = self.cost_calc.calculate_cost(
+            custo = self.cost_calc.calculate_financial_cost(
                 modal,
                 distance_km,
                 time_minutes=time_minutes,
@@ -74,13 +80,15 @@ class PathReconstructor:
                 rain_factor=self.rain_factor,
             )
 
+        custo_rota = custo + esforco
+
         tempo_norm = Normalizer.normalize_value(
             tempo_final,
             self.normalizer_params["time"]["min"],
             self.normalizer_params["time"]["max"],
         )
         custo_norm = Normalizer.normalize_value(
-            custo,
+            custo_rota,
             self.normalizer_params["cost"]["min"],
             self.normalizer_params["cost"]["max"],
         )
@@ -99,6 +107,7 @@ class PathReconstructor:
             "distancia": round(distance_km, 4),
             "tempo": round(tempo_final, 4),
             "custo": round(custo, 2),
+            "esforco": round(esforco, 4),
             "risco": round(risco_final, 4),
             "peso": round(peso, 4),
             "velocidade_media_kmh": round(speed, 2),
@@ -140,6 +149,7 @@ class PathReconstructor:
         distancia = sum(float(e.get("distancia", 0.0)) for e in group)
         tempo = sum(float(e.get("tempo", 0.0)) for e in group)
         custo = sum(float(e.get("custo", 0.0)) for e in group)
+        esforco = sum(float(e.get("esforco", 0.0)) for e in group)
         risco_medio = (
             sum(float(e.get("risco", 0.0)) for e in group) / len(group)
             if group
@@ -155,6 +165,7 @@ class PathReconstructor:
             "tempo": round(tempo, 4),
             "distancia": round(distancia, 4),
             "custo": round(custo, 2),
+            "esforco": round(esforco, 4),
             "risco_medio": round(risco_medio, 4),
             "velocidade_media_kmh": round(vel_media, 2),
             "quantidade_arestas": len(group),
@@ -173,6 +184,7 @@ class PathReconstructor:
         """Calcula métricas totais a partir das arestas percorridas."""
         tempo_total = sum(float(e.get("tempo", 0.0)) for e in edges)
         custo_total = sum(float(e.get("custo", 0.0)) for e in edges)
+        esforco_total = sum(float(e.get("esforco", 0.0)) for e in edges)
         distancia_total = sum(float(e.get("distancia", 0.0)) for e in edges)
         risco_medio = (
             sum(float(e.get("risco", 0.0)) for e in edges) / len(edges)
@@ -186,6 +198,7 @@ class PathReconstructor:
         return {
             "tempo_total": round(tempo_total, 4),
             "custo_total": round(custo_total, 2),
+            "esforco_total": round(esforco_total, 4),
             "distancia_total": round(distancia_total, 4),
             "risco_medio": round(risco_medio, 4),
             "velocidade_media_total": round(velocidade_media_total, 2),

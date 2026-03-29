@@ -21,9 +21,9 @@ class CostCalculator:
         debug_walk_penalty: bool = False,
         debug_bike_penalty: bool = False,
     ):
-        self.fuel_df = fuel_df
-        self.uber_df = uber_df
-        self.speed_df = speed_df
+        self.fuel_df = fuel_df if fuel_df is not None else pd.DataFrame()
+        self.uber_df = uber_df if uber_df is not None else pd.DataFrame()
+        self.speed_df = speed_df if speed_df is not None else pd.DataFrame()
 
         self.gas_price = gas_price  # R$ por litro
         self.walk_effort_factor = walk_effort_factor
@@ -122,7 +122,7 @@ class CostCalculator:
             "price_per_min": price_per_min,
         }
 
-    def calculate_cost(
+    def calculate_financial_cost(
         self,
         modal: str,
         distance_km: float,
@@ -145,7 +145,7 @@ class CostCalculator:
             driver_supply_factor: Nível de oferta de motoristas [0, 1] (opcional)
 
         Returns:
-            Custo em reais
+            Custo financeiro em reais
         """
         modal = modal.lower()
 
@@ -153,21 +153,11 @@ class CostCalculator:
             modal = "uber_car"
 
         if modal == "walk":
-            walk_penalty = distance_km * self.walk_effort_factor
-            if self.debug_walk_penalty:
-                print(
-                    f"[DEBUG] Walk penalty aplicada: {walk_penalty:.4f} para {distance_km:.4f} km"
-                )
-            return walk_penalty
+            return 0.0
 
         elif modal == "bike":
             bike_operational_cost = distance_km * self._get_bike_cost()
-            bike_effort_penalty = distance_km * self.bike_effort_factor
-            if self.debug_bike_penalty:
-                print(
-                    f"[DEBUG] Bike penalty aplicada: {bike_effort_penalty:.4f} para {distance_km:.4f} km"
-                )
-            return bike_operational_cost + bike_effort_penalty
+            return bike_operational_cost
 
         elif modal == "bus":
             return 4.50  # Tarifa fixa
@@ -199,10 +189,89 @@ class CostCalculator:
         else:
             return 0
 
+    def calculate_effort_score(
+        self,
+        modal: str,
+        distance_km: float,
+        climate_factor: float = 1.0,
+    ) -> float:
+        """Calcula esforço físico (cansaço) em pontos, sem unidade monetária."""
+        modal = modal.lower()
+
+        climate_adjustment = max(1.0, float(climate_factor))
+
+        if modal == "walk":
+            effort = distance_km * self.walk_effort_factor * climate_adjustment
+            if self.debug_walk_penalty:
+                print(
+                    f"[DEBUG] Walk effort aplicada: {effort:.4f} para {distance_km:.4f} km"
+                )
+            return effort
+
+        if modal == "bike":
+            effort = distance_km * self.bike_effort_factor * climate_adjustment
+            if self.debug_bike_penalty:
+                print(
+                    f"[DEBUG] Bike effort aplicada: {effort:.4f} para {distance_km:.4f} km"
+                )
+            return effort
+
+        return 0.0
+
+    def calculate_routing_cost(
+        self,
+        modal: str,
+        distance_km: float,
+        time_minutes: float = 0.0,
+        avg_speed_kmh: float = 50.0,
+        rain_factor: float = 1.0,
+        tide_factor: float = 1.0,
+        traffic_factor: float | None = None,
+        driver_supply_factor: float | None = None,
+        effort_weight: float = 1.0,
+    ) -> float:
+        """Custo usado no roteamento: financeiro + peso de esforço."""
+        financial_cost = self.calculate_financial_cost(
+            modal,
+            distance_km,
+            time_minutes=time_minutes,
+            avg_speed_kmh=avg_speed_kmh,
+            rain_factor=rain_factor,
+            traffic_factor=traffic_factor,
+            driver_supply_factor=driver_supply_factor,
+        )
+        effort_score = self.calculate_effort_score(
+            modal,
+            distance_km,
+            climate_factor=rain_factor * tide_factor,
+        )
+        return financial_cost + (effort_weight * effort_score)
+
+    def calculate_cost(
+        self,
+        modal: str,
+        distance_km: float,
+        time_minutes: float = 0.0,
+        avg_speed_kmh: float = 50.0,
+        rain_factor: float = 1.0,
+        traffic_factor: float | None = None,
+        driver_supply_factor: float | None = None,
+    ) -> float:
+        """Compatibilidade: mantém assinatura antiga retornando custo financeiro."""
+        return self.calculate_financial_cost(
+            modal,
+            distance_km,
+            time_minutes=time_minutes,
+            avg_speed_kmh=avg_speed_kmh,
+            rain_factor=rain_factor,
+            traffic_factor=traffic_factor,
+            driver_supply_factor=driver_supply_factor,
+        )
+
     def get_all_costs(self, distance_km: float) -> Dict[str, float]:
         """Retorna custos para todos os modais."""
         return {
-            modal: self.calculate_cost(modal, distance_km)
+            modal: self.calculate_financial_cost(modal, distance_km)
             for modal in [
                 "walk",
                 "bike",

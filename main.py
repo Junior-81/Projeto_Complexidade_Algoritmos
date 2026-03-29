@@ -73,10 +73,16 @@ def main():
     origem_lat, origem_lon = input_data["origem"]
     destino_lat, destino_lon = input_data["destino"]
     modo_inicial = input_data["modo_inicial"].lower()
+    restricao_modal = input_data.get("restricao_modal")
     algoritmo = input_data.get("algoritmo", "dijkstra").lower()
     if algoritmo not in {"dijkstra", "astar"}:
         print(f"! Algoritmo '{algoritmo}' invalido. Usando dijkstra.")
         algoritmo = "dijkstra"
+
+    allowed_modes = None
+    if restricao_modal:
+        allowed_modes = {str(restricao_modal).lower()}
+        print(f"  Restricao de modal ativa: {', '.join(sorted(allowed_modes))}")
 
     # ETAPA 2: Carrega CSVs
     print("\n[2] Carregando CSVs...")
@@ -135,26 +141,52 @@ def main():
     print(f"✓ Origem: nó {start_node}")
     print(f"✓ Destino: nó {goal_node}")
 
-    # ETAPA 8: Calcula tempos, custos e riscos das arestas (amostra)
+    # ETAPA 8: Calcula tempos, custos e riscos para normalizacao
     print("\n[8] Normalizando tempo, custo e risco...")
     normalizer = Normalizer()
 
-    # Amostras valores para normalização
-    sample_distances = [0.5, 1.0, 2.0, 5.0, 10.0]
-    for dist in sample_distances:
-        for modal in ["walk", "bike", "car", "moto", "bus", "uber_car", "uber_moto"]:
-            speed = builder.get_speed(modal)
+    # Usa a distribuicao real do grafo para evitar normalizacao distorcida.
+    max_edges_for_normalization = 80000
+    edges_seen = 0
+    climate_factor = rain_factor * tide_factor
+    for _, _, edge_data in graph.edges(data=True):
+        modal = str(edge_data.get("modal", "walk")).lower()
+        dist = float(edge_data.get("distance_km", 0.0) or 0.0)
+        if dist <= 0:
+            continue
+
+        speed = builder.get_speed(modal)
+        tempo = (dist / speed) * rain_factor * tide_factor if speed > 0 else 10
+        custo_rota = cost_calc.calculate_routing_cost(
+            modal,
+            dist,
+            time_minutes=tempo * 60,
+            avg_speed_kmh=speed,
+            rain_factor=rain_factor,
+            tide_factor=tide_factor,
+        )
+        risco = risk_calc.get_adjusted_risk(modal, climate_factor) * dist / 10
+        normalizer.register_values(tempo, custo_rota, risco)
+
+        edges_seen += 1
+        if edges_seen >= max_edges_for_normalization:
+            break
+
+    if edges_seen == 0:
+        # Fallback defensivo para evitar min=max quando nao houver arestas validas.
+        for dist in [0.5, 1.0, 2.0]:
+            speed = builder.get_speed("walk")
             tempo = (dist / speed) * rain_factor * tide_factor if speed > 0 else 10
-            custo = cost_calc.calculate_cost(
-                modal,
+            custo_rota = cost_calc.calculate_routing_cost(
+                "walk",
                 dist,
                 time_minutes=tempo * 60,
                 avg_speed_kmh=speed,
                 rain_factor=rain_factor,
+                tide_factor=tide_factor,
             )
-            climate_factor = rain_factor * tide_factor
-            risco = risk_calc.get_adjusted_risk(modal, climate_factor)
-            normalizer.register_values(tempo, custo, risco)
+            risco = risk_calc.get_adjusted_risk("walk", climate_factor) * dist / 10
+            normalizer.register_values(tempo, custo_rota, risco)
 
     norm_params = normalizer.normalize()
     print(f"✓ Parâmetros de normalização calculados")
@@ -189,6 +221,7 @@ def main():
             tide_factor=tide_factor,
             speed_getter=speed_getter,
             start_modal=modo_inicial,
+            allowed_modes=allowed_modes,
         )
     else:
         path = dijkstra.search(
@@ -200,6 +233,7 @@ def main():
             tide_factor=tide_factor,
             speed_getter=speed_getter,
             start_modal=modo_inicial,
+            allowed_modes=allowed_modes,
         )
 
     if path is None:

@@ -18,8 +18,10 @@ class RiskCalculator:
     }
 
     def __init__(self, crime_df: pd.DataFrame, accident_df: pd.DataFrame):
-        self.crime_df = crime_df
-        self.accident_df = accident_df
+        self.crime_df = crime_df if crime_df is not None else pd.DataFrame()
+        self.accident_df = (
+            accident_df if accident_df is not None else pd.DataFrame()
+        )
         self.risk_profiles: Dict[str, float] = {}
         self._calculate_risks()
 
