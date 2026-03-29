@@ -7,6 +7,6 @@
     -8.117809,
     -34.900231
   ],
-  "modo_inicial": "uber_car",
-  "restricao_modal": "uber_car"
+  "modo_inicial": "walk",
+  "restricao_modal": "walk"
 }

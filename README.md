@@ -79,6 +79,87 @@ Execute o sistema:
 python main.py
 ```
 
+### Modo especial: bus_com_acesso
+
+Para evitar falso negativo de `bus-only`, o projeto agora suporta `restricao_modal: "bus_com_acesso"`.
+
+Observacao: `restricao_modal: "bus"` usa o mesmo comportamento de acesso a pe (compatibilidade para frontend/API).
+
+- Modais permitidos neste modo: `walk` e `bus`
+- Regra obrigatória: a rota so e aceita se usar `bus` em pelo menos um trecho
+- Regras de caminhada neste modo:
+  - limite por aresta: `0.5 km`
+  - penalizacao no peso da aresta: `x1.4`
+
+Exemplo de entrada:
+
+```json
+{
+  "origem": [-8.05, -34.90],
+  "destino": [-8.10, -34.95],
+  "modo_inicial": "walk",
+  "restricao_modal": "bus_com_acesso"
+}
+```
+
+### Evidencia tecnica (29/03/2026)
+
+Comando executado:
+
+```bash
+POST /api/calculate
+{
+  "restricao_modal": "bus_com_acesso"
+}
+```
+
+Resultado observado:
+
+- Status HTTP: `200`
+- Arestas na rota: `91`
+- Segmentos: `3`
+- Modais presentes: `bus` e `walk`
+
+## GTFS operacional com paradas (stops)
+
+O integrador GTFS foi evoluido para priorizar modelo operacional:
+
+`walk -> stop -> bus -> stop -> walk`
+
+Arquivos usados no feed GTFS local:
+
+- `data/bus_gtfs/stops.txt`
+- `data/bus_gtfs/stop_times.txt`
+- `data/bus_gtfs/trips.txt`
+- `data/bus_gtfs/routes.txt`
+
+Comportamento implementado:
+
+- cria nos de parada (`type=stop`) no grafo multimodal;
+- cria arestas `bus` por sequencia real de `stop_sequence` em `stop_times`;
+- conecta rua <-> parada por `walk` dentro de raio maximo de `0.5 km`;
+- se `stops/stop_times` nao existirem, aplica fallback para modo shape-based.
+
+### Evidencia tecnica (29/03/2026 - stop-based)
+
+Comando executado:
+
+```bash
+POST /api/calculate
+{
+  "restricao_modal": "bus_com_acesso"
+}
+```
+
+Resultado observado apos stop-based:
+
+- Status HTTP: `200`
+- Arestas na rota: `7`
+- Segmentos: `3`
+- Modais presentes: `bus` e `walk`
+- Distancia total: `9.9862 km`
+- Tempo total: `0.6388 h`
+
 O sistema irá:
 
 1. Ler o arquivo `input.json`

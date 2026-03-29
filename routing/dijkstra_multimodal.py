@@ -36,13 +36,20 @@ class DijkstraMultimodal:
             return True
 
         if start_modal == "walk":
-            return current_modal == "walk" and next_modal in {
+            if current_modal == "walk" and next_modal in {
                 "walk",
                 "bus",
                 "uber_car",
                 "uber_moto",
                 "bike",
-            }
+            }:
+                return True
+
+            # Permite descer do modal para concluir rota a pe.
+            if current_modal in {"bus", "uber_car", "uber_moto", "bike"}:
+                return next_modal == "walk"
+
+            return False
 
         return True
 
@@ -127,6 +134,9 @@ class DijkstraMultimodal:
         speed_getter=None,
         start_modal: str | None = None,
         allowed_modes: set[str] | None = None,
+        bus_required: bool = False,
+        max_walk_distance_km: float | None = None,
+        walk_penalty_factor: float = 1.0,
     ) -> Optional[List[Tuple[int, str]]]:
         """Executa Dijkstra para encontrar o caminho otimo."""
 
@@ -140,12 +150,15 @@ class DijkstraMultimodal:
         if allowed_modes:
             allowed_modes_norm = {m.lower() for m in allowed_modes}
 
-        self.closed_set = set()
-        self.open_set = {start}
-        self.came_from = {}
-        self.g_score = {start: 0.0}
+        start_used_bus = start[1].lower() == "bus"
+        start_state = (start[0], start[1], start_used_bus)
 
-        pq = [(0.0, start)]
+        self.closed_set = set()
+        self.open_set = {start_state}
+        self.came_from = {}
+        self.g_score = {start_state: 0.0}
+
+        pq = [(0.0, start_state)]
         iteration = 0
         max_iterations = 100000
 
@@ -159,10 +172,10 @@ class DijkstraMultimodal:
             self.open_set.remove(current)
             self.closed_set.add(current)
 
-            if current[0] == goal[0]:
+            if current[0] == goal[0] and (not bus_required or current[2]):
                 return self._reconstruct_path(current)
 
-            node_curr, modal_curr = current
+            node_curr, modal_curr, used_bus_curr = current
 
             for neighbor in self.graph.neighbors(node_curr):
                 for _, edge_data in self.graph[node_curr][neighbor].items():
@@ -174,12 +187,19 @@ class DijkstraMultimodal:
                     ):
                         continue
 
+                    if modal_neighbor == "walk" and max_walk_distance_km is not None:
+                        if float(edge_data.get("distance_km", 0.0) or 0.0) > float(
+                            max_walk_distance_km
+                        ):
+                            continue
+
                     if not self._is_transition_allowed(
                         modal_curr, modal_neighbor, start_modal
                     ):
                         continue
 
-                    state_neighbor = (neighbor, modal_neighbor)
+                    used_bus_neighbor = used_bus_curr or (modal_neighbor == "bus")
+                    state_neighbor = (neighbor, modal_neighbor, used_bus_neighbor)
                     if state_neighbor in self.closed_set:
                         continue
 
@@ -195,6 +215,8 @@ class DijkstraMultimodal:
                     )
 
                     weight = 0.5 * tempo_norm + 0.3 * custo_norm + 0.2 * risco_norm
+                    if modal_neighbor == "walk" and walk_penalty_factor != 1.0:
+                        weight *= walk_penalty_factor
                     tentative_g = current_cost + weight
 
                     if (
@@ -211,11 +233,11 @@ class DijkstraMultimodal:
         print(f"Dijkstra nao encontrou caminho apos {iteration} iteracoes")
         return None
 
-    def _reconstruct_path(self, current: Tuple[int, str]) -> List[Tuple[int, str]]:
+    def _reconstruct_path(self, current: Tuple[int, str, bool]) -> List[Tuple[int, str]]:
         """Reconstrói o caminho a partir do mapa de precedentes."""
         path = [current]
         while current in self.came_from:
             current = self.came_from[current]
             path.append(current)
         path.reverse()
-        return path
+        return [(node, modal) for node, modal, _ in path]

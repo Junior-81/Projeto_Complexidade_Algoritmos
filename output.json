@@ -1,188 +1,46 @@
 {
   "edges": [
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
         -8.0623949,
         -34.8737916
       ],
       "destino": [
-        -8.0623784,
-        -34.8738494
+        -8.0627,
+        -34.8739
       ],
-      "distancia": 0.0066,
-      "tempo": 0.0003,
+      "distancia": 0.036,
+      "tempo": 0.0094,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0002,
-      "peso": 0.0004,
-      "velocidade_media_kmh": 30.0,
-      "servico": "Uber"
+      "esforco": 0.2338,
+      "risco": 0.0012,
+      "peso": 0.015,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.0623784,
-        -34.8738494
-      ],
-      "destino": [
-        -8.0633409,
-        -34.8743932
-      ],
-      "distancia": 0.1232,
-      "tempo": 0.0053,
-      "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0032,
-      "peso": 0.0093,
-      "velocidade_media_kmh": 30.0,
-      "servico": "Uber"
-    },
-    {
-      "modo": "uber_car",
-      "meio": "uber carro",
-      "origem": [
-        -8.0633409,
-        -34.8743932
-      ],
-      "destino": [
-        -8.0637652,
-        -34.874436
-      ],
-      "distancia": 0.0481,
-      "tempo": 0.0021,
-      "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0013,
-      "peso": 0.0036,
-      "velocidade_media_kmh": 30.0,
-      "servico": "Uber"
-    },
-    {
-      "modo": "uber_car",
-      "meio": "uber carro",
-      "origem": [
-        -8.0637652,
-        -34.874436
-      ],
-      "destino": [
-        -8.0658274,
-        -34.8738628
-      ],
-      "distancia": 0.2393,
-      "tempo": 0.0104,
-      "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0062,
-      "peso": 0.0182,
-      "velocidade_media_kmh": 30.0,
-      "servico": "Uber"
-    },
-    {
-      "modo": "uber_car",
-      "meio": "uber carro",
-      "origem": [
-        -8.0658274,
-        -34.8738628
-      ],
-      "destino": [
-        -8.0660469,
-        -34.8736426
-      ],
-      "distancia": 0.0344,
-      "tempo": 0.0015,
-      "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0009,
-      "peso": 0.0026,
-      "velocidade_media_kmh": 30.0,
-      "servico": "Uber"
-    },
-    {
-      "modo": "uber_car",
-      "meio": "uber carro",
-      "origem": [
-        -8.0660469,
-        -34.8736426
-      ],
-      "destino": [
-        -8.0665105,
-        -34.8734772
-      ],
-      "distancia": 0.0561,
-      "tempo": 0.0024,
-      "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0015,
-      "peso": 0.0042,
-      "velocidade_media_kmh": 30.0,
-      "servico": "Uber"
-    },
-    {
-      "modo": "uber_car",
-      "meio": "uber carro",
-      "origem": [
-        -8.0665105,
-        -34.8734772
-      ],
-      "destino": [
-        -8.0680239,
-        -34.8747966
-      ],
-      "distancia": 0.2287,
-      "tempo": 0.005,
-      "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0059,
-      "peso": 0.013,
-      "velocidade_media_kmh": 60.0,
-      "servico": "Uber"
-    },
-    {
-      "modo": "uber_car",
-      "meio": "uber carro",
-      "origem": [
-        -8.0680239,
-        -34.8747966
-      ],
-      "destino": [
-        -8.0661882,
-        -34.8760802
-      ],
-      "distancia": 0.2553,
-      "tempo": 0.0066,
-      "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0066,
-      "peso": 0.0155,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
-    },
-    {
-      "modo": "uber_car",
-      "meio": "uber carro",
-      "origem": [
-        -8.0661882,
-        -34.8760802
+        -8.0627,
+        -34.8739
       ],
       "destino": [
         -8.066202,
         -34.8762466
       ],
-      "distancia": 0.0197,
-      "tempo": 0.0005,
+      "distancia": 0.4673,
+      "tempo": 0.1215,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0005,
-      "peso": 0.0011,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 3.0375,
+      "risco": 0.0158,
+      "peso": 0.1958,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
         -8.066202,
         -34.8762466
@@ -192,17 +50,16 @@
         -34.8760814
       ],
       "distancia": 0.0657,
-      "tempo": 0.0017,
+      "tempo": 0.0171,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0017,
-      "peso": 0.0039,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.427,
+      "risco": 0.0022,
+      "peso": 0.0275,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
         -8.0667596,
         -34.8760814
@@ -212,17 +69,16 @@
         -34.8760942
       ],
       "distancia": 0.0756,
-      "tempo": 0.002,
+      "tempo": 0.0197,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.002,
-      "peso": 0.0045,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.4915,
+      "risco": 0.0026,
+      "peso": 0.0316,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
         -8.0673927,
         -34.8760942
@@ -232,17 +88,16 @@
         -34.8764075
       ],
       "distancia": 0.1378,
-      "tempo": 0.0036,
+      "tempo": 0.0358,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0036,
-      "peso": 0.0083,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.8958,
+      "risco": 0.0047,
+      "peso": 0.0577,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
         -8.0685924,
         -34.8764075
@@ -252,17 +107,16 @@
         -34.8772781
       ],
       "distancia": 0.2397,
-      "tempo": 0.0062,
+      "tempo": 0.0623,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0062,
-      "peso": 0.0145,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 1.5582,
+      "risco": 0.0081,
+      "peso": 0.1004,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
         -8.0705667,
         -34.8772781
@@ -272,17 +126,16 @@
         -34.877625
       ],
       "distancia": 0.0866,
-      "tempo": 0.0023,
+      "tempo": 0.0225,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0023,
-      "peso": 0.0052,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.5626,
+      "risco": 0.0029,
+      "peso": 0.0362,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
         -8.0712652,
         -34.877625
@@ -292,17 +145,16 @@
         -34.8780495
       ],
       "distancia": 0.0704,
-      "tempo": 0.0018,
+      "tempo": 0.0183,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0018,
-      "peso": 0.0042,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.4577,
+      "risco": 0.0024,
+      "peso": 0.0294,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
         -8.0717087,
         -34.8780495
@@ -312,17 +164,16 @@
         -34.8789101
       ],
       "distancia": 0.1003,
-      "tempo": 0.0026,
+      "tempo": 0.0261,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0026,
-      "peso": 0.006,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.6519,
+      "risco": 0.0034,
+      "peso": 0.042,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
         -8.0719999,
         -34.8789101
@@ -332,17 +183,16 @@
         -34.8801796
       ],
       "distancia": 0.1591,
-      "tempo": 0.0041,
+      "tempo": 0.0414,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0041,
-      "peso": 0.0096,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 1.034,
+      "risco": 0.0054,
+      "peso": 0.0666,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
         -8.0719005,
         -34.8801796
@@ -352,479 +202,968 @@
         -34.8836566
       ],
       "distancia": 0.4847,
-      "tempo": 0.0158,
+      "tempo": 0.126,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0126,
-      "peso": 0.0323,
-      "velocidade_media_kmh": 40.0,
-      "servico": "Uber"
+      "esforco": 3.1508,
+      "risco": 0.0164,
+      "peso": 0.2031,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
         -8.0741903,
         -34.8836566
       ],
       "destino": [
-        -8.0746247,
-        -34.887184
+        -8.074371,
+        -34.8837558
       ],
-      "distancia": 0.4534,
-      "tempo": 0.0147,
+      "distancia": 0.0241,
+      "tempo": 0.0063,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0118,
-      "peso": 0.0302,
-      "velocidade_media_kmh": 40.0,
-      "servico": "Uber"
+      "esforco": 0.1568,
+      "risco": 0.0008,
+      "peso": 0.01,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.0746247,
-        -34.887184
+        -8.074371,
+        -34.8837558
       ],
       "destino": [
-        -8.0748878,
-        -34.8878576
+        -8.0752446,
+        -34.8869427
       ],
-      "distancia": 0.0797,
-      "tempo": 0.0021,
+      "distancia": 0.3674,
+      "tempo": 0.0955,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0021,
-      "peso": 0.0048,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 2.3883,
+      "risco": 0.0124,
+      "peso": 0.1539,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.0748878,
-        -34.8878576
+        -8.0752446,
+        -34.8869427
       ],
       "destino": [
-        -8.0753468,
-        -34.8890573
+        -8.075599,
+        -34.8875798
       ],
-      "distancia": 0.1416,
-      "tempo": 0.0037,
+      "distancia": 0.0805,
+      "tempo": 0.0209,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0037,
-      "peso": 0.0086,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.5229,
+      "risco": 0.0027,
+      "peso": 0.0336,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.0753468,
-        -34.8890573
+        -8.075599,
+        -34.8875798
       ],
       "destino": [
-        -8.0763399,
-        -34.8904098
+        -8.0760032,
+        -34.8888438
       ],
-      "distancia": 0.1958,
-      "tempo": 0.0051,
+      "distancia": 0.147,
+      "tempo": 0.0382,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0051,
-      "peso": 0.0119,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.9555,
+      "risco": 0.005,
+      "peso": 0.0615,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.0763399,
-        -34.8904098
+        -8.0760032,
+        -34.8888438
       ],
       "destino": [
-        -8.077176,
-        -34.8911678
+        -8.0766291,
+        -34.8899938
       ],
-      "distancia": 0.127,
-      "tempo": 0.0033,
+      "distancia": 0.146,
+      "tempo": 0.0379,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0033,
-      "peso": 0.0077,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.9487,
+      "risco": 0.0049,
+      "peso": 0.0611,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.077176,
-        -34.8911678
+        -8.0766291,
+        -34.8899938
       ],
       "destino": [
-        -8.0775643,
-        -34.8920256
+        -8.0777563,
+        -34.8920001
+      ],
+      "distancia": 0.257,
+      "tempo": 0.0668,
+      "custo": 0.0,
+      "esforco": 1.6706,
+      "risco": 0.0087,
+      "peso": 0.1076,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0777563,
+        -34.8920001
+      ],
+      "destino": [
+        -8.0784499,
+        -34.8919398
+      ],
+      "distancia": 0.08,
+      "tempo": 0.0208,
+      "custo": 0.0,
+      "esforco": 0.5201,
+      "risco": 0.0027,
+      "peso": 0.0335,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0784499,
+        -34.8919398
+      ],
+      "destino": [
+        -8.0789076,
+        -34.8918209
+      ],
+      "distancia": 0.0527,
+      "tempo": 0.0137,
+      "custo": 0.0,
+      "esforco": 0.3424,
+      "risco": 0.0018,
+      "peso": 0.022,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0789076,
+        -34.8918209
+      ],
+      "destino": [
+        -8.079387,
+        -34.8919399
+      ],
+      "distancia": 0.0551,
+      "tempo": 0.0143,
+      "custo": 0.0,
+      "esforco": 0.3585,
+      "risco": 0.0019,
+      "peso": 0.023,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.079387,
+        -34.8919399
+      ],
+      "destino": [
+        -8.0838049,
+        -34.8881511
+      ],
+      "distancia": 0.6541,
+      "tempo": 0.1701,
+      "custo": 0.0,
+      "esforco": 4.252,
+      "risco": 0.0221,
+      "peso": 0.274,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0838049,
+        -34.8881511
+      ],
+      "destino": [
+        -8.0841028,
+        -34.8878553
+      ],
+      "distancia": 0.0465,
+      "tempo": 0.0121,
+      "custo": 0.0,
+      "esforco": 0.3019,
+      "risco": 0.0016,
+      "peso": 0.0194,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0841028,
+        -34.8878553
+      ],
+      "destino": [
+        -8.0853853,
+        -34.886601
+      ],
+      "distancia": 0.1985,
+      "tempo": 0.0516,
+      "custo": 0.0,
+      "esforco": 1.2903,
+      "risco": 0.0067,
+      "peso": 0.0831,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0853853,
+        -34.886601
+      ],
+      "destino": [
+        -8.0854634,
+        -34.8866971
+      ],
+      "distancia": 0.0137,
+      "tempo": 0.0036,
+      "custo": 0.0,
+      "esforco": 0.089,
+      "risco": 0.0005,
+      "peso": 0.0057,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0854634,
+        -34.8866971
+      ],
+      "destino": [
+        -8.0859069,
+        -34.8862694
+      ],
+      "distancia": 0.0682,
+      "tempo": 0.0177,
+      "custo": 0.0,
+      "esforco": 0.4432,
+      "risco": 0.0023,
+      "peso": 0.0285,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0859069,
+        -34.8862694
+      ],
+      "destino": [
+        -8.0859314,
+        -34.886246
+      ],
+      "distancia": 0.0037,
+      "tempo": 0.001,
+      "custo": 0.0,
+      "esforco": 0.0244,
+      "risco": 0.0001,
+      "peso": 0.0015,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0859314,
+        -34.886246
+      ],
+      "destino": [
+        -8.0863744,
+        -34.8862691
+      ],
+      "distancia": 0.0503,
+      "tempo": 0.0131,
+      "custo": 0.0,
+      "esforco": 0.327,
+      "risco": 0.0017,
+      "peso": 0.021,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0863744,
+        -34.8862691
+      ],
+      "destino": [
+        -8.0876681,
+        -34.8863059
+      ],
+      "distancia": 0.1618,
+      "tempo": 0.0421,
+      "custo": 0.0,
+      "esforco": 1.0517,
+      "risco": 0.0055,
+      "peso": 0.0677,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0876681,
+        -34.8863059
+      ],
+      "destino": [
+        -8.087987,
+        -34.8860068
+      ],
+      "distancia": 0.0484,
+      "tempo": 0.0126,
+      "custo": 0.0,
+      "esforco": 0.3145,
+      "risco": 0.0016,
+      "peso": 0.0202,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.087987,
+        -34.8860068
+      ],
+      "destino": [
+        -8.0883287,
+        -34.8856721
+      ],
+      "distancia": 0.0529,
+      "tempo": 0.0138,
+      "custo": 0.0,
+      "esforco": 0.3441,
+      "risco": 0.0018,
+      "peso": 0.0221,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0883287,
+        -34.8856721
+      ],
+      "destino": [
+        -8.0889135,
+        -34.8850914
+      ],
+      "distancia": 0.0912,
+      "tempo": 0.0237,
+      "custo": 0.0,
+      "esforco": 0.5928,
+      "risco": 0.0031,
+      "peso": 0.0382,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0889135,
+        -34.8850914
+      ],
+      "destino": [
+        -8.0891512,
+        -34.8848547
+      ],
+      "distancia": 0.0371,
+      "tempo": 0.0097,
+      "custo": 0.0,
+      "esforco": 0.2413,
+      "risco": 0.0013,
+      "peso": 0.0155,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0891512,
+        -34.8848547
+      ],
+      "destino": [
+        -8.0893716,
+        -34.8846341
+      ],
+      "distancia": 0.0345,
+      "tempo": 0.009,
+      "custo": 0.0,
+      "esforco": 0.2243,
+      "risco": 0.0012,
+      "peso": 0.0144,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0893716,
+        -34.8846341
+      ],
+      "destino": [
+        -8.0902738,
+        -34.8845576
       ],
       "distancia": 0.1038,
+      "tempo": 0.027,
+      "custo": 0.0,
+      "esforco": 0.6749,
+      "risco": 0.0035,
+      "peso": 0.0434,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0902738,
+        -34.8845576
+      ],
+      "destino": [
+        -8.0903647,
+        -34.8845811
+      ],
+      "distancia": 0.0104,
       "tempo": 0.0027,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0027,
-      "peso": 0.0063,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.0678,
+      "risco": 0.0004,
+      "peso": 0.0043,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.0775643,
-        -34.8920256
+        -8.0903647,
+        -34.8845811
       ],
       "destino": [
-        -8.0775768,
-        -34.8920541
+        -8.0908745,
+        -34.8847389
       ],
-      "distancia": 0.0034,
-      "tempo": 0.0001,
+      "distancia": 0.0593,
+      "tempo": 0.0154,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0001,
-      "peso": 0.0001,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.3854,
+      "risco": 0.002,
+      "peso": 0.0248,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.0775768,
-        -34.8920541
+        -8.0908745,
+        -34.8847389
       ],
       "destino": [
-        -8.0778142,
-        -34.8925714
+        -8.0913175,
+        -34.8848615
       ],
-      "distancia": 0.0628,
-      "tempo": 0.0016,
+      "distancia": 0.0511,
+      "tempo": 0.0133,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0016,
-      "peso": 0.0038,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.332,
+      "risco": 0.0017,
+      "peso": 0.0213,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.0778142,
-        -34.8925714
+        -8.0913175,
+        -34.8848615
       ],
       "destino": [
-        -8.0779059,
-        -34.8926452
+        -8.0929018,
+        -34.8852975
       ],
-      "distancia": 0.013,
-      "tempo": 0.0003,
+      "distancia": 0.1826,
+      "tempo": 0.0475,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0003,
-      "peso": 0.0007,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 1.1868,
+      "risco": 0.0062,
+      "peso": 0.0764,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.0779059,
-        -34.8926452
+        -8.0929018,
+        -34.8852975
       ],
       "destino": [
-        -8.0804011,
-        -34.8924138
+        -8.0940518,
+        -34.885678
       ],
-      "distancia": 0.2983,
-      "tempo": 0.0078,
+      "distancia": 0.135,
+      "tempo": 0.0351,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0078,
-      "peso": 0.0181,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.8775,
+      "risco": 0.0046,
+      "peso": 0.0565,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.0804011,
-        -34.8924138
+        -8.0940518,
+        -34.885678
       ],
       "destino": [
-        -8.0809743,
-        -34.8922099
+        -8.0951832,
+        -34.8859348
       ],
-      "distancia": 0.0676,
-      "tempo": 0.0018,
+      "distancia": 0.1289,
+      "tempo": 0.0335,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0018,
-      "peso": 0.0041,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.8382,
+      "risco": 0.0044,
+      "peso": 0.054,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.0809743,
-        -34.8922099
+        -8.0951832,
+        -34.8859348
       ],
       "destino": [
-        -8.0827513,
-        -34.8908395
+        -8.0973732,
+        -34.8863207
       ],
-      "distancia": 0.2498,
-      "tempo": 0.0065,
+      "distancia": 0.2472,
+      "tempo": 0.0643,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0065,
-      "peso": 0.0151,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 1.6068,
+      "risco": 0.0084,
+      "peso": 0.1035,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.0827513,
-        -34.8908395
+        -8.0973732,
+        -34.8863207
       ],
       "destino": [
-        -8.0848348,
-        -34.8903312
+        -8.0987473,
+        -34.8866166
       ],
-      "distancia": 0.2562,
-      "tempo": 0.0056,
+      "distancia": 0.1568,
+      "tempo": 0.0408,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0067,
-      "peso": 0.0146,
-      "velocidade_media_kmh": 60.0,
-      "servico": "Uber"
+      "esforco": 1.0191,
+      "risco": 0.0053,
+      "peso": 0.0656,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.0848348,
-        -34.8903312
+        -8.0987473,
+        -34.8866166
       ],
       "destino": [
-        -8.08742,
-        -34.8912753
+        -8.0993153,
+        -34.8868847
       ],
-      "distancia": 0.3057,
-      "tempo": 0.0066,
+      "distancia": 0.0697,
+      "tempo": 0.0181,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0079,
-      "peso": 0.0174,
-      "velocidade_media_kmh": 60.0,
-      "servico": "Uber"
+      "esforco": 0.4531,
+      "risco": 0.0024,
+      "peso": 0.0291,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.08742,
-        -34.8912753
+        -8.0993153,
+        -34.8868847
       ],
       "destino": [
-        -8.0881028,
-        -34.8914627
+        -8.0999094,
+        -34.8871521
       ],
-      "distancia": 0.079,
-      "tempo": 0.0021,
+      "distancia": 0.0723,
+      "tempo": 0.0188,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0021,
-      "peso": 0.0047,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.4701,
+      "risco": 0.0024,
+      "peso": 0.0302,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.0881028,
-        -34.8914627
+        -8.0999094,
+        -34.8871521
       ],
       "destino": [
-        -8.0996052,
-        -34.8899798
+        -8.1019594,
+        -34.8880895
       ],
-      "distancia": 1.6128,
-      "tempo": 0.0349,
+      "distancia": 0.2502,
+      "tempo": 0.0651,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0419,
-      "peso": 0.0919,
-      "velocidade_media_kmh": 60.0,
-      "servico": "Uber"
+      "esforco": 1.6265,
+      "risco": 0.0085,
+      "peso": 0.1048,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.0996052,
-        -34.8899798
+        -8.1019594,
+        -34.8880895
       ],
       "destino": [
-        -8.1052008,
-        -34.8917701
+        -8.1040229,
+        -34.8890352
       ],
-      "distancia": 0.777,
-      "tempo": 0.0168,
+      "distancia": 0.252,
+      "tempo": 0.0655,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0202,
-      "peso": 0.0442,
-      "velocidade_media_kmh": 60.0,
-      "servico": "Uber"
+      "esforco": 1.6379,
+      "risco": 0.0085,
+      "peso": 0.1055,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.1052008,
-        -34.8917701
+        -8.1040229,
+        -34.8890352
       ],
       "destino": [
-        -8.1098828,
-        -34.8995154
+        -8.1054344,
+        -34.8896935
       ],
-      "distancia": 1.0684,
+      "distancia": 0.1729,
+      "tempo": 0.045,
+      "custo": 0.0,
+      "esforco": 1.1238,
+      "risco": 0.0058,
+      "peso": 0.0724,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.1054344,
+        -34.8896935
+      ],
+      "destino": [
+        -8.1061588,
+        -34.8900335
+      ],
+      "distancia": 0.0888,
       "tempo": 0.0231,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0278,
-      "peso": 0.0609,
-      "velocidade_media_kmh": 60.0,
-      "servico": "Uber"
+      "esforco": 0.5773,
+      "risco": 0.003,
+      "peso": 0.0372,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.1098828,
-        -34.8995154
+        -8.1061588,
+        -34.8900335
       ],
       "destino": [
-        -8.1152795,
-        -34.9006724
+        -8.109229,
+        -34.891625
       ],
-      "distancia": 0.6218,
-      "tempo": 0.0135,
+      "distancia": 0.3843,
+      "tempo": 0.0999,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0162,
-      "peso": 0.0354,
-      "velocidade_media_kmh": 60.0,
-      "servico": "Uber"
+      "esforco": 2.498,
+      "risco": 0.013,
+      "peso": 0.161,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.1152795,
-        -34.9006724
+        -8.109229,
+        -34.891625
       ],
       "destino": [
-        -8.1154034,
-        -34.9004351
+        -8.1099244,
+        -34.8920341
       ],
-      "distancia": 0.0295,
-      "tempo": 0.0008,
+      "distancia": 0.0895,
+      "tempo": 0.0233,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0008,
-      "peso": 0.0017,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.5816,
+      "risco": 0.003,
+      "peso": 0.0374,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.1154034,
-        -34.9004351
+        -8.1099244,
+        -34.8920341
       ],
       "destino": [
-        -8.1162009,
-        -34.8989667
+        -8.1105234,
+        -34.8923947
       ],
-      "distancia": 0.1844,
-      "tempo": 0.0048,
+      "distancia": 0.0775,
+      "tempo": 0.0202,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0048,
-      "peso": 0.0112,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.5041,
+      "risco": 0.0026,
+      "peso": 0.0324,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.1162009,
-        -34.8989667
+        -8.1105234,
+        -34.8923947
       ],
       "destino": [
-        -8.1170435,
-        -34.8994617
+        -8.1110955,
+        -34.8927431
       ],
-      "distancia": 0.1084,
-      "tempo": 0.0028,
+      "distancia": 0.0743,
+      "tempo": 0.0193,
       "custo": 0.0,
-      "esforco": 0.0,
-      "risco": 0.0028,
-      "peso": 0.0065,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "esforco": 0.4828,
+      "risco": 0.0025,
+      "peso": 0.0311,
+      "velocidade_media_kmh": 5.0
     },
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
-        -8.1170435,
-        -34.8994617
+        -8.1110955,
+        -34.8927431
+      ],
+      "destino": [
+        -8.1119579,
+        -34.8932501
+      ],
+      "distancia": 0.111,
+      "tempo": 0.0288,
+      "custo": 0.0,
+      "esforco": 0.7212,
+      "risco": 0.0038,
+      "peso": 0.0464,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.1119579,
+        -34.8932501
+      ],
+      "destino": [
+        -8.1124487,
+        -34.8935503
+      ],
+      "distancia": 0.0638,
+      "tempo": 0.0166,
+      "custo": 0.0,
+      "esforco": 0.4147,
+      "risco": 0.0022,
+      "peso": 0.0267,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.1124487,
+        -34.8935503
+      ],
+      "destino": [
+        -8.1132521,
+        -34.8940396
+      ],
+      "distancia": 0.1043,
+      "tempo": 0.0271,
+      "custo": 0.0,
+      "esforco": 0.6781,
+      "risco": 0.0035,
+      "peso": 0.0436,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.1132521,
+        -34.8940396
+      ],
+      "destino": [
+        -8.1140731,
+        -34.8945548
+      ],
+      "distancia": 0.1075,
+      "tempo": 0.0279,
+      "custo": 0.0,
+      "esforco": 0.6987,
+      "risco": 0.0036,
+      "peso": 0.045,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.1140731,
+        -34.8945548
+      ],
+      "destino": [
+        -8.1149134,
+        -34.8950586
+      ],
+      "distancia": 0.1087,
+      "tempo": 0.0283,
+      "custo": 0.0,
+      "esforco": 0.7063,
+      "risco": 0.0037,
+      "peso": 0.0455,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.1149134,
+        -34.8950586
+      ],
+      "destino": [
+        -8.115731,
+        -34.8955696
+      ],
+      "distancia": 0.1069,
+      "tempo": 0.0278,
+      "custo": 0.0,
+      "esforco": 0.6949,
+      "risco": 0.0036,
+      "peso": 0.0447,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.115731,
+        -34.8955696
+      ],
+      "destino": [
+        -8.1165602,
+        -34.8960963
+      ],
+      "distancia": 0.1089,
+      "tempo": 0.0283,
+      "custo": 0.0,
+      "esforco": 0.708,
+      "risco": 0.0037,
+      "peso": 0.0456,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.1165602,
+        -34.8960963
+      ],
+      "destino": [
+        -8.1178,
+        -34.9002
+      ],
+      "distancia": 0.4723,
+      "tempo": 0.1228,
+      "custo": 0.0,
+      "esforco": 3.07,
+      "risco": 0.016,
+      "peso": 0.1978,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.1178,
+        -34.9002
       ],
       "destino": [
         -8.1179317,
         -34.8999959
       ],
-      "distancia": 0.1149,
-      "tempo": 0.003,
-      "custo": 16.9,
-      "esforco": 0.0,
-      "risco": 0.003,
-      "peso": 0.0069,
-      "velocidade_media_kmh": 50.0,
-      "servico": "Uber"
+      "distancia": 0.0268,
+      "tempo": 0.007,
+      "custo": 0.0,
+      "esforco": 0.1743,
+      "risco": 0.0009,
+      "peso": 0.0112,
+      "velocidade_media_kmh": 5.0
     }
   ],
   "segments": [
     {
-      "modo": "uber_car",
-      "meio": "uber carro",
+      "modo": "walk",
+      "meio": "walk",
       "origem": [
         -8.0623949,
         -34.8737916
@@ -833,22 +1172,21 @@
         -8.1179317,
         -34.8999959
       ],
-      "tempo": 0.2379,
-      "distancia": 9.3856,
-      "custo": 16.9,
-      "esforco": 0.0,
-      "risco_medio": 0.006,
-      "velocidade_media_kmh": 39.45,
-      "quantidade_arestas": 41,
-      "servico": "Uber"
+      "tempo": 2.1871,
+      "distancia": 8.4107,
+      "custo": 0.0,
+      "esforco": 54.671,
+      "risco_medio": 0.0047,
+      "velocidade_media_kmh": 3.85,
+      "quantidade_arestas": 61
     }
   ],
   "resumo": {
-    "tempo_total": 0.2379,
-    "custo_total": 16.9,
-    "esforco_total": 0.0,
-    "distancia_total": 9.3856,
-    "risco_medio": 0.006,
-    "velocidade_media_total": 39.45
+    "tempo_total": 2.1871,
+    "custo_total": 0.0,
+    "esforco_total": 54.671,
+    "distancia_total": 8.4107,
+    "risco_medio": 0.0047,
+    "velocidade_media_total": 3.85
   }
 }

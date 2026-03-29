@@ -52,14 +52,21 @@ class AStarMultimodal:
             return True
 
         if start_modal == "walk":
-            # Ao iniciar a pé, permite troca apenas para meios públicos/por app.
-            return current_modal == "walk" and next_modal in {
+            # Ao iniciar a pe, permite embarque em meios publicos/app.
+            if current_modal == "walk" and next_modal in {
                 "walk",
                 "bus",
                 "uber_car",
                 "uber_moto",
                 "bike",
-            }
+            }:
+                return True
+
+            # Permite desembarque para finalizar percurso a pe.
+            if current_modal in {"bus", "uber_car", "uber_moto", "bike"}:
+                return next_modal == "walk"
+
+            return False
 
         return True
 
@@ -204,6 +211,9 @@ class AStarMultimodal:
         speed_getter=None,
         start_modal: str | None = None,
         allowed_modes: set[str] | None = None,
+        bus_required: bool = False,
+        max_walk_distance_km: float | None = None,
+        walk_penalty_factor: float = 1.0,
     ) -> Optional[List[Tuple[int, str]]]:
         """
         Executa A* para encontrar o caminho ótimo.
@@ -231,15 +241,18 @@ class AStarMultimodal:
         if allowed_modes:
             allowed_modes_norm = {m.lower() for m in allowed_modes}
 
+        start_used_bus = start[1].lower() == "bus"
+        start_state = (start[0], start[1], start_used_bus)
+
         self.closed_set = set()
-        self.open_set = {start}
+        self.open_set = {start_state}
         self.came_from = {}
-        self.g_score = {start: 0}
+        self.g_score = {start_state: 0}
 
         h_start = self.heuristic(start, goal, speed_getter)
-        self.f_score = {start: h_start}
+        self.f_score = {start_state: h_start}
 
-        pq = [(h_start, start)]  # (f_score, state)
+        pq = [(h_start, start_state)]  # (f_score, state)
 
         iteration = 0
         max_iterations = 100000
@@ -257,10 +270,10 @@ class AStarMultimodal:
             self.closed_set.add(current)
 
             # Verifica se chegou ao destino
-            if current[0] == goal[0]:  # Mesmo nó (ignore modal na meta)
+            if current[0] == goal[0] and (not bus_required or current[2]):
                 return self._reconstruct_path(current)
 
-            node_curr, modal_curr = current
+            node_curr, modal_curr, used_bus_curr = current
 
             # Expande vizinhos
             for neighbor in self.graph.neighbors(node_curr):
@@ -273,12 +286,19 @@ class AStarMultimodal:
                     ):
                         continue
 
+                    if modal_neighbor == "walk" and max_walk_distance_km is not None:
+                        if float(edge_data.get("distance_km", 0.0) or 0.0) > float(
+                            max_walk_distance_km
+                        ):
+                            continue
+
                     if not self._is_transition_allowed(
                         modal_curr, modal_neighbor, start_modal
                     ):
                         continue
 
-                    state_neighbor = (neighbor, modal_neighbor)
+                    used_bus_neighbor = used_bus_curr or (modal_neighbor == "bus")
+                    state_neighbor = (neighbor, modal_neighbor, used_bus_neighbor)
 
                     if state_neighbor in self.closed_set:
                         continue
@@ -297,6 +317,8 @@ class AStarMultimodal:
 
                     # Função objetivo multiobjetiva
                     weight = 0.5 * tempo_norm + 0.3 * custo_norm + 0.2 * risco_norm
+                    if modal_neighbor == "walk" and walk_penalty_factor != 1.0:
+                        weight *= walk_penalty_factor
 
                     tentative_g = self.g_score.get(current, float("inf")) + weight
 
@@ -307,7 +329,7 @@ class AStarMultimodal:
                         self.came_from[state_neighbor] = current
                         self.g_score[state_neighbor] = tentative_g
 
-                        h = self.heuristic(state_neighbor, goal, speed_getter)
+                        h = self.heuristic((neighbor, modal_neighbor), goal, speed_getter)
                         f = tentative_g + h
                         self.f_score[state_neighbor] = f
 
@@ -318,11 +340,11 @@ class AStarMultimodal:
         print(f"A* não encontrou caminho após {iteration} iterações")
         return None
 
-    def _reconstruct_path(self, current: Tuple[int, str]) -> List[Tuple[int, str]]:
+    def _reconstruct_path(self, current: Tuple[int, str, bool]) -> List[Tuple[int, str]]:
         """Reconstrói o caminho a partir do mapa de precedentes."""
         path = [current]
         while current in self.came_from:
             current = self.came_from[current]
             path.append(current)
         path.reverse()
-        return path
+        return [(node, modal) for node, modal, _ in path]

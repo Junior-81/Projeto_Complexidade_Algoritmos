@@ -54,6 +54,12 @@ OPTION_SCENARIOS = [
         "restricao_modal": "bus",
     },
     {
+        "id": "bus_with_access",
+        "label": "Onibus com acesso a pe",
+        "modo_inicial": "walk",
+        "restricao_modal": "bus_com_acesso",
+    },
+    {
         "id": "uber_car_only",
         "label": "Somente uber carro",
         "modo_inicial": "uber_car",
@@ -78,7 +84,7 @@ class CalculateRequest(BaseModel):
     algoritmo: str | None = Field(default=None, description="dijkstra|astar")
     restricao_modal: str | None = Field(
         default=None,
-        description="forca o uso de apenas um modal em toda a rota",
+        description="forca modal unico ou modo especial bus_com_acesso",
     )
 
     @model_validator(mode="after")
@@ -140,7 +146,10 @@ def _write_input(payload: CalculateRequest) -> None:
     if payload.modo_inicial is not None:
         existing["modo_inicial"] = payload.modo_inicial
     elif payload.restricao_modal is not None:
-        existing["modo_inicial"] = payload.restricao_modal
+        if str(payload.restricao_modal).lower() in {"bus", "bus_com_acesso"}:
+            existing["modo_inicial"] = "walk"
+        else:
+            existing["modo_inicial"] = payload.restricao_modal
     else:
         existing["modo_inicial"] = "walk"
     if payload.algoritmo is not None:
@@ -347,7 +356,18 @@ def calculate_options(payload: OptionsRequest | None = None) -> dict:
             key=lambda item: item["score"] if item.get("score") is not None else 9999,
         )
 
-        best_option_id = valid_sorted[0]["id"] if valid_sorted else None
+        # Regra de negocio: em "sem restricao", recomendar 1 modal vencedor
+        # (cenarios *_only), evitando rota quebrada em varios modais.
+        single_modal_sorted = [
+            opt
+            for opt in valid_sorted
+            if str(opt.get("id", "")).endswith("_only")
+        ]
+        best_option_id = (
+            single_modal_sorted[0]["id"]
+            if single_modal_sorted
+            else (valid_sorted[0]["id"] if valid_sorted else None)
+        )
 
         return {
             "generated_at": datetime.utcnow().isoformat() + "Z",

@@ -43,7 +43,7 @@ const ROUTE_RESTRICTION_OPTIONS = [
   { value: "bike", label: "Forcar apenas Bike" },
   { value: "car", label: "Forcar apenas Carro" },
   { value: "moto", label: "Forcar apenas Moto" },
-  { value: "bus", label: "Forcar apenas Onibus" },
+  { value: "bus", label: "Onibus (com acesso a pe)" },
   { value: "uber_car", label: "Forcar apenas Uber Carro" },
   { value: "uber_moto", label: "Forcar apenas Uber Moto" },
 ];
@@ -251,20 +251,45 @@ function App() {
   const [routeModeChoice, setRouteModeChoice] = useState("auto");
   const [routeRestriction, setRouteRestriction] = useState("none");
 
+  async function fetchOptionsPayload() {
+    const response = await fetch(`${API_BASE}/api/options`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erro ao buscar opcoes (${response.status})`);
+    }
+
+    return response.json();
+  }
+
   async function fetchRouteOptions() {
     setError("");
     setLoading(true);
     try {
-      const response = await fetch(`${API_BASE}/api/route`);
-
-      if (!response.ok) {
-        throw new Error(`Erro ao buscar rota (${response.status})`);
-      }
-
-      const routeData = await response.json();
-      setOptionsPayload(wrapSingleRoute(routeData));
+      const optionsData = await fetchOptionsPayload();
+      setOptionsPayload(optionsData);
+      return;
     } catch (err) {
-      setError(err.message || "Falha ao carregar rota");
+      try {
+        const response = await fetch(`${API_BASE}/api/route`);
+        if (!response.ok) {
+          throw new Error(`Erro ao buscar rota (${response.status})`);
+        }
+        const routeData = await response.json();
+        setOptionsPayload(wrapSingleRoute(routeData));
+        setError(
+          `Falha ao buscar opcoes; exibindo rota atual. Detalhe: ${
+            err?.message || "erro desconhecido"
+          }`
+        );
+      } catch (fallbackErr) {
+        setError(fallbackErr.message || err.message || "Falha ao carregar rota");
+      }
     } finally {
       setLoading(false);
     }
@@ -274,14 +299,32 @@ function App() {
     setError("");
     setRunning(true);
     try {
-      const busOnlyRequested =
-        routeRestriction === "bus" ||
-        (routeRestriction === "none" && routeModeChoice === "bus");
+      const isOfficialNoRestrictionMode =
+        routeModeChoice === "auto" && routeRestriction === "none";
 
-      if (busOnlyRequested) {
-        throw new Error(
-          "Modo onibus requer dados GTFS em data/bus_gtfs (shapes.txt, trips.txt e routes.txt)."
-        );
+      if (isOfficialNoRestrictionMode) {
+        try {
+          const optionsData = await fetchOptionsPayload();
+          setOptionsPayload(optionsData);
+          setSelectedOptionId(optionsData?.best_option_id || null);
+        } catch {
+          const fallbackResponse = await fetch(`${API_BASE}/api/calculate`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ modo_inicial: null, restricao_modal: null }),
+          });
+
+          if (!fallbackResponse.ok) {
+            throw new Error(`Erro ao recalcular rota (${fallbackResponse.status})`);
+          }
+
+          const routeData = await fallbackResponse.json();
+          setOptionsPayload(wrapSingleRoute(routeData));
+          setError("Nao foi possivel carregar ranking de opcoes; exibindo rota sem restricao.");
+        }
+        return;
       }
 
       const resolvedMode =
@@ -470,7 +513,7 @@ function App() {
         </div>
 
         <p className="control-help">
-          Para testar rota so de carro ou so de moto, selecione a restricao desejada e clique em Recalcular opcoes.
+          Para testar cenarios como carro/moto ou onibus com acesso a pe, selecione a restricao desejada e clique em Recalcular opcoes.
         </p>
       </section>
 

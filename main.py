@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Sistema de Recomendação de Rotas Multimodais.
 Suporta Dijkstra e A* com otimizacao multiobjetivo (tempo, custo, risco).
 """
 
-import json
 import sys
+import io
+
+# Força UTF-8 output (importante para PowerShell no Windows)
+if sys.platform == "win32":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+
+import json
 from pathlib import Path
 
 # Adiciona diretórios ao path
@@ -79,10 +87,32 @@ def main():
         print(f"! Algoritmo '{algoritmo}' invalido. Usando dijkstra.")
         algoritmo = "dijkstra"
 
+    bus_required = False
+    max_walk_distance_km = None
+    walk_penalty_factor = 1.0
     allowed_modes = None
     if restricao_modal:
-        allowed_modes = {str(restricao_modal).lower()}
+        restricao_modal = str(restricao_modal).lower()
+        if restricao_modal == "bus":
+            # Modo padrao de onibus: acesso/egresso a pe + obrigatoriedade de usar bus.
+            allowed_modes = {"walk", "bus"}
+            bus_required = True
+            max_walk_distance_km = 0.5
+            walk_penalty_factor = 1.4
+        elif restricao_modal == "bus_com_acesso":
+            allowed_modes = {"walk", "bus"}
+            bus_required = True
+            max_walk_distance_km = 0.5
+            walk_penalty_factor = 1.4
+        elif restricao_modal == "bus_estrito":
+            allowed_modes = {"bus"}
+            bus_required = False
+        else:
+            allowed_modes = {restricao_modal}
+
         print(f"  Restricao de modal ativa: {', '.join(sorted(allowed_modes))}")
+        if bus_required:
+            print("  Regra ativa: rota precisa usar onibus em algum trecho")
 
     # ETAPA 2: Carrega CSVs
     print("\n[2] Carregando CSVs...")
@@ -117,21 +147,35 @@ def main():
     print(f"  Fator chuva: {rain_factor:.2f}")
     print(f"  Fator maré: {tide_factor:.2f}")
 
-    # ETAPA 6: Constrói grafo com OSMnx
+    # ETAPA 6: Constrói grafo com OSMnx (ou carrega de cache)
     print("\n[6] Construindo grafo multimodal...")
     builder = GraphBuilder("Recife, Brazil")
-    builder.load_base_graph()
-    builder.load_speed_data(data.get("transport_speed"))
-    builder.load_flood_data(data.get("flood_risk"))
-
-    graph = builder.build_multimodal_graph()
-
-    # Integra trajetos de ônibus validados por GTFS
-    builder.add_gtfs_bus_routes("data/bus_gtfs")
-
+    
+    # Tenta carregar grafo de cache
+    cached_data = GraphBuilder.load_graph_cache()
+    if cached_data:
+        graph, builder.speed_data = cached_data
+        # Reconstrói base_graph para find_nearest_node (leve, apenas estrutura)
+        builder.load_base_graph()
+        builder.load_flood_data(data.get("flood_risk"))
+        use_cached = True
+    else:
+        # Construção completa do zero
+        builder.load_base_graph()
+        builder.load_speed_data(data.get("transport_speed"))
+        builder.load_flood_data(data.get("flood_risk"))
+        graph = builder.build_multimodal_graph()
+        builder.add_gtfs_bus_routes("data/bus_gtfs")
+        use_cached = False
+        
+        # Salva em cache para próximas requisições
+        GraphBuilder.save_graph_cache(graph, builder.speed_data)
+    
     if graph is None:
         print("✗ Falha ao construir grafo")
         sys.exit(1)
+    
+    builder.multimodal_graph = graph  # Garante que builder tem referência ao grafo carregado
 
     # ETAPA 7: Encontra nós mais próximos
     print("\n[7] Localizando nós no grafo...")
@@ -222,6 +266,9 @@ def main():
             speed_getter=speed_getter,
             start_modal=modo_inicial,
             allowed_modes=allowed_modes,
+            bus_required=bus_required,
+            max_walk_distance_km=max_walk_distance_km,
+            walk_penalty_factor=walk_penalty_factor,
         )
     else:
         path = dijkstra.search(
@@ -234,6 +281,9 @@ def main():
             speed_getter=speed_getter,
             start_modal=modo_inicial,
             allowed_modes=allowed_modes,
+            bus_required=bus_required,
+            max_walk_distance_km=max_walk_distance_km,
+            walk_penalty_factor=walk_penalty_factor,
         )
 
     if path is None:
