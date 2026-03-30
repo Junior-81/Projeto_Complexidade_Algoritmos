@@ -8,34 +8,186 @@
         -34.8737916
       ],
       "destino": [
-        -8.0627,
-        -34.8739
+        -8.0623784,
+        -34.8738494
       ],
-      "distancia": 0.036,
-      "tempo": 0.0094,
+      "distancia": 0.0066,
+      "tempo": 0.0013,
       "custo": 0.0,
-      "esforco": 0.2338,
-      "risco": 0.0012,
-      "peso": 0.015,
+      "esforco": 0.0331,
+      "risco": 0.0002,
+      "peso": 0.0027,
       "velocidade_media_kmh": 5.0
     },
     {
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.0627,
-        -34.8739
+        -8.0623784,
+        -34.8738494
+      ],
+      "destino": [
+        -8.0633409,
+        -34.8743932
+      ],
+      "distancia": 0.1232,
+      "tempo": 0.0246,
+      "custo": 0.0,
+      "esforco": 0.6162,
+      "risco": 0.0032,
+      "peso": 0.0516,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0633409,
+        -34.8743932
+      ],
+      "destino": [
+        -8.0637652,
+        -34.874436
+      ],
+      "distancia": 0.0481,
+      "tempo": 0.0096,
+      "custo": 0.0,
+      "esforco": 0.2406,
+      "risco": 0.0013,
+      "peso": 0.0201,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0637652,
+        -34.874436
+      ],
+      "destino": [
+        -8.0640965,
+        -34.8763296
+      ],
+      "distancia": 0.2117,
+      "tempo": 0.0423,
+      "custo": 0.0,
+      "esforco": 1.0586,
+      "risco": 0.0055,
+      "peso": 0.0887,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0640965,
+        -34.8763296
+      ],
+      "destino": [
+        -8.0641714,
+        -34.876358
+      ],
+      "distancia": 0.0089,
+      "tempo": 0.0018,
+      "custo": 0.0,
+      "esforco": 0.0445,
+      "risco": 0.0002,
+      "peso": 0.0037,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0641714,
+        -34.876358
+      ],
+      "destino": [
+        -8.0650483,
+        -34.876269
+      ],
+      "distancia": 0.098,
+      "tempo": 0.0196,
+      "custo": 0.0,
+      "esforco": 0.4902,
+      "risco": 0.0025,
+      "peso": 0.041,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0650483,
+        -34.876269
+      ],
+      "destino": [
+        -8.0654177,
+        -34.8762051
+      ],
+      "distancia": 0.0417,
+      "tempo": 0.0083,
+      "custo": 0.0,
+      "esforco": 0.2084,
+      "risco": 0.0011,
+      "peso": 0.0174,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0654177,
+        -34.8762051
+      ],
+      "destino": [
+        -8.0660454,
+        -34.8761088
+      ],
+      "distancia": 0.0706,
+      "tempo": 0.0141,
+      "custo": 0.0,
+      "esforco": 0.353,
+      "risco": 0.0018,
+      "peso": 0.0295,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0660454,
+        -34.8761088
+      ],
+      "destino": [
+        -8.0660621,
+        -34.8762623
+      ],
+      "distancia": 0.017,
+      "tempo": 0.0034,
+      "custo": 0.0,
+      "esforco": 0.085,
+      "risco": 0.0004,
+      "peso": 0.0071,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0660621,
+        -34.8762623
       ],
       "destino": [
         -8.066202,
         -34.8762466
       ],
-      "distancia": 0.4673,
-      "tempo": 0.1215,
+      "distancia": 0.0157,
+      "tempo": 0.0031,
       "custo": 0.0,
-      "esforco": 3.0375,
-      "risco": 0.0158,
-      "peso": 0.1958,
+      "esforco": 0.0783,
+      "risco": 0.0004,
+      "peso": 0.0065,
       "velocidade_media_kmh": 5.0
     },
     {
@@ -50,10 +202,10 @@
         -34.8760814
       ],
       "distancia": 0.0657,
-      "tempo": 0.0171,
+      "tempo": 0.0131,
       "custo": 0.0,
-      "esforco": 0.427,
-      "risco": 0.0022,
+      "esforco": 0.3285,
+      "risco": 0.0017,
       "peso": 0.0275,
       "velocidade_media_kmh": 5.0
     },
@@ -69,10 +221,10 @@
         -34.8760942
       ],
       "distancia": 0.0756,
-      "tempo": 0.0197,
+      "tempo": 0.0151,
       "custo": 0.0,
-      "esforco": 0.4915,
-      "risco": 0.0026,
+      "esforco": 0.3781,
+      "risco": 0.002,
       "peso": 0.0316,
       "velocidade_media_kmh": 5.0
     },
@@ -88,10 +240,10 @@
         -34.8764075
       ],
       "distancia": 0.1378,
-      "tempo": 0.0358,
+      "tempo": 0.0276,
       "custo": 0.0,
-      "esforco": 0.8958,
-      "risco": 0.0047,
+      "esforco": 0.6891,
+      "risco": 0.0036,
       "peso": 0.0577,
       "velocidade_media_kmh": 5.0
     },
@@ -107,10 +259,10 @@
         -34.8772781
       ],
       "distancia": 0.2397,
-      "tempo": 0.0623,
+      "tempo": 0.0479,
       "custo": 0.0,
-      "esforco": 1.5582,
-      "risco": 0.0081,
+      "esforco": 1.1986,
+      "risco": 0.0062,
       "peso": 0.1004,
       "velocidade_media_kmh": 5.0
     },
@@ -126,10 +278,10 @@
         -34.877625
       ],
       "distancia": 0.0866,
-      "tempo": 0.0225,
+      "tempo": 0.0173,
       "custo": 0.0,
-      "esforco": 0.5626,
-      "risco": 0.0029,
+      "esforco": 0.4328,
+      "risco": 0.0023,
       "peso": 0.0362,
       "velocidade_media_kmh": 5.0
     },
@@ -145,10 +297,10 @@
         -34.8780495
       ],
       "distancia": 0.0704,
-      "tempo": 0.0183,
+      "tempo": 0.0141,
       "custo": 0.0,
-      "esforco": 0.4577,
-      "risco": 0.0024,
+      "esforco": 0.3521,
+      "risco": 0.0018,
       "peso": 0.0294,
       "velocidade_media_kmh": 5.0
     },
@@ -164,10 +316,10 @@
         -34.8789101
       ],
       "distancia": 0.1003,
-      "tempo": 0.0261,
+      "tempo": 0.0201,
       "custo": 0.0,
-      "esforco": 0.6519,
-      "risco": 0.0034,
+      "esforco": 0.5015,
+      "risco": 0.0026,
       "peso": 0.042,
       "velocidade_media_kmh": 5.0
     },
@@ -183,10 +335,10 @@
         -34.8801796
       ],
       "distancia": 0.1591,
-      "tempo": 0.0414,
+      "tempo": 0.0318,
       "custo": 0.0,
-      "esforco": 1.034,
-      "risco": 0.0054,
+      "esforco": 0.7954,
+      "risco": 0.0041,
       "peso": 0.0666,
       "velocidade_media_kmh": 5.0
     },
@@ -202,10 +354,10 @@
         -34.8836566
       ],
       "distancia": 0.4847,
-      "tempo": 0.126,
+      "tempo": 0.0969,
       "custo": 0.0,
-      "esforco": 3.1508,
-      "risco": 0.0164,
+      "esforco": 2.4237,
+      "risco": 0.0126,
       "peso": 0.2031,
       "velocidade_media_kmh": 5.0
     },
@@ -221,10 +373,10 @@
         -34.8837558
       ],
       "distancia": 0.0241,
-      "tempo": 0.0063,
+      "tempo": 0.0048,
       "custo": 0.0,
-      "esforco": 0.1568,
-      "risco": 0.0008,
+      "esforco": 0.1206,
+      "risco": 0.0006,
       "peso": 0.01,
       "velocidade_media_kmh": 5.0
     },
@@ -240,10 +392,10 @@
         -34.8869427
       ],
       "distancia": 0.3674,
-      "tempo": 0.0955,
+      "tempo": 0.0735,
       "custo": 0.0,
-      "esforco": 2.3883,
-      "risco": 0.0124,
+      "esforco": 1.8372,
+      "risco": 0.0096,
       "peso": 0.1539,
       "velocidade_media_kmh": 5.0
     },
@@ -259,10 +411,10 @@
         -34.8875798
       ],
       "distancia": 0.0805,
-      "tempo": 0.0209,
+      "tempo": 0.0161,
       "custo": 0.0,
-      "esforco": 0.5229,
-      "risco": 0.0027,
+      "esforco": 0.4023,
+      "risco": 0.0021,
       "peso": 0.0336,
       "velocidade_media_kmh": 5.0
     },
@@ -278,10 +430,10 @@
         -34.8888438
       ],
       "distancia": 0.147,
-      "tempo": 0.0382,
+      "tempo": 0.0294,
       "custo": 0.0,
-      "esforco": 0.9555,
-      "risco": 0.005,
+      "esforco": 0.735,
+      "risco": 0.0038,
       "peso": 0.0615,
       "velocidade_media_kmh": 5.0
     },
@@ -297,10 +449,10 @@
         -34.8899938
       ],
       "distancia": 0.146,
-      "tempo": 0.0379,
+      "tempo": 0.0292,
       "custo": 0.0,
-      "esforco": 0.9487,
-      "risco": 0.0049,
+      "esforco": 0.7298,
+      "risco": 0.0038,
       "peso": 0.0611,
       "velocidade_media_kmh": 5.0
     },
@@ -312,224 +464,262 @@
         -34.8899938
       ],
       "destino": [
-        -8.0777563,
-        -34.8920001
+        -8.0763399,
+        -34.8904098
       ],
-      "distancia": 0.257,
-      "tempo": 0.0668,
-      "custo": 0.0,
-      "esforco": 1.6706,
-      "risco": 0.0087,
-      "peso": 0.1076,
-      "velocidade_media_kmh": 5.0
-    },
-    {
-      "modo": "walk",
-      "meio": "walk",
-      "origem": [
-        -8.0777563,
-        -34.8920001
-      ],
-      "destino": [
-        -8.0784499,
-        -34.8919398
-      ],
-      "distancia": 0.08,
-      "tempo": 0.0208,
-      "custo": 0.0,
-      "esforco": 0.5201,
-      "risco": 0.0027,
-      "peso": 0.0335,
-      "velocidade_media_kmh": 5.0
-    },
-    {
-      "modo": "walk",
-      "meio": "walk",
-      "origem": [
-        -8.0784499,
-        -34.8919398
-      ],
-      "destino": [
-        -8.0789076,
-        -34.8918209
-      ],
-      "distancia": 0.0527,
-      "tempo": 0.0137,
-      "custo": 0.0,
-      "esforco": 0.3424,
-      "risco": 0.0018,
-      "peso": 0.022,
-      "velocidade_media_kmh": 5.0
-    },
-    {
-      "modo": "walk",
-      "meio": "walk",
-      "origem": [
-        -8.0789076,
-        -34.8918209
-      ],
-      "destino": [
-        -8.079387,
-        -34.8919399
-      ],
-      "distancia": 0.0551,
-      "tempo": 0.0143,
-      "custo": 0.0,
-      "esforco": 0.3585,
-      "risco": 0.0019,
-      "peso": 0.023,
-      "velocidade_media_kmh": 5.0
-    },
-    {
-      "modo": "walk",
-      "meio": "walk",
-      "origem": [
-        -8.079387,
-        -34.8919399
-      ],
-      "destino": [
-        -8.0838049,
-        -34.8881511
-      ],
-      "distancia": 0.6541,
-      "tempo": 0.1701,
-      "custo": 0.0,
-      "esforco": 4.252,
-      "risco": 0.0221,
-      "peso": 0.274,
-      "velocidade_media_kmh": 5.0
-    },
-    {
-      "modo": "walk",
-      "meio": "walk",
-      "origem": [
-        -8.0838049,
-        -34.8881511
-      ],
-      "destino": [
-        -8.0841028,
-        -34.8878553
-      ],
-      "distancia": 0.0465,
+      "distancia": 0.0605,
       "tempo": 0.0121,
       "custo": 0.0,
-      "esforco": 0.3019,
+      "esforco": 0.3026,
       "risco": 0.0016,
-      "peso": 0.0194,
+      "peso": 0.0253,
       "velocidade_media_kmh": 5.0
     },
     {
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.0841028,
-        -34.8878553
+        -8.0763399,
+        -34.8904098
       ],
       "destino": [
-        -8.0853853,
-        -34.886601
+        -8.077176,
+        -34.8911678
       ],
-      "distancia": 0.1985,
-      "tempo": 0.0516,
+      "distancia": 0.127,
+      "tempo": 0.0254,
       "custo": 0.0,
-      "esforco": 1.2903,
-      "risco": 0.0067,
-      "peso": 0.0831,
+      "esforco": 0.6349,
+      "risco": 0.0033,
+      "peso": 0.0531,
       "velocidade_media_kmh": 5.0
     },
     {
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.0853853,
-        -34.886601
+        -8.077176,
+        -34.8911678
       ],
       "destino": [
-        -8.0854634,
-        -34.8866971
+        -8.0775643,
+        -34.8920256
       ],
-      "distancia": 0.0137,
-      "tempo": 0.0036,
+      "distancia": 0.1038,
+      "tempo": 0.0208,
       "custo": 0.0,
-      "esforco": 0.089,
-      "risco": 0.0005,
-      "peso": 0.0057,
+      "esforco": 0.5192,
+      "risco": 0.0027,
+      "peso": 0.0435,
       "velocidade_media_kmh": 5.0
     },
     {
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.0854634,
-        -34.8866971
+        -8.0775643,
+        -34.8920256
       ],
       "destino": [
-        -8.0859069,
-        -34.8862694
+        -8.0775768,
+        -34.8920541
       ],
-      "distancia": 0.0682,
-      "tempo": 0.0177,
+      "distancia": 0.0034,
+      "tempo": 0.0007,
       "custo": 0.0,
-      "esforco": 0.4432,
-      "risco": 0.0023,
-      "peso": 0.0285,
-      "velocidade_media_kmh": 5.0
-    },
-    {
-      "modo": "walk",
-      "meio": "walk",
-      "origem": [
-        -8.0859069,
-        -34.8862694
-      ],
-      "destino": [
-        -8.0859314,
-        -34.886246
-      ],
-      "distancia": 0.0037,
-      "tempo": 0.001,
-      "custo": 0.0,
-      "esforco": 0.0244,
+      "esforco": 0.0172,
       "risco": 0.0001,
-      "peso": 0.0015,
+      "peso": 0.0014,
       "velocidade_media_kmh": 5.0
     },
     {
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.0859314,
-        -34.886246
+        -8.0775768,
+        -34.8920541
       ],
       "destino": [
-        -8.0863744,
-        -34.8862691
+        -8.0778142,
+        -34.8925714
       ],
-      "distancia": 0.0503,
-      "tempo": 0.0131,
+      "distancia": 0.0628,
+      "tempo": 0.0126,
       "custo": 0.0,
-      "esforco": 0.327,
-      "risco": 0.0017,
-      "peso": 0.021,
+      "esforco": 0.3139,
+      "risco": 0.0016,
+      "peso": 0.0262,
       "velocidade_media_kmh": 5.0
     },
     {
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.0863744,
-        -34.8862691
+        -8.0778142,
+        -34.8925714
+      ],
+      "destino": [
+        -8.0779059,
+        -34.8926452
+      ],
+      "distancia": 0.013,
+      "tempo": 0.0026,
+      "custo": 0.0,
+      "esforco": 0.0652,
+      "risco": 0.0003,
+      "peso": 0.0054,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0779059,
+        -34.8926452
+      ],
+      "destino": [
+        -8.0804011,
+        -34.8924138
+      ],
+      "distancia": 0.2983,
+      "tempo": 0.0597,
+      "custo": 0.0,
+      "esforco": 1.4916,
+      "risco": 0.0078,
+      "peso": 0.1249,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0804011,
+        -34.8924138
+      ],
+      "destino": [
+        -8.0809743,
+        -34.8922099
+      ],
+      "distancia": 0.0676,
+      "tempo": 0.0135,
+      "custo": 0.0,
+      "esforco": 0.3379,
+      "risco": 0.0018,
+      "peso": 0.0283,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0809743,
+        -34.8922099
+      ],
+      "destino": [
+        -8.0827513,
+        -34.8908395
+      ],
+      "distancia": 0.2498,
+      "tempo": 0.05,
+      "custo": 0.0,
+      "esforco": 1.2489,
+      "risco": 0.0065,
+      "peso": 0.1046,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0827513,
+        -34.8908395
+      ],
+      "destino": [
+        -8.0853757,
+        -34.8884767
+      ],
+      "distancia": 0.391,
+      "tempo": 0.0782,
+      "custo": 0.0,
+      "esforco": 1.9549,
+      "risco": 0.0102,
+      "peso": 0.1638,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0853757,
+        -34.8884767
+      ],
+      "destino": [
+        -8.0858707,
+        -34.8880201
+      ],
+      "distancia": 0.0745,
+      "tempo": 0.0149,
+      "custo": 0.0,
+      "esforco": 0.3727,
+      "risco": 0.0019,
+      "peso": 0.0312,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0858707,
+        -34.8880201
+      ],
+      "destino": [
+        -8.0862474,
+        -34.8876497
+      ],
+      "distancia": 0.0585,
+      "tempo": 0.0117,
+      "custo": 0.0,
+      "esforco": 0.2923,
+      "risco": 0.0015,
+      "peso": 0.0244,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0862474,
+        -34.8876497
+      ],
+      "destino": [
+        -8.0864675,
+        -34.8874359
+      ],
+      "distancia": 0.034,
+      "tempo": 0.0068,
+      "custo": 0.0,
+      "esforco": 0.1698,
+      "risco": 0.0009,
+      "peso": 0.0142,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.0864675,
+        -34.8874359
       ],
       "destino": [
         -8.0876681,
         -34.8863059
       ],
-      "distancia": 0.1618,
-      "tempo": 0.0421,
+      "distancia": 0.1825,
+      "tempo": 0.0365,
       "custo": 0.0,
-      "esforco": 1.0517,
-      "risco": 0.0055,
-      "peso": 0.0677,
+      "esforco": 0.9124,
+      "risco": 0.0047,
+      "peso": 0.0764,
       "velocidade_media_kmh": 5.0
     },
     {
@@ -544,10 +734,10 @@
         -34.8860068
       ],
       "distancia": 0.0484,
-      "tempo": 0.0126,
+      "tempo": 0.0097,
       "custo": 0.0,
-      "esforco": 0.3145,
-      "risco": 0.0016,
+      "esforco": 0.242,
+      "risco": 0.0013,
       "peso": 0.0202,
       "velocidade_media_kmh": 5.0
     },
@@ -563,10 +753,10 @@
         -34.8856721
       ],
       "distancia": 0.0529,
-      "tempo": 0.0138,
+      "tempo": 0.0106,
       "custo": 0.0,
-      "esforco": 0.3441,
-      "risco": 0.0018,
+      "esforco": 0.2647,
+      "risco": 0.0014,
       "peso": 0.0221,
       "velocidade_media_kmh": 5.0
     },
@@ -582,10 +772,10 @@
         -34.8850914
       ],
       "distancia": 0.0912,
-      "tempo": 0.0237,
+      "tempo": 0.0182,
       "custo": 0.0,
-      "esforco": 0.5928,
-      "risco": 0.0031,
+      "esforco": 0.456,
+      "risco": 0.0024,
       "peso": 0.0382,
       "velocidade_media_kmh": 5.0
     },
@@ -601,10 +791,10 @@
         -34.8848547
       ],
       "distancia": 0.0371,
-      "tempo": 0.0097,
+      "tempo": 0.0074,
       "custo": 0.0,
-      "esforco": 0.2413,
-      "risco": 0.0013,
+      "esforco": 0.1856,
+      "risco": 0.001,
       "peso": 0.0155,
       "velocidade_media_kmh": 5.0
     },
@@ -620,10 +810,10 @@
         -34.8846341
       ],
       "distancia": 0.0345,
-      "tempo": 0.009,
+      "tempo": 0.0069,
       "custo": 0.0,
-      "esforco": 0.2243,
-      "risco": 0.0012,
+      "esforco": 0.1725,
+      "risco": 0.0009,
       "peso": 0.0144,
       "velocidade_media_kmh": 5.0
     },
@@ -639,10 +829,10 @@
         -34.8845576
       ],
       "distancia": 0.1038,
-      "tempo": 0.027,
+      "tempo": 0.0208,
       "custo": 0.0,
-      "esforco": 0.6749,
-      "risco": 0.0035,
+      "esforco": 0.5192,
+      "risco": 0.0027,
       "peso": 0.0434,
       "velocidade_media_kmh": 5.0
     },
@@ -658,10 +848,10 @@
         -34.8845811
       ],
       "distancia": 0.0104,
-      "tempo": 0.0027,
+      "tempo": 0.0021,
       "custo": 0.0,
-      "esforco": 0.0678,
-      "risco": 0.0004,
+      "esforco": 0.0522,
+      "risco": 0.0003,
       "peso": 0.0043,
       "velocidade_media_kmh": 5.0
     },
@@ -677,10 +867,10 @@
         -34.8847389
       ],
       "distancia": 0.0593,
-      "tempo": 0.0154,
+      "tempo": 0.0119,
       "custo": 0.0,
-      "esforco": 0.3854,
-      "risco": 0.002,
+      "esforco": 0.2964,
+      "risco": 0.0015,
       "peso": 0.0248,
       "velocidade_media_kmh": 5.0
     },
@@ -696,10 +886,10 @@
         -34.8848615
       ],
       "distancia": 0.0511,
-      "tempo": 0.0133,
+      "tempo": 0.0102,
       "custo": 0.0,
-      "esforco": 0.332,
-      "risco": 0.0017,
+      "esforco": 0.2554,
+      "risco": 0.0013,
       "peso": 0.0213,
       "velocidade_media_kmh": 5.0
     },
@@ -715,10 +905,10 @@
         -34.8852975
       ],
       "distancia": 0.1826,
-      "tempo": 0.0475,
+      "tempo": 0.0365,
       "custo": 0.0,
-      "esforco": 1.1868,
-      "risco": 0.0062,
+      "esforco": 0.9129,
+      "risco": 0.0047,
       "peso": 0.0764,
       "velocidade_media_kmh": 5.0
     },
@@ -734,10 +924,10 @@
         -34.885678
       ],
       "distancia": 0.135,
-      "tempo": 0.0351,
+      "tempo": 0.027,
       "custo": 0.0,
-      "esforco": 0.8775,
-      "risco": 0.0046,
+      "esforco": 0.675,
+      "risco": 0.0035,
       "peso": 0.0565,
       "velocidade_media_kmh": 5.0
     },
@@ -753,10 +943,10 @@
         -34.8859348
       ],
       "distancia": 0.1289,
-      "tempo": 0.0335,
+      "tempo": 0.0258,
       "custo": 0.0,
-      "esforco": 0.8382,
-      "risco": 0.0044,
+      "esforco": 0.6447,
+      "risco": 0.0034,
       "peso": 0.054,
       "velocidade_media_kmh": 5.0
     },
@@ -772,10 +962,10 @@
         -34.8863207
       ],
       "distancia": 0.2472,
-      "tempo": 0.0643,
+      "tempo": 0.0494,
       "custo": 0.0,
-      "esforco": 1.6068,
-      "risco": 0.0084,
+      "esforco": 1.236,
+      "risco": 0.0064,
       "peso": 0.1035,
       "velocidade_media_kmh": 5.0
     },
@@ -791,10 +981,10 @@
         -34.8866166
       ],
       "distancia": 0.1568,
-      "tempo": 0.0408,
+      "tempo": 0.0314,
       "custo": 0.0,
-      "esforco": 1.0191,
-      "risco": 0.0053,
+      "esforco": 0.7839,
+      "risco": 0.0041,
       "peso": 0.0656,
       "velocidade_media_kmh": 5.0
     },
@@ -810,10 +1000,10 @@
         -34.8868847
       ],
       "distancia": 0.0697,
-      "tempo": 0.0181,
+      "tempo": 0.0139,
       "custo": 0.0,
-      "esforco": 0.4531,
-      "risco": 0.0024,
+      "esforco": 0.3486,
+      "risco": 0.0018,
       "peso": 0.0291,
       "velocidade_media_kmh": 5.0
     },
@@ -829,10 +1019,10 @@
         -34.8871521
       ],
       "distancia": 0.0723,
-      "tempo": 0.0188,
+      "tempo": 0.0145,
       "custo": 0.0,
-      "esforco": 0.4701,
-      "risco": 0.0024,
+      "esforco": 0.3616,
+      "risco": 0.0019,
       "peso": 0.0302,
       "velocidade_media_kmh": 5.0
     },
@@ -848,10 +1038,10 @@
         -34.8880895
       ],
       "distancia": 0.2502,
-      "tempo": 0.0651,
+      "tempo": 0.05,
       "custo": 0.0,
-      "esforco": 1.6265,
-      "risco": 0.0085,
+      "esforco": 1.2512,
+      "risco": 0.0065,
       "peso": 0.1048,
       "velocidade_media_kmh": 5.0
     },
@@ -867,10 +1057,10 @@
         -34.8890352
       ],
       "distancia": 0.252,
-      "tempo": 0.0655,
+      "tempo": 0.0504,
       "custo": 0.0,
-      "esforco": 1.6379,
-      "risco": 0.0085,
+      "esforco": 1.2599,
+      "risco": 0.0066,
       "peso": 0.1055,
       "velocidade_media_kmh": 5.0
     },
@@ -886,10 +1076,10 @@
         -34.8896935
       ],
       "distancia": 0.1729,
-      "tempo": 0.045,
+      "tempo": 0.0346,
       "custo": 0.0,
-      "esforco": 1.1238,
-      "risco": 0.0058,
+      "esforco": 0.8644,
+      "risco": 0.0045,
       "peso": 0.0724,
       "velocidade_media_kmh": 5.0
     },
@@ -905,10 +1095,10 @@
         -34.8900335
       ],
       "distancia": 0.0888,
-      "tempo": 0.0231,
+      "tempo": 0.0178,
       "custo": 0.0,
-      "esforco": 0.5773,
-      "risco": 0.003,
+      "esforco": 0.4441,
+      "risco": 0.0023,
       "peso": 0.0372,
       "velocidade_media_kmh": 5.0
     },
@@ -920,147 +1110,242 @@
         -34.8900335
       ],
       "destino": [
-        -8.109229,
-        -34.891625
+        -8.1059058,
+        -34.8905356
       ],
-      "distancia": 0.3843,
-      "tempo": 0.0999,
+      "distancia": 0.062,
+      "tempo": 0.0124,
       "custo": 0.0,
-      "esforco": 2.498,
-      "risco": 0.013,
-      "peso": 0.161,
+      "esforco": 0.3101,
+      "risco": 0.0016,
+      "peso": 0.0259,
       "velocidade_media_kmh": 5.0
     },
     {
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.109229,
-        -34.891625
+        -8.1059058,
+        -34.8905356
       ],
       "destino": [
-        -8.1099244,
-        -34.8920341
+        -8.105874,
+        -34.8906992
       ],
-      "distancia": 0.0895,
-      "tempo": 0.0233,
+      "distancia": 0.0184,
+      "tempo": 0.0037,
       "custo": 0.0,
-      "esforco": 0.5816,
-      "risco": 0.003,
-      "peso": 0.0374,
+      "esforco": 0.0918,
+      "risco": 0.0005,
+      "peso": 0.0076,
       "velocidade_media_kmh": 5.0
     },
     {
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.1099244,
-        -34.8920341
+        -8.105874,
+        -34.8906992
       ],
       "destino": [
-        -8.1105234,
-        -34.8923947
+        -8.1066527,
+        -34.8916823
       ],
-      "distancia": 0.0775,
-      "tempo": 0.0202,
+      "distancia": 0.1632,
+      "tempo": 0.0326,
       "custo": 0.0,
-      "esforco": 0.5041,
-      "risco": 0.0026,
-      "peso": 0.0324,
+      "esforco": 0.8161,
+      "risco": 0.0042,
+      "peso": 0.0683,
       "velocidade_media_kmh": 5.0
     },
     {
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.1105234,
-        -34.8923947
+        -8.1066527,
+        -34.8916823
       ],
       "destino": [
-        -8.1110955,
-        -34.8927431
+        -8.1086973,
+        -34.8927813
       ],
-      "distancia": 0.0743,
-      "tempo": 0.0193,
+      "distancia": 0.2588,
+      "tempo": 0.0518,
       "custo": 0.0,
-      "esforco": 0.4828,
-      "risco": 0.0025,
-      "peso": 0.0311,
+      "esforco": 1.2941,
+      "risco": 0.0067,
+      "peso": 0.1084,
       "velocidade_media_kmh": 5.0
     },
     {
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.1110955,
-        -34.8927431
+        -8.1086973,
+        -34.8927813
       ],
       "destino": [
-        -8.1119579,
-        -34.8932501
+        -8.1092176,
+        -34.8930956
       ],
-      "distancia": 0.111,
-      "tempo": 0.0288,
+      "distancia": 0.0674,
+      "tempo": 0.0135,
       "custo": 0.0,
-      "esforco": 0.7212,
-      "risco": 0.0038,
-      "peso": 0.0464,
+      "esforco": 0.3371,
+      "risco": 0.0018,
+      "peso": 0.0282,
       "velocidade_media_kmh": 5.0
     },
     {
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.1119579,
-        -34.8932501
+        -8.1092176,
+        -34.8930956
       ],
       "destino": [
-        -8.1124487,
-        -34.8935503
+        -8.109825,
+        -34.8934651
       ],
-      "distancia": 0.0638,
-      "tempo": 0.0166,
+      "distancia": 0.0788,
+      "tempo": 0.0158,
       "custo": 0.0,
-      "esforco": 0.4147,
-      "risco": 0.0022,
-      "peso": 0.0267,
+      "esforco": 0.3942,
+      "risco": 0.002,
+      "peso": 0.033,
       "velocidade_media_kmh": 5.0
     },
     {
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.1124487,
-        -34.8935503
+        -8.109825,
+        -34.8934651
       ],
       "destino": [
-        -8.1132521,
-        -34.8940396
+        -8.110427,
+        -34.8938452
       ],
-      "distancia": 0.1043,
-      "tempo": 0.0271,
+      "distancia": 0.0789,
+      "tempo": 0.0158,
       "custo": 0.0,
-      "esforco": 0.6781,
-      "risco": 0.0035,
-      "peso": 0.0436,
+      "esforco": 0.3947,
+      "risco": 0.0021,
+      "peso": 0.033,
       "velocidade_media_kmh": 5.0
     },
     {
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.1132521,
-        -34.8940396
+        -8.110427,
+        -34.8938452
       ],
       "destino": [
-        -8.1140731,
-        -34.8945548
+        -8.11101,
+        -34.8942111
+      ],
+      "distancia": 0.0763,
+      "tempo": 0.0153,
+      "custo": 0.0,
+      "esforco": 0.3816,
+      "risco": 0.002,
+      "peso": 0.0319,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.11101,
+        -34.8942111
+      ],
+      "destino": [
+        -8.1118547,
+        -34.8947162
+      ],
+      "distancia": 0.1092,
+      "tempo": 0.0218,
+      "custo": 0.0,
+      "esforco": 0.5458,
+      "risco": 0.0028,
+      "peso": 0.0457,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.1118547,
+        -34.8947162
+      ],
+      "destino": [
+        -8.1126728,
+        -34.8952015
+      ],
+      "distancia": 0.1055,
+      "tempo": 0.0211,
+      "custo": 0.0,
+      "esforco": 0.5275,
+      "risco": 0.0027,
+      "peso": 0.0441,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.1126728,
+        -34.8952015
+      ],
+      "destino": [
+        -8.1134902,
+        -34.8957004
+      ],
+      "distancia": 0.1062,
+      "tempo": 0.0212,
+      "custo": 0.0,
+      "esforco": 0.531,
+      "risco": 0.0028,
+      "peso": 0.0444,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.1134902,
+        -34.8957004
+      ],
+      "destino": [
+        -8.1143218,
+        -34.8962277
+      ],
+      "distancia": 0.1092,
+      "tempo": 0.0218,
+      "custo": 0.0,
+      "esforco": 0.5459,
+      "risco": 0.0028,
+      "peso": 0.0457,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.1143218,
+        -34.8962277
+      ],
+      "destino": [
+        -8.1151493,
+        -34.8967322
       ],
       "distancia": 0.1075,
-      "tempo": 0.0279,
+      "tempo": 0.0215,
       "custo": 0.0,
-      "esforco": 0.6987,
-      "risco": 0.0036,
+      "esforco": 0.5374,
+      "risco": 0.0028,
       "peso": 0.045,
       "velocidade_media_kmh": 5.0
     },
@@ -1068,95 +1353,95 @@
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.1140731,
-        -34.8945548
+        -8.1151493,
+        -34.8967322
       ],
       "destino": [
-        -8.1149134,
-        -34.8950586
+        -8.1159917,
+        -34.8972411
       ],
-      "distancia": 0.1087,
-      "tempo": 0.0283,
+      "distancia": 0.1091,
+      "tempo": 0.0218,
       "custo": 0.0,
-      "esforco": 0.7063,
-      "risco": 0.0037,
-      "peso": 0.0455,
+      "esforco": 0.5457,
+      "risco": 0.0028,
+      "peso": 0.0457,
       "velocidade_media_kmh": 5.0
     },
     {
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.1149134,
-        -34.8950586
+        -8.1159917,
+        -34.8972411
       ],
       "destino": [
-        -8.115731,
-        -34.8955696
+        -8.1167968,
+        -34.8977576
       ],
-      "distancia": 0.1069,
-      "tempo": 0.0278,
+      "distancia": 0.1061,
+      "tempo": 0.0212,
       "custo": 0.0,
-      "esforco": 0.6949,
-      "risco": 0.0036,
-      "peso": 0.0447,
+      "esforco": 0.5303,
+      "risco": 0.0028,
+      "peso": 0.0444,
       "velocidade_media_kmh": 5.0
     },
     {
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.115731,
-        -34.8955696
+        -8.1167968,
+        -34.8977576
       ],
       "destino": [
-        -8.1165602,
-        -34.8960963
+        -8.1162009,
+        -34.8989667
       ],
-      "distancia": 0.1089,
-      "tempo": 0.0283,
+      "distancia": 0.1487,
+      "tempo": 0.0297,
       "custo": 0.0,
-      "esforco": 0.708,
-      "risco": 0.0037,
-      "peso": 0.0456,
+      "esforco": 0.7435,
+      "risco": 0.0039,
+      "peso": 0.0622,
       "velocidade_media_kmh": 5.0
     },
     {
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.1165602,
-        -34.8960963
+        -8.1162009,
+        -34.8989667
       ],
       "destino": [
-        -8.1178,
-        -34.9002
+        -8.1170435,
+        -34.8994617
       ],
-      "distancia": 0.4723,
-      "tempo": 0.1228,
+      "distancia": 0.1084,
+      "tempo": 0.0217,
       "custo": 0.0,
-      "esforco": 3.07,
-      "risco": 0.016,
-      "peso": 0.1978,
+      "esforco": 0.5419,
+      "risco": 0.0028,
+      "peso": 0.0454,
       "velocidade_media_kmh": 5.0
     },
     {
       "modo": "walk",
       "meio": "walk",
       "origem": [
-        -8.1178,
-        -34.9002
+        -8.1170435,
+        -34.8994617
       ],
       "destino": [
         -8.1179317,
         -34.8999959
       ],
-      "distancia": 0.0268,
-      "tempo": 0.007,
+      "distancia": 0.1149,
+      "tempo": 0.023,
       "custo": 0.0,
-      "esforco": 0.1743,
-      "risco": 0.0009,
-      "peso": 0.0112,
+      "esforco": 0.5747,
+      "risco": 0.003,
+      "peso": 0.0481,
       "velocidade_media_kmh": 5.0
     }
   ],
@@ -1172,21 +1457,21 @@
         -8.1179317,
         -34.8999959
       ],
-      "tempo": 2.1871,
-      "distancia": 8.4107,
+      "tempo": 1.7453,
+      "distancia": 8.7268,
       "custo": 0.0,
-      "esforco": 54.671,
-      "risco_medio": 0.0047,
-      "velocidade_media_kmh": 3.85,
-      "quantidade_arestas": 61
+      "esforco": 43.6358,
+      "risco_medio": 0.003,
+      "velocidade_media_kmh": 5.0,
+      "quantidade_arestas": 76
     }
   ],
   "resumo": {
-    "tempo_total": 2.1871,
+    "tempo_total": 1.7453,
     "custo_total": 0.0,
-    "esforco_total": 54.671,
-    "distancia_total": 8.4107,
-    "risco_medio": 0.0047,
-    "velocidade_media_total": 3.85
+    "esforco_total": 43.6358,
+    "distancia_total": 8.7268,
+    "risco_medio": 0.003,
+    "velocidade_media_total": 5.0
   }
 }

@@ -1,304 +1,339 @@
-# Sistema de Recomendação de Rotas Multimodais Com A*
+# Sistema de Rotas Multimodais (Dijkstra e A*)
 
-Um sistema avançado em Python para encontrar a melhor rota entre dois pontos considerando múltiplos modais de transporte, usando o algoritmo A* e otimização multiobjetivo.
+Sistema em Python para recomendacao de rotas entre origem e destino com multiplos modais, otimizando **tempo**, **custo** e **risco** de forma conjunta.
 
-## Características
+Este projeto possui:
+- motor de calculo em Python (`main.py`)
+- API FastAPI no backend (`backend/`)
+- interface React + Vite no frontend (`frontend/`)
 
-✅ **Otimização Multiobjetiva**: Considera tempo, custo e risco na mesma decisão  
-✅ **Algoritmo A*** com heurística euclidiana adaptada  
-✅ **Grafo Multimodal**: De walk, bike, car, moto, bus e uber  
-✅ **Dados Climáticos**: Integração com API Open-Meteo para fatores de chuva  
-✅ **Análise de Risco**: Cálculo de risco baseado em crime e acidentes por modal  
-✅ **Normalização Min-Max**: Para comparação justa entre objetivos  
-✅ **Saída em JSON**: Com detalhes da rota e resumo dos métricas  
+---
 
-## Estrutura do Projeto
+## 1. Visao Geral
 
-```
-project/
-│
-├── data/                         # Arquivos CSV com dados
-│   ├── crime_rate.csv           # Taxa de assaltos por modal
-│   ├── accident_rate.csv        # Taxa de acidentes por modal
-│   ├── fuel_consumption.csv     # Consumo e custo de combustível
-│   ├── uber_price_ranges.csv    # Preços do Uber por faixa de km
-│   ├── transport_speed.csv      # Velocidade média por modal
-│   ├── flood_risk_streets.csv   # Ruas com risco de alagamento
-│   ├── weather_factors.csv      # Fatores de chuva
-│   └── tide_factors.csv         # Fatores de maré
-│
-├── loaders/                      # Módulos de carregamento de dados
-│   ├── __init__.py
-│   ├── csv_loader.py            # Carregador de CSVs
-│   └── weather_api.py           # API de clima
-│
-├── graph/                        # Componentes de construção de grafo
-│   ├── __init__.py
-│   ├── graph_builder.py         # Construtor do grafo com OSMnx
-│   ├── risk_calculator.py       # Calculador de riscos
-│   ├── cost_calculator.py       # Calculador de custos
-│   └── normalizer.py            # Normalizador Min-Max
-│
-├── routing/                      # Algoritmos de roteamento
-│   ├── __init__.py
-│   ├── astar_multimodal.py      # Implementação do A*
-│   └── path_reconstructor.py    # Reconstrutor de rotas
-│
-├── main.py                       # Ponto de entrada principal
-├── input.json                    # Arquivo de entrada com origem/destino
-├── output.json                   # Arquivo de saída com a rota
-└── requirements.txt              # Dependências Python
+O sistema transforma o problema de rota em um problema de caminho minimo em um **grafo multimodal**.
+
+Cada aresta representa um deslocamento possivel com um modal especifico (walk, bike, car, moto, bus, uber_car, uber_moto), e recebe um peso multiobjetivo:
+
+```text
+peso = 0.5 * tempo_norm + 0.3 * custo_norm + 0.2 * risco_norm
 ```
 
-## Instalação
+O algoritmo escolhido (`dijkstra` ou `astar`) percorre esse grafo buscando o menor custo acumulado.
 
-1. **Clone ou descompacte o projeto**
+---
 
-2. **Instale as dependências**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+## 2. Como Rodar
 
-3. **Prepare o arquivo de entrada** (`input.json`):
-   ```json
-   {
-     "origem": [-8.05, -34.90],
-     "destino": [-8.10, -34.95],
-     "modo_inicial": "walk"
-   }
-   ```
-   - `origem`: [latitude, longitude] do ponto de partida
-   - `destino`: [latitude, longitude] do ponto de chegada
-   - `modo_inicial`: walk | bike | car | moto (determina se pode trocar de modal)
+### 2.1 Backend (API)
 
-## Uso
+No diretorio raiz do projeto:
 
-Execute o sistema:
-
-```bash
-python main.py
+```powershell
+pip install -r requirements.txt
+pip install -r backend/requirements.txt
+python -m uvicorn backend.app.main:app --reload --port 8000
 ```
 
-### Modo especial: bus_com_acesso
+Endpoints principais:
+- `GET /api/health`
+- `GET /api/route`
+- `POST /api/calculate`
+- `POST /api/options`
 
-Para evitar falso negativo de `bus-only`, o projeto agora suporta `restricao_modal: "bus_com_acesso"`.
+### 2.2 Frontend
 
-Observacao: `restricao_modal: "bus"` usa o mesmo comportamento de acesso a pe (compatibilidade para frontend/API).
+Em outro terminal:
 
-- Modais permitidos neste modo: `walk` e `bus`
-- Regra obrigatória: a rota so e aceita se usar `bus` em pelo menos um trecho
-- Regras de caminhada neste modo:
-  - limite por aresta: `0.5 km`
-  - penalizacao no peso da aresta: `x1.4`
+```powershell
+cd frontend
+npm install
+npm run dev
+```
 
-Exemplo de entrada:
+Abrir no navegador:
+
+```text
+http://localhost:5173
+```
+
+---
+
+## 3. Entrada e Saida
+
+### 3.1 Entrada (`input.json`)
+
+Exemplo:
 
 ```json
 {
-  "origem": [-8.05, -34.90],
-  "destino": [-8.10, -34.95],
+  "origem": [-8.062742, -34.8739],
+  "destino": [-8.117809, -34.900231],
   "modo_inicial": "walk",
+  "algoritmo": "dijkstra",
   "restricao_modal": "bus_com_acesso"
 }
 ```
 
-### Evidencia tecnica (29/03/2026)
+Campos:
+- `origem`: `[lat, lon]`
+- `destino`: `[lat, lon]`
+- `modo_inicial`: `walk|bike|car|moto|bus|uber_car|uber_moto`
+- `algoritmo`: `dijkstra|astar` (default do motor: `dijkstra`)
+- `restricao_modal`:
+  - `walk`, `bike`, `car`, `moto`, `bus`, `uber_car`, `uber_moto`
+  - `bus_com_acesso` (permite walk + bus com regra de uso de onibus)
 
-Comando executado:
+### 3.2 Saida (`output.json`)
 
-```bash
-POST /api/calculate
-{
-  "restricao_modal": "bus_com_acesso"
-}
-```
-
-Resultado observado:
-
-- Status HTTP: `200`
-- Arestas na rota: `91`
-- Segmentos: `3`
-- Modais presentes: `bus` e `walk`
-
-## GTFS operacional com paradas (stops)
-
-O integrador GTFS foi evoluido para priorizar modelo operacional:
-
-`walk -> stop -> bus -> stop -> walk`
-
-Arquivos usados no feed GTFS local:
-
-- `data/bus_gtfs/stops.txt`
-- `data/bus_gtfs/stop_times.txt`
-- `data/bus_gtfs/trips.txt`
-- `data/bus_gtfs/routes.txt`
-
-Comportamento implementado:
-
-- cria nos de parada (`type=stop`) no grafo multimodal;
-- cria arestas `bus` por sequencia real de `stop_sequence` em `stop_times`;
-- conecta rua <-> parada por `walk` dentro de raio maximo de `0.5 km`;
-- se `stops/stop_times` nao existirem, aplica fallback para modo shape-based.
-
-### Evidencia tecnica (29/03/2026 - stop-based)
-
-Comando executado:
-
-```bash
-POST /api/calculate
-{
-  "restricao_modal": "bus_com_acesso"
-}
-```
-
-Resultado observado apos stop-based:
-
-- Status HTTP: `200`
-- Arestas na rota: `7`
-- Segmentos: `3`
-- Modais presentes: `bus` e `walk`
-- Distancia total: `9.9862 km`
-- Tempo total: `0.6388 h`
-
-O sistema irá:
-
-1. Ler o arquivo `input.json`
-2. Carregar dados dos CSVs
-3. Calcular riscos por modal
-4. Obter dados climáticos da API aberta
-5. Construir o grafo multimodal com OSMnx
-6. Executar o algoritmo A*
-7. Gerar o arquivo `output.json` com a rota recomendada
-
-## Saída (output.json)
+Estrutura retornada:
 
 ```json
 {
-  "rota": [
+  "edges": [
     {
       "modo": "walk",
-      "origem": [-8.05, -34.90],
-      "destino": [-8.065, -34.905],
-      "tempo": 5.2,
-      "distancia": 0.43,
-      "custo": 0.0
-    },
+      "origem": [-8.06, -34.87],
+      "destino": [-8.07, -34.88],
+      "distancia": 0.41,
+      "tempo": 0.08,
+      "custo": 0.0,
+      "risco": 0.003,
+      "peso": 0.12
+    }
+  ],
+  "segments": [
     {
-      "modo": "bus",
-      "origem": [-8.065, -34.905],
-      "destino": [-8.10, -34.95],
-      "tempo": 18.5,
-      "distancia": 7.2,
-      "custo": 4.50
+      "modo": "walk",
+      "tempo": 0.32,
+      "distancia": 1.63,
+      "custo": 0.0,
+      "risco_medio": 0.004
     }
   ],
   "resumo": {
-    "tempo_total": 23.7,
-    "custo_total": 4.50,
-    "distancia_total": 7.63,
-    "risco_medio": 0.156
+    "tempo_total": 1.7232,
+    "custo_total": 0.0,
+    "distancia_total": 8.6158,
+    "risco_medio": 0.003,
+    "velocidade_media_total": 5.0
   }
 }
 ```
 
-## Algoritmo A*
+---
 
-O algoritmo implementa A* multimodal com:
+## 4. Pipeline de Calculo (Passo a Passo)
 
-- **Estado**: (nó_no_grafo, modal_atual)
-- **Heurística**: Distância euclidiana / velocidade máxima
-- **Função Objetivo** (peso da aresta):
-  ```
-  peso = 0.5 * tempo_normalizado +
-         0.3 * custo_normalizado +
-         0.2 * risco_normalizado
-  ```
+O `main.py` executa este fluxo:
 
-## Cálculos
-
-### Risco
-- Baseia-se em assaltos (crime_rate) e acidentes (accident_rate)
-- Normalizado entre 0 e 1 usando Min-Max
-- Multiplicado pela distância para acumular
-
-### Tempo
-```
-tempo_base = distancia_km / velocidade_kmh
-tempo_final = tempo_base * fator_chuva * fator_mare * multiplicador_rua
-```
-
-### Custo
-- walk: R$ 0
-- bike: R$ 0.01/km (ou valor do CSV)
-- bus: R$ 4.50 (tarifa fixa)
-- car/moto: (distancia / km_por_litro) * preco_gasolina
-- uber: distancia * preco_por_km
-
-## Dados Esperados
-
-### CSVs Mínimos:
-- `crime_rate.csv`: mode, robberies
-- `accident_rate.csv`: mode, deaths, involved
-- `transport_speed.csv`: mode, speed_kmh
-- `fuel_consumption.csv`: mode, km_per_liter
-- `uber_price_ranges.csv`: car_price_per_km, moto_price_per_km
-- `flood_risk_streets.csv`: street_name, rain_multiplier
-
-### Dados de Exemplo:
-
-**crime_rate.csv**:
-```
-mode,robberies
-walk,10345
-bike,21
-car,3651
-moto,3651
-bus,229
-```
-
-**transport_speed.csv**:
-```
-mode,speed_kmh
-walk,5
-bike,15
-car,40
-moto,45
-bus,25
-```
-
-## Extensões Possíveis
-
-- [ ] Adicionar suporte a metrô/trem com GTFS
-- [ ] Implementar Dijkstra como alternativa
-- [ ] Cache de grafo para rotas frequentes
-- [ ] Interface web com Flask/Streamlit
-- [ ] Visualização interativa com folium
-- [ ] Integração com OpenStreetMap para ruas em tempo real
-- [ ] Suporte a restrições de horário (madrugada, feriados)
-- [ ] Feedback de usuários para melhorar pesos
-
-## Requisitos do Sistema
-
-- Python 3.8+
-- Acesso à internet (para Open-Meteo API)
-- ~500MB de RAM para grafos de cidades grandes
-
-## Limitações Conhecidas
-
-1. Grafo carregado em memória (limite em cidades muito grandes)
-2. A* assume custos não-negativos (garantido por pesos normalizados)
-3. Sem suporte a horários de ônibus específicos (usa velocidade média)
-4. Sem integração com GTFS real (simula com mesmas ruas de carro)
-
-## Licença
-
-MIT License - Use livremente em projetos pessoais e comerciais
-
-## Autor
-
-Sistema desenvolvido como demonstração de algoritmos de grafos e otimização multiobjetiva.
+1. Le `input.json`
+2. Carrega CSVs de dados (risco, velocidade, custos)
+3. Calcula perfis de risco por modal
+4. Configura calculadora de custo
+5. Busca clima (Open-Meteo) e calcula fatores (`rain_factor`, `tide_factor`)
+6. Carrega ou constroi o grafo multimodal (OSMnx + cache)
+7. Integra GTFS de onibus quando disponivel
+8. Encontra no de origem e no de destino
+9. Calcula parametros de normalizacao min-max
+10. Executa `dijkstra` ou `astar`
+11. Reconstrui arestas e segmentos
+12. Salva `output.json`
 
 ---
 
-**Versão**: 1.0.0  
-**Última atualização**: 2024
+## 5. Como o Sistema Faz o Calculo
+
+### 5.1 Funcao objetivo (multiobjetivo)
+
+Para cada aresta candidata:
+
+```text
+tempo_base = distancia_km / velocidade_kmh
+tempo_final = tempo_base * rain_factor * tide_factor
+
+custo = funcao_por_modal(modal, distancia_km, tempo_min, velocidade, clima)
+
+risco_base = risco_do_modal_ajustado_por_clima
+risco = risco_base * distancia_km / 10
+
+tempo_norm = normalize(tempo_final)
+custo_norm = normalize(custo)
+risco_norm = normalize(risco)
+
+peso = 0.5 * tempo_norm + 0.3 * custo_norm + 0.2 * risco_norm
+```
+
+Resumo:
+- **tempo** aumenta com distancia, chuva e mare
+- **custo** depende do modal (tarifa, combustivel ou regra Uber)
+- **risco** vem da combinacao crime + acidente, ajustado por clima
+
+### 5.2 Normalizacao
+
+Como tempo, custo e risco estao em escalas diferentes, o projeto aplica Min-Max:
+
+```text
+norm = (valor - min) / (max - min)
+```
+
+Isso evita que uma metrica domine a decisao so por ter numeros maiores.
+
+---
+
+## 6. Dijkstra x A* (como explicar)
+
+### 6.1 Estado de busca
+
+Nos dois algoritmos, o estado e:
+
+```text
+(node_id, modal_atual, used_bus)
+```
+
+- `node_id`: no do grafo
+- `modal_atual`: modal usado para chegar naquele estado
+- `used_bus`: flag para validar cenarios com obrigatoriedade de bus
+
+### 6.2 Dijkstra
+
+O Dijkstra usa apenas custo acumulado real:
+
+```text
+prioridade = g(n)
+```
+
+- garante otimo para pesos nao negativos
+- tende a expandir mais estados
+- usado como padrao do projeto
+
+### 6.3 A*
+
+O A* usa custo acumulado + heuristica:
+
+```text
+prioridade = f(n) = g(n) + h(n)
+```
+
+Heuristica implementada:
+- distancia em linha reta entre no atual e destino
+- dividida pela maior velocidade disponivel
+- normalizada para a mesma escala
+
+Na pratica:
+- normalmente visita menos estados que Dijkstra
+- costuma ser mais rapido
+- mantem qualidade de rota quando a heuristica e bem comportada
+
+### 6.4 Quando usar cada um
+
+- Use `dijkstra` quando quiser comportamento mais conservador e baseline.
+- Use `astar` quando quiser reduzir tempo de busca em grafos grandes.
+
+---
+
+## 7. Regras de Modais e Restricoes
+
+### 7.1 Trocas de modal
+
+Quando a viagem inicia em `walk`, o motor permite embarcar em:
+- `bus`, `uber_car`, `uber_moto`, `bike`
+
+Tambem permite descer para `walk` ao final.
+
+### 7.2 `bus_com_acesso`
+
+Modo especial para onibus com acesso/egresso a pe:
+- modais permitidos: `walk` e `bus`
+- rota so e valida se usar `bus` em algum trecho
+- limite por aresta de caminhada: `0.5 km`
+- penalidade no peso para aresta walk: `x1.4`
+
+---
+
+## 8. GTFS e Onibus
+
+Quando os arquivos GTFS estao presentes em `data/bus_gtfs`, o sistema integra:
+- `stops.txt`
+- `stop_times.txt`
+- `trips.txt`
+- `routes.txt`
+
+Com isso, o grafo inclui:
+- nos de parada
+- arestas de bus entre paradas consecutivas
+- conexao de rua <-> parada por walk
+
+Se faltar parte do GTFS, o sistema usa fallback para manter o calculo funcionando.
+
+---
+
+## 9. API para Recalculo
+
+### 9.1 `POST /api/calculate`
+
+Recalcula a rota com os parametros enviados e retorna o novo `output.json`.
+
+Payload exemplo:
+
+```json
+{
+  "origem": [-8.062742, -34.8739],
+  "destino": [-8.117809, -34.900231],
+  "modo_inicial": "walk",
+  "algoritmo": "astar",
+  "restricao_modal": "bus_com_acesso"
+}
+```
+
+### 9.2 `POST /api/options`
+
+Executa varios cenarios (walk_only, bike_only, car_only etc.), calcula score comparativo e retorna ranking das opcoes.
+
+---
+
+## 10. Estrutura de Pastas (resumo)
+
+```text
+backend/           API FastAPI
+frontend/          React + Vite + Leaflet
+graph/             construcao do grafo
+loaders/           carga de CSV e clima
+routing/           Dijkstra, A*, reconstrucao
+main.py            orquestrador do motor
+input.json         entrada da simulacao
+output.json        resultado gerado
+```
+
+---
+
+## 11. Dependencias
+
+Python:
+- `osmnx`, `networkx`
+- `pandas`, `numpy`, `geopandas`
+- `requests`, `folium`
+- `fastapi`, `uvicorn`, `pydantic` (backend)
+
+Frontend:
+- `react`, `vite`, `leaflet`, `react-leaflet`
+
+---
+
+## 12. Troubleshooting Rapido
+
+1. Erro `No module named pandas`
+   - instalar dependencias com `pip install -r requirements.txt`
+
+2. Erro `uvicorn nao reconhecido`
+   - usar `python -m uvicorn backend.app.main:app --reload --port 8000`
+
+3. Front sem resposta de calculo
+   - confirmar backend ativo na porta 8000
+   - testar `GET /api/health`
+
+4. Avisos de arquivos em `data/` ausentes
+   - o sistema possui fallback em varios pontos, mas com dados completos o resultado fica mais realista
+
+---
+
