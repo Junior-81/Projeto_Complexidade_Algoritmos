@@ -1,0 +1,12 @@
+{
+  "origem": [
+    -8.062742,
+    -34.8739
+  ],
+  "destino": [
+    -8.117809,
+    -34.900231
+  ],
+  "modo_inicial": "uber_moto",
+  "restricao_modal": "uber_moto"
+}
