@@ -1,0 +1,23 @@
+============================================================
+Lista:     [2023001, 2023045, 2023102, 2023120, 2023201, 2023333]
+Procurar:  2023102 (esperado: True)
+============================================================
+  busca_linear  -> True
+  busca_binaria -> True
+  busca_hash    -> True
+
+Procurar:  2024999 (esperado: False)
+  busca_linear  -> False
+  busca_binaria -> False
+  busca_hash    -> False
+
+============================================================
+Benchmark: lista com 100,000 matrículas, 500 consultas
+============================================================
+  Linear  :   469.47 ms
+  Binária :    35.92 ms  (inclui ordenação inicial)
+  Hash    :    11.49 ms  (inclui construção do set)
+
+Observe a relação:
+  Linear / Hash    ≈ 41x
+  Linear / Binária ≈ 13x

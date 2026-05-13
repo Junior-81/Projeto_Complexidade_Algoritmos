@@ -1,0 +1,11 @@
+{
+  "name": "@rotas/api",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Backend FastAPI - wrapper de scripts para Turborepo",
+  "scripts": {
+    "install:py": "pip install -r requirements.txt",
+    "dev": "python -m uvicorn app.main:app --reload --port 8000",
+    "start": "python -m uvicorn app.main:app --host 0.0.0.0 --port 8000"
+  }
+}

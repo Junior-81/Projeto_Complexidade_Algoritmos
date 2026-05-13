@@ -1,0 +1,11 @@
+{
+  "name": "@rotas/engine",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Motor de roteamento multimodal (Dijkstra/A*) - wrapper Python para Turborepo",
+  "scripts": {
+    "install:py": "pip install -r requirements.txt",
+    "calc": "python main.py",
+    "visualize": "python scripts/visualize_route.py"
+  }
+}

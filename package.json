@@ -1,0 +1,21 @@
+{
+  "name": "rotas-multimodais",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Sistema de rotas multimodais (Dijkstra/A*) - monorepo Turborepo",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "start": "turbo run start",
+    "calc": "turbo run calc --filter=@rotas/engine",
+    "visualize": "turbo run visualize --filter=@rotas/engine"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  },
+  "packageManager": "npm@10.0.0"
+}

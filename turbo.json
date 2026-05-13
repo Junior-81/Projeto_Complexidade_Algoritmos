@@ -1,0 +1,28 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "start": {
+      "cache": false,
+      "persistent": true
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "lint": {},
+    "calc": {
+      "cache": false,
+      "inputs": ["input.json", "**/*.py"],
+      "outputs": ["output/output.json"]
+    },
+    "visualize": {
+      "cache": false,
+      "inputs": ["output/output.json", "scripts/**/*.py"],
+      "outputs": ["output/route_map.html"]
+    }
+  }
+}

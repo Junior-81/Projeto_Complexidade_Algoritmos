@@ -118,14 +118,18 @@ def build_map(data: dict) -> folium.Map:
 
 
 def main():
-    output_path = Path("output.json")
+    project_root = Path(__file__).resolve().parent.parent
+    output_path = project_root / "output" / "output.json"
+    map_path = project_root / "output" / "route_map.html"
+
     if not output_path.exists():
-        raise FileNotFoundError("output.json nao encontrado. Execute main.py antes.")
+        raise FileNotFoundError(f"{output_path} nao encontrado. Execute main.py antes.")
 
     data = load_output(str(output_path))
     route_map = build_map(data)
-    route_map.save("route_map.html")
-    print("Mapa salvo em route_map.html")
+    map_path.parent.mkdir(exist_ok=True)
+    route_map.save(str(map_path))
+    print(f"Mapa salvo em {map_path}")
 
 
 if __name__ == "__main__":

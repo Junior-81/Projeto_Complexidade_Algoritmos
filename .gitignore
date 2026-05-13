@@ -3,12 +3,21 @@ venv/
 pycache/
 __pycache__/
 **/__pycache__/
-.pyc
-cache/
-data/
-frontend/node_modules/
-frontend/dist/
-backend/.venv/
+*.pyc
 .pytest_cache/
 .mypy_cache/
 .DS_Store
+
+# Node
+node_modules/
+.turbo/
+dist/
+
+# Engine: dados externos e artefatos gerados
+apps/engine/data/
+apps/engine/cache/
+apps/engine/output/*
+!apps/engine/output/.gitkeep
+
+# Web build
+apps/web/dist/
