@@ -10,8 +10,8 @@ import io
 
 # Força UTF-8 output (importante para PowerShell no Windows)
 if sys.platform == "win32":
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
 
 import json
 from pathlib import Path
@@ -25,10 +25,10 @@ from graph.graph_builder import GraphBuilder
 from graph.risk_calculator import RiskCalculator
 from graph.cost_calculator import CostCalculator
 from graph.normalizer import Normalizer
+from graph.graph_cache_utils import load_base_graph_cache, save_base_graph_cache
 from routing.astar_multimodal import AStarMultimodal
 from routing.dijkstra_multimodal import DijkstraMultimodal
 from routing.path_reconstructor import PathReconstructor
-
 
 GASOLINE_PRICE_PER_LITER = 7.50
 
@@ -150,32 +150,44 @@ def main():
     # ETAPA 6: Constrói grafo com OSMnx (ou carrega de cache)
     print("\n[6] Construindo grafo multimodal...")
     builder = GraphBuilder("Recife, Brazil")
-    
-    # Tenta carregar grafo de cache
+
+    # ETAPA 6.1: Verificar cache do base_graph (OSMnx)
+    print("  [6.1] Verificando cache do base_graph...")
+    cached_base_graph = load_base_graph_cache()
+
+    if cached_base_graph is not None:
+        builder.base_graph = cached_base_graph
+        print("  ✓ Base graph carregado do cache (2-5s)")
+    else:
+        print("  [6.2] Cache não encontrado. Carregando OSMnx...")
+        builder.load_base_graph()
+        save_base_graph_cache(builder.base_graph)
+        print("  ✓ Base graph cacheado para próximas execuções")
+
+    # ETAPA 6.3: Tenta carregar grafo multimodal de cache
     cached_data = GraphBuilder.load_graph_cache()
     if cached_data:
         graph, builder.speed_data = cached_data
-        # Reconstrói base_graph para find_nearest_node (leve, apenas estrutura)
-        builder.load_base_graph()
         builder.load_flood_data(data.get("flood_risk"))
         use_cached = True
     else:
         # Construção completa do zero
-        builder.load_base_graph()
         builder.load_speed_data(data.get("transport_speed"))
         builder.load_flood_data(data.get("flood_risk"))
         graph = builder.build_multimodal_graph()
         builder.add_gtfs_bus_routes("data/bus_gtfs")
         use_cached = False
-        
+
         # Salva em cache para próximas requisições
         GraphBuilder.save_graph_cache(graph, builder.speed_data)
-    
+
     if graph is None:
         print("✗ Falha ao construir grafo")
         sys.exit(1)
-    
-    builder.multimodal_graph = graph  # Garante que builder tem referência ao grafo carregado
+
+    builder.multimodal_graph = (
+        graph  # Garante que builder tem referência ao grafo carregado
+    )
 
     # ETAPA 7: Encontra nós mais próximos
     print("\n[7] Localizando nós no grafo...")
