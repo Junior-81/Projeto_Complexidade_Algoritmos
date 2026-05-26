@@ -2,7 +2,7 @@ import { useMemo, useState, useEffect } from "react";
 import { MapContainer, Polyline, Popup, TileLayer } from "react-leaflet";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
-const ALL_MODES_KEY = "all";
+const OPTIONS_TIMEOUT_MS = 8000;
 
 const MODAL_COLORS = {
   walk: "#2e7d32",
@@ -16,36 +16,36 @@ const MODAL_COLORS = {
 };
 
 const MODAL_LABELS = {
-  walk: "A pe",
+  walk: "A pé",
   bike: "Bike",
   car: "Carro",
   moto: "Moto",
-  bus: "Onibus",
+  bus: "Ônibus",
   uber: "Uber",
   uber_car: "Uber Carro",
   uber_moto: "Uber Moto",
 };
 
 const ROUTE_MODE_OPTIONS = [
-  { value: "auto", label: "Automatico (multimodal)" },
-  { value: "walk", label: "A pe" },
+  { value: "auto", label: "Automático" },
+  { value: "walk", label: "A pé" },
   { value: "bike", label: "Bike" },
   { value: "car", label: "Carro" },
   { value: "moto", label: "Moto" },
-  { value: "bus", label: "Onibus" },
+  { value: "bus", label: "Ônibus" },
   { value: "uber_car", label: "Uber Carro" },
   { value: "uber_moto", label: "Uber Moto" },
 ];
 
 const ROUTE_RESTRICTION_OPTIONS = [
-  { value: "none", label: "Sem restricao (deixa trocar modal)" },
-  { value: "walk", label: "Forcar apenas A pe" },
-  { value: "bike", label: "Forcar apenas Bike" },
-  { value: "car", label: "Forcar apenas Carro" },
-  { value: "moto", label: "Forcar apenas Moto" },
-  { value: "bus", label: "Onibus (com acesso a pe)" },
-  { value: "uber_car", label: "Forcar apenas Uber Carro" },
-  { value: "uber_moto", label: "Forcar apenas Uber Moto" },
+  { value: "none", label: "Livre" },
+  { value: "walk", label: "Somente a pé" },
+  { value: "bike", label: "Somente bike" },
+  { value: "car", label: "Somente carro" },
+  { value: "moto", label: "Somente moto" },
+  { value: "bus", label: "Ônibus com acesso a pé" },
+  { value: "uber_car", label: "Somente Uber Carro" },
+  { value: "uber_moto", label: "Somente Uber Moto" },
 ];
 
 const SEGMENT_DISPLAY_ORDER = [
@@ -94,70 +94,30 @@ function formatDuration(hoursValue) {
   return `${hours} h ${minutes} min`;
 }
 
+async function fetchJson(url, init = {}, timeoutMs = 0) {
+  if (!timeoutMs) {
+    return fetch(url, init);
+  }
+
+  const controller = new AbortController();
+  const timer = window.setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    return await fetch(url, {
+      ...init,
+      signal: controller.signal,
+    });
+  } finally {
+    window.clearTimeout(timer);
+  }
+}
+
 function normalizeValue(value, min, max) {
   const range = max - min;
   if (range === 0) {
     return 0.5;
   }
   return Math.max(0, Math.min(1, (value - min) / range));
-}
-
-function buildModeRanking(edges) {
-  if (!edges?.length) {
-    return [];
-  }
-
-  const grouped = new Map();
-
-  for (const edge of edges) {
-    const mode = edge?.modo || "desconhecido";
-    const current = grouped.get(mode) || {
-      modo: mode,
-      distancia: 0,
-      tempo: 0,
-      custo: 0,
-      risco: 0,
-      quantidade: 0,
-    };
-
-    current.distancia += Number(edge?.distancia || 0);
-    current.tempo += Number(edge?.tempo || 0);
-    current.custo += Number(edge?.custo || 0);
-    current.risco += Number(edge?.risco || 0);
-    current.quantidade += 1;
-
-    grouped.set(mode, current);
-  }
-
-  const list = [...grouped.values()].map((item) => ({
-    ...item,
-    risco_medio: item.quantidade > 0 ? item.risco / item.quantidade : 0,
-  }));
-
-  const times = list.map((item) => item.tempo);
-  const costs = list.map((item) => item.custo);
-  const risks = list.map((item) => item.risco_medio);
-
-  const minTime = Math.min(...times);
-  const maxTime = Math.max(...times);
-  const minCost = Math.min(...costs);
-  const maxCost = Math.max(...costs);
-  const minRisk = Math.min(...risks);
-  const maxRisk = Math.max(...risks);
-
-  return list
-    .map((item) => {
-      const tempoNorm = normalizeValue(item.tempo, minTime, maxTime);
-      const custoNorm = normalizeValue(item.custo, minCost, maxCost);
-      const riscoNorm = normalizeValue(item.risco_medio, minRisk, maxRisk);
-      const score = 0.5 * tempoNorm + 0.3 * custoNorm + 0.2 * riscoNorm;
-
-      return {
-        ...item,
-        score,
-      };
-    })
-    .sort((a, b) => a.score - b.score);
 }
 
 function toLabel(key) {
@@ -246,22 +206,35 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [running, setRunning] = useState(false);
   const [error, setError] = useState("");
-  const [selectedMode, setSelectedMode] = useState(ALL_MODES_KEY);
   const [selectedOptionId, setSelectedOptionId] = useState(null);
   const [routeModeChoice, setRouteModeChoice] = useState("auto");
   const [routeRestriction, setRouteRestriction] = useState("none");
 
-  async function fetchOptionsPayload() {
-    const response = await fetch(`${API_BASE}/api/options`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+  async function fetchOptionsPayload({ timeoutMs = 0 } = {}) {
+    const response = await fetchJson(
+      `${API_BASE}/api/options`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({}),
       },
-      body: JSON.stringify({}),
-    });
+      timeoutMs
+    );
 
     if (!response.ok) {
       throw new Error(`Erro ao buscar opcoes (${response.status})`);
+    }
+
+    return response.json();
+  }
+
+  async function fetchRouteData() {
+    const response = await fetchJson(`${API_BASE}/api/route`);
+
+    if (!response.ok) {
+      throw new Error(`Erro ao buscar rota (${response.status})`);
     }
 
     return response.json();
@@ -271,27 +244,28 @@ function App() {
     setError("");
     setLoading(true);
     try {
-      const optionsData = await fetchOptionsPayload();
-      setOptionsPayload(optionsData);
-      return;
-    } catch (err) {
-      try {
-        const response = await fetch(`${API_BASE}/api/route`);
-        if (!response.ok) {
-          throw new Error(`Erro ao buscar rota (${response.status})`);
-        }
-        const routeData = await response.json();
-        setOptionsPayload(wrapSingleRoute(routeData));
-        setError(
-          `Falha ao buscar opcoes; exibindo rota atual. Detalhe: ${
-            err?.message || "erro desconhecido"
-          }`
-        );
-      } catch (fallbackErr) {
-        setError(fallbackErr.message || err.message || "Falha ao carregar rota");
-      }
-    } finally {
+      const routeData = await fetchRouteData();
+      setOptionsPayload(wrapSingleRoute(routeData));
       setLoading(false);
+
+      fetchOptionsPayload({ timeoutMs: OPTIONS_TIMEOUT_MS })
+        .then((optionsData) => {
+          setOptionsPayload(optionsData);
+        })
+        .catch(() => {
+          // Mantem a rota carregada mesmo se o ranking nao responder a tempo.
+        });
+
+      return;
+    } catch (routeErr) {
+      try {
+        const optionsData = await fetchOptionsPayload({ timeoutMs: OPTIONS_TIMEOUT_MS });
+        setOptionsPayload(optionsData);
+      } catch (optionsErr) {
+        setError(routeErr?.message || optionsErr?.message || "Falha ao carregar rota");
+      } finally {
+        setLoading(false);
+      }
     }
   }
 
@@ -400,44 +374,6 @@ function App() {
   const segments = routeData?.segments || [];
   const summary = routeData?.resumo || {};
 
-  const modeOptions = useMemo(() => {
-    const modes = [...new Set(edges.map((edge) => edge?.modo).filter(Boolean))];
-    return [ALL_MODES_KEY, ...modes];
-  }, [edges]);
-
-  useEffect(() => {
-    if (selectedMode !== ALL_MODES_KEY && !modeOptions.includes(selectedMode)) {
-      setSelectedMode(ALL_MODES_KEY);
-    }
-  }, [modeOptions, selectedMode]);
-
-  const filteredEdges = useMemo(() => {
-    if (selectedMode === ALL_MODES_KEY) {
-      return edges;
-    }
-    return edges.filter((edge) => edge?.modo === selectedMode);
-  }, [edges, selectedMode]);
-
-  const filteredSegments = useMemo(() => {
-    if (selectedMode === ALL_MODES_KEY) {
-      return segments;
-    }
-    return segments.filter((segment) => segment?.modo === selectedMode);
-  }, [segments, selectedMode]);
-
-  const modeRanking = useMemo(() => buildModeRanking(edges), [edges]);
-
-  const optionRanking = useMemo(() => {
-    const valid = options.filter((option) => option.status === "ok");
-    return valid
-      .slice()
-      .sort((a, b) => {
-        const scoreA = typeof a.score === "number" ? a.score : 9999;
-        const scoreB = typeof b.score === "number" ? b.score : 9999;
-        return scoreA - scoreB;
-      });
-  }, [options]);
-
   const failedOptions = useMemo(
     () => options.filter((option) => option.status === "error"),
     [options]
@@ -456,76 +392,89 @@ function App() {
   }, [failedOptions]);
 
   const center = useMemo(() => {
-    if (filteredEdges.length > 0) {
-      return getCenter(filteredEdges);
+    if (edges.length > 0) {
+      return getCenter(edges);
     }
     return getCenter(edges);
-  }, [filteredEdges, edges]);
+  }, [edges]);
 
   return (
     <div className="app-shell">
-      <header className="top-bar">
-        <div>
+      <header className="hero">
+        <div className="hero-copy">
           <p className="eyebrow">Route Web</p>
-          <h1>Visualizador de Rotas Multimodais</h1>
+          <h1>Planejador de rotas</h1>
+          <p className="hero-subtitle">
+            Defina o tipo de locomoção inicial, aplique a regra desejada e acompanhe o trajeto no mapa.
+          </p>
         </div>
-        <div className="top-actions">
+        <div className="hero-actions">
           <button onClick={fetchRouteOptions} disabled={loading || running}>
-            Atualizar
+            Atualizar dados
           </button>
           <button className="primary" onClick={recalculate} disabled={running}>
-            {running ? "Calculando..." : "Recalcular opcoes"}
+            {running ? "Calculando..." : "Recalcular rota"}
           </button>
         </div>
       </header>
 
-      <section className="route-controls">
-        <div className="control-group">
-          <label htmlFor="route-mode">Modal inicial</label>
-          <select
-            id="route-mode"
-            value={routeModeChoice}
-            onChange={(event) => setRouteModeChoice(event.target.value)}
-            disabled={running}
-          >
-            {ROUTE_MODE_OPTIONS.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
+      <section className="control-panel">
+        <div className="control-card">
+          <div className="control-group">
+            <label htmlFor="route-mode">Tipo de locomoção inicial</label>
+            <select
+              id="route-mode"
+              value={routeModeChoice}
+              onChange={(event) => setRouteModeChoice(event.target.value)}
+              disabled={running}
+            >
+              {ROUTE_MODE_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="control-group">
-          <label htmlFor="route-restriction">Restricao de modal</label>
-          <select
-            id="route-restriction"
-            value={routeRestriction}
-            onChange={(event) => setRouteRestriction(event.target.value)}
-            disabled={running}
-          >
-            {ROUTE_RESTRICTION_OPTIONS.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
+          <div className="control-group">
+            <label htmlFor="route-restriction">Regra da rota</label>
+            <select
+              id="route-restriction"
+              value={routeRestriction}
+              onChange={(event) => setRouteRestriction(event.target.value)}
+              disabled={running}
+            >
+              {ROUTE_RESTRICTION_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <p className="control-help">
-          Para testar cenarios como carro/moto ou onibus com acesso a pe, selecione a restricao desejada e clique em Recalcular opcoes.
-        </p>
+          <p className="control-help">
+            Ajuste a locomoção inicial e a regra de uso para recalcular a rota com o perfil desejado.
+          </p>
+        </div>
       </section>
 
       {error ? <div className="error-box">{error}</div> : null}
-      {!loading && !error && optionRanking.length === 0 && failedOptions.length > 0 ? (
+      {!loading && !error && options.length === 0 && failedOptions.length > 0 ? (
         <div className="error-box">
-          Nenhuma opcao de rota foi gerada no backend. Motivo: {firstErrorMessage}
+          Nenhuma opção de rota foi gerada no backend. Motivo: {firstErrorMessage}
         </div>
       ) : null}
 
       <main className="layout">
         <section className="map-panel">
+          <div className="panel-header">
+            <div>
+              <p className="panel-kicker">Mapa</p>
+              <h2>Trajeto exibido</h2>
+            </div>
+            <span className="panel-badge">{segments.length} trechos</span>
+          </div>
+
           {loading ? (
             <div className="loading-state">Carregando rota...</div>
           ) : (
@@ -535,7 +484,7 @@ function App() {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
 
-              {filteredEdges.map((edge, index) => (
+              {edges.map((edge, index) => (
                 <Polyline
                   key={`${edge.modo}-${index}`}
                   positions={[edge.origem, edge.destino]}
@@ -565,48 +514,35 @@ function App() {
         </section>
 
         <aside className="info-panel">
-          <div className="summary-grid">
-            <article>
-              <p>Tempo total</p>
-              <h2>{formatDuration(summary.tempo_total)}</h2>
-            </article>
-            <article>
-              <p>Custo total</p>
-              <h2>{formatMoney(summary.custo_total)}</h2>
-            </article>
-            <article>
-              <p>Distancia</p>
-              <h2>{summary.distancia_total || 0} km</h2>
-            </article>
-            <article>
-              <p>Risco medio</p>
-              <h2>{summary.risco_medio || 0}</h2>
-            </article>
-            <article>
-              <p>Esforco total</p>
-              <h2>{Number(summary.esforco_total || 0).toFixed(3)} pts</h2>
-            </article>
-          </div>
+          <section className="summary-card">
+            <div className="summary-grid">
+              <article>
+                <p>Tempo total</p>
+                <h2>{formatDuration(summary.tempo_total)}</h2>
+              </article>
+              <article>
+                <p>Custo total</p>
+                <h2>{formatMoney(summary.custo_total)}</h2>
+              </article>
+              <article>
+                <p>Distância</p>
+                <h2>{summary.distancia_total || 0} km</h2>
+              </article>
+            </div>
+          </section>
 
-          {selectedOption ? (
-            <section className="selected-option-banner">
-              <h3>Cenario selecionado</h3>
-              <p>{selectedOption.label}</p>
-              <small>
-                Modal inicial: {MODAL_LABELS[selectedOption.modo_inicial] || selectedOption.modo_inicial}
-                {selectedOption.restricao_modal
-                  ? ` | Restricao: ${MODAL_LABELS[selectedOption.restricao_modal] || selectedOption.restricao_modal}`
-                  : " | Sem restricao de modal"}
-              </small>
-            </section>
-          ) : null}
 
           <section className="segments-list">
-            <h3>Segmentos ({filteredSegments.length})</h3>
-            {filteredSegments.length === 0 ? (
-              <p>Nenhum segmento encontrado.</p>
+            <div className="panel-header panel-header-tight">
+              <div>
+                <p className="panel-kicker">Detalhes</p>
+                <h3>Trechos da rota ({segments.length})</h3>
+              </div>
+            </div>
+            {segments.length === 0 ? (
+              <p>Nenhum trecho encontrado.</p>
             ) : (
-              filteredSegments.map((segment, index) => (
+              segments.map((segment, index) => (
                 <article key={`${segment.modo}-${index}`} className="segment-card">
                   <header>
                     <strong>
@@ -637,12 +573,6 @@ function App() {
                 </article>
               ))
             )}
-          </section>
-
-          <section className="effort-panel info-section">
-            <h3>Como o esforco e calculado</h3>
-            <p>A pe: esforco = distancia (km) x 5.0 x fator de clima</p>
-            <p>Bike: esforco = distancia (km) x 1.5 x fator de clima</p>
           </section>
         </aside>
       </main>

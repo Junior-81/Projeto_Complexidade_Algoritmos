@@ -123,11 +123,14 @@ app.add_middleware(
 
 def _load_json(path: Path) -> dict:
     if not path.exists():
-        raise HTTPException(status_code=404, detail=f"Arquivo nao encontrado: {path.name}")
+        raise HTTPException(
+            status_code=404, detail=f"Arquivo nao encontrado: {path.name}"
+        )
 
     try:
         return json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
+        print(f"Erro ao ler JSON de {path}")
         raise HTTPException(
             status_code=500, detail=f"JSON invalido em {path.name}: {exc}"
         ) from exc
@@ -211,9 +214,15 @@ def _compute_ranking(options: list[dict]) -> list[dict]:
 
     for opt in valid:
         resumo = opt["resumo"]
-        tempo_norm = _normalize(float(resumo.get("tempo_total", 0.0)), min_time, max_time)
-        custo_norm = _normalize(float(resumo.get("custo_total", 0.0)), min_cost, max_cost)
-        risco_norm = _normalize(float(resumo.get("risco_medio", 0.0)), min_risk, max_risk)
+        tempo_norm = _normalize(
+            float(resumo.get("tempo_total", 0.0)), min_time, max_time
+        )
+        custo_norm = _normalize(
+            float(resumo.get("custo_total", 0.0)), min_cost, max_cost
+        )
+        risco_norm = _normalize(
+            float(resumo.get("risco_medio", 0.0)), min_risk, max_risk
+        )
 
         score = (
             WEIGHTS["time"] * tempo_norm
@@ -339,7 +348,9 @@ def calculate(payload: CalculateRequest | None = None) -> dict:
 def calculate_options(payload: OptionsRequest | None = None) -> dict:
     base_input = _load_json(INPUT_FILE)
     original_input = dict(base_input)
-    original_output = OUTPUT_FILE.read_text(encoding="utf-8") if OUTPUT_FILE.exists() else None
+    original_output = (
+        OUTPUT_FILE.read_text(encoding="utf-8") if OUTPUT_FILE.exists() else None
+    )
 
     algorithm = payload.algoritmo if payload is not None else None
 
@@ -359,9 +370,7 @@ def calculate_options(payload: OptionsRequest | None = None) -> dict:
         # Regra de negocio: em "sem restricao", recomendar 1 modal vencedor
         # (cenarios *_only), evitando rota quebrada em varios modais.
         single_modal_sorted = [
-            opt
-            for opt in valid_sorted
-            if str(opt.get("id", "")).endswith("_only")
+            opt for opt in valid_sorted if str(opt.get("id", "")).endswith("_only")
         ]
         best_option_id = (
             single_modal_sorted[0]["id"]
@@ -379,3 +388,16 @@ def calculate_options(payload: OptionsRequest | None = None) -> dict:
         _write_input_dict(original_input)
         if original_output is not None:
             OUTPUT_FILE.write_text(original_output, encoding="utf-8")
+
+
+def main() -> None:
+    import uvicorn
+
+    host = os.getenv("HOST", "127.0.0.1")
+    port = int(os.getenv("PORT", "8000"))
+
+    uvicorn.run(app, host=host, port=port, reload=False)
+
+
+if __name__ == "__main__":
+    main()
