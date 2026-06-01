@@ -8,10 +8,14 @@ Suporta Dijkstra e A* com otimizacao multiobjetivo (tempo, custo, risco).
 import sys
 import io
 
-# Força UTF-8 output (importante para PowerShell no Windows)
-if sys.platform == "win32":
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
+
+def configure_windows_stdio() -> None:
+    """Força UTF-8 no Windows quando o script é executado diretamente."""
+
+    if sys.platform == "win32":
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
+        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
+
 
 import json
 from pathlib import Path
@@ -68,8 +72,8 @@ def find_nearest_node(graph, lat: float, lon: float):
         return nearest
 
 
-def main():
-    """Executa o sistema principal."""
+def calculate_route(input_data: dict, persist_output: bool = True) -> dict:
+    """Executa o sistema principal e retorna o resultado em memória."""
 
     print("\n" + "=" * 60)
     print("SISTEMA DE ROTAS MULTIMODAIS")
@@ -77,7 +81,6 @@ def main():
 
     # ETAPA 1: Carrega input
     print("[1] Carregando entrada...")
-    input_data = load_input()
     origem_lat, origem_lon = input_data["origem"]
     destino_lat, destino_lon = input_data["destino"]
     modo_inicial = input_data["modo_inicial"].lower()
@@ -320,10 +323,11 @@ def main():
 
     # ETAPA 11: Gera JSON de saída
     print("\n[11] Gerando saída...")
-    with open("output.json", "w", encoding="utf-8") as f:
-        json.dump(result, f, indent=2, ensure_ascii=False)
+    if persist_output:
+        with open("output.json", "w", encoding="utf-8") as f:
+            json.dump(result, f, indent=2, ensure_ascii=False)
 
-    print(f"✓ Saída salva em output.json")
+        print(f"✓ Saída salva em output.json")
 
     # ETAPA 12: Exibe resumo
     print("\n" + "=" * 60)
@@ -351,6 +355,16 @@ def main():
         )
 
     print("\n✓ Sistema concluído com sucesso!\n")
+
+    return result
+
+
+def main():
+    """Executa o sistema principal."""
+
+    configure_windows_stdio()
+    input_data = load_input()
+    calculate_route(input_data, persist_output=True)
 
 
 if __name__ == "__main__":

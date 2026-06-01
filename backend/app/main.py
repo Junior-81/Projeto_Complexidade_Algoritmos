@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 import os
-import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -15,6 +15,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 INPUT_FILE = PROJECT_ROOT / "input.json"
 OUTPUT_FILE = PROJECT_ROOT / "output.json"
 WEIGHTS = {"time": 0.5, "cost": 0.3, "risk": 0.2}
+ROUTE_EXECUTOR_MODULE_NAME = "complexidade_route_executor"
+_ROUTE_EXECUTOR = None
 
 OPTION_SCENARIOS = [
     {
@@ -174,21 +176,29 @@ def _write_input_dict(payload: dict) -> None:
     )
 
 
-def _run_calculation() -> subprocess.CompletedProcess[str]:
-    cmd = [sys.executable, "main.py"]
-    env = os.environ.copy()
-    env["PYTHONIOENCODING"] = "utf-8"
-    env["PYTHONUTF8"] = "1"
-    completed = subprocess.run(
-        cmd,
-        cwd=str(PROJECT_ROOT),
-        env=env,
-        capture_output=True,
-        text=True,
-        timeout=1200,
-    )
+def _get_route_executor():
+    global _ROUTE_EXECUTOR
 
-    return completed
+    if _ROUTE_EXECUTOR is not None:
+        return _ROUTE_EXECUTOR
+
+    route_module_path = PROJECT_ROOT / "main.py"
+    spec = importlib.util.spec_from_file_location(
+        ROUTE_EXECUTOR_MODULE_NAME, route_module_path
+    )
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Nao foi possivel carregar {route_module_path}")
+
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[ROUTE_EXECUTOR_MODULE_NAME] = module
+    spec.loader.exec_module(module)
+    _ROUTE_EXECUTOR = module
+    return module
+
+
+def _run_calculation(input_data: dict, persist_output: bool = True) -> dict:
+    route_executor = _get_route_executor()
+    return route_executor.calculate_route(input_data, persist_output=persist_output)
 
 
 def _normalize(value: float, min_val: float, max_val: float) -> float:
@@ -257,10 +267,9 @@ def _run_scenario(base_input: dict, scenario: dict, algorithm: str | None) -> di
     else:
         scenario_input.pop("restricao_modal", None)
 
-    _write_input_dict(scenario_input)
-    completed = _run_calculation()
-
-    if completed.returncode != 0 or not OUTPUT_FILE.exists():
+    try:
+        route_data = _run_calculation(scenario_input, persist_output=False)
+    except Exception as exc:
         return {
             "id": scenario["id"],
             "label": scenario["label"],
@@ -269,13 +278,9 @@ def _run_scenario(base_input: dict, scenario: dict, algorithm: str | None) -> di
             "status": "error",
             "error": {
                 "message": "Falha ao calcular este cenario",
-                "returncode": completed.returncode,
-                "stderr": completed.stderr[-3000:],
-                "stdout": completed.stdout[-3000:],
+                "exception": str(exc),
             },
         }
-
-    route_data = _load_json(OUTPUT_FILE)
 
     return {
         "id": scenario["id"],
@@ -310,84 +315,57 @@ def calculate(payload: CalculateRequest | None = None) -> dict:
     if payload is not None:
         _write_input(payload)
 
-    completed = _run_calculation()
-    stdout = completed.stdout
-    stderr = completed.stderr
+    current_input = _load_json(INPUT_FILE)
 
-    if completed.returncode != 0:
+    try:
+        route_data = _run_calculation(current_input, persist_output=True)
+    except Exception as exc:
         raise HTTPException(
             status_code=500,
             detail={
                 "message": "Falha ao executar calculo do backend Python",
-                "returncode": completed.returncode,
-                "stderr": stderr[-3000:],
-                "stdout": stdout[-3000:],
+                "exception": str(exc),
             },
         )
 
-    if not OUTPUT_FILE.exists():
-        raise HTTPException(
-            status_code=500,
-            detail={
-                "message": "Calculo executado sem gerar output.json",
-                "stderr": stderr[-3000:],
-                "stdout": stdout[-3000:],
-            },
-        )
-
-    if stderr.strip():
-        # Mantem retorno de sucesso com aviso quando o script escreveu em stderr.
-        route_data = _load_json(OUTPUT_FILE)
-        route_data["warning"] = stderr[-1200:]
-        return route_data
-
-    return _load_json(OUTPUT_FILE)
+    return route_data
 
 
 @app.post("/api/options")
 def calculate_options(payload: OptionsRequest | None = None) -> dict:
     base_input = _load_json(INPUT_FILE)
-    original_input = dict(base_input)
-    original_output = (
-        OUTPUT_FILE.read_text(encoding="utf-8") if OUTPUT_FILE.exists() else None
-    )
 
     algorithm = payload.algoritmo if payload is not None else None
 
     options: list[dict] = []
-    try:
-        for scenario in OPTION_SCENARIOS:
-            option_result = _run_scenario(base_input, scenario, algorithm)
-            options.append(option_result)
+    for scenario in OPTION_SCENARIOS:
+        option_result = _run_scenario(base_input, scenario, algorithm)
+        options.append(option_result)
 
-        options = _compute_ranking(options)
-        valid_options = [opt for opt in options if opt.get("status") == "ok"]
-        valid_sorted = sorted(
-            valid_options,
-            key=lambda item: item["score"] if item.get("score") is not None else 9999,
-        )
+    options = _compute_ranking(options)
+    valid_options = [opt for opt in options if opt.get("status") == "ok"]
+    valid_sorted = sorted(
+        valid_options,
+        key=lambda item: item["score"] if item.get("score") is not None else 9999,
+    )
 
-        # Regra de negocio: em "sem restricao", recomendar 1 modal vencedor
-        # (cenarios *_only), evitando rota quebrada em varios modais.
-        single_modal_sorted = [
-            opt for opt in valid_sorted if str(opt.get("id", "")).endswith("_only")
-        ]
-        best_option_id = (
-            single_modal_sorted[0]["id"]
-            if single_modal_sorted
-            else (valid_sorted[0]["id"] if valid_sorted else None)
-        )
+    # Regra de negocio: em "sem restricao", recomendar 1 modal vencedor
+    # (cenarios *_only), evitando rota quebrada em varios modais.
+    single_modal_sorted = [
+        opt for opt in valid_sorted if str(opt.get("id", "")).endswith("_only")
+    ]
+    best_option_id = (
+        single_modal_sorted[0]["id"]
+        if single_modal_sorted
+        else (valid_sorted[0]["id"] if valid_sorted else None)
+    )
 
-        return {
-            "generated_at": datetime.utcnow().isoformat() + "Z",
-            "weights": WEIGHTS,
-            "best_option_id": best_option_id,
-            "options": options,
-        }
-    finally:
-        _write_input_dict(original_input)
-        if original_output is not None:
-            OUTPUT_FILE.write_text(original_output, encoding="utf-8")
+    return {
+        "generated_at": datetime.utcnow().isoformat() + "Z",
+        "weights": WEIGHTS,
+        "best_option_id": best_option_id,
+        "options": options,
+    }
 
 
 def main() -> None:

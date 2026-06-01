@@ -1,0 +1,969 @@
+{
+  "edges": [
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0623949,
+        -34.8737916
+      ],
+      "destino": [
+        -8.0623784,
+        -34.8738494
+      ],
+      "distancia": 0.0066,
+      "tempo": 0.0005,
+      "custo": 0.0,
+      "esforco": 0.0149,
+      "risco": 0.0003,
+      "peso": 0.001,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0623784,
+        -34.8738494
+      ],
+      "destino": [
+        -8.0616035,
+        -34.8765324
+      ],
+      "distancia": 0.3077,
+      "tempo": 0.0231,
+      "custo": 0.0,
+      "esforco": 0.6924,
+      "risco": 0.0138,
+      "peso": 0.048,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0616035,
+        -34.8765324
+      ],
+      "destino": [
+        -8.0615094,
+        -34.8769886
+      ],
+      "distancia": 0.0513,
+      "tempo": 0.0038,
+      "custo": 0.0,
+      "esforco": 0.1155,
+      "risco": 0.0023,
+      "peso": 0.008,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0615094,
+        -34.8769886
+      ],
+      "destino": [
+        -8.0616023,
+        -34.8771147
+      ],
+      "distancia": 0.0173,
+      "tempo": 0.0013,
+      "custo": 0.0,
+      "esforco": 0.0389,
+      "risco": 0.0008,
+      "peso": 0.0026,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0616023,
+        -34.8771147
+      ],
+      "destino": [
+        -8.0621061,
+        -34.8770634
+      ],
+      "distancia": 0.0563,
+      "tempo": 0.0042,
+      "custo": 0.0,
+      "esforco": 0.1267,
+      "risco": 0.0025,
+      "peso": 0.0087,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0621061,
+        -34.8770634
+      ],
+      "destino": [
+        -8.0628594,
+        -34.8770024
+      ],
+      "distancia": 0.084,
+      "tempo": 0.0063,
+      "custo": 0.0,
+      "esforco": 0.1891,
+      "risco": 0.0038,
+      "peso": 0.0131,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0628594,
+        -34.8770024
+      ],
+      "destino": [
+        -8.0633636,
+        -34.8769566
+      ],
+      "distancia": 0.0563,
+      "tempo": 0.0042,
+      "custo": 0.0,
+      "esforco": 0.1267,
+      "risco": 0.0025,
+      "peso": 0.0087,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0633636,
+        -34.8769566
+      ],
+      "destino": [
+        -8.0641842,
+        -34.8768645
+      ],
+      "distancia": 0.0918,
+      "tempo": 0.0069,
+      "custo": 0.0,
+      "esforco": 0.2066,
+      "risco": 0.0041,
+      "peso": 0.0143,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0641842,
+        -34.8768645
+      ],
+      "destino": [
+        -8.0650973,
+        -34.8767652
+      ],
+      "distancia": 0.1021,
+      "tempo": 0.0077,
+      "custo": 0.0,
+      "esforco": 0.2298,
+      "risco": 0.0046,
+      "peso": 0.0159,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0650973,
+        -34.8767652
+      ],
+      "destino": [
+        -8.0654851,
+        -34.8767308
+      ],
+      "distancia": 0.0433,
+      "tempo": 0.0032,
+      "custo": 0.0,
+      "esforco": 0.0974,
+      "risco": 0.0019,
+      "peso": 0.0067,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0654851,
+        -34.8767308
+      ],
+      "destino": [
+        -8.0661077,
+        -34.8766951
+      ],
+      "distancia": 0.0693,
+      "tempo": 0.0052,
+      "custo": 0.0,
+      "esforco": 0.156,
+      "risco": 0.0031,
+      "peso": 0.0108,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0661077,
+        -34.8766951
+      ],
+      "destino": [
+        -8.066082,
+        -34.8764623
+      ],
+      "distancia": 0.0258,
+      "tempo": 0.0019,
+      "custo": 0.0,
+      "esforco": 0.058,
+      "risco": 0.0012,
+      "peso": 0.004,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.066082,
+        -34.8764623
+      ],
+      "destino": [
+        -8.066202,
+        -34.8762466
+      ],
+      "distancia": 0.0275,
+      "tempo": 0.0021,
+      "custo": 0.0,
+      "esforco": 0.0619,
+      "risco": 0.0012,
+      "peso": 0.0042,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.066202,
+        -34.8762466
+      ],
+      "destino": [
+        -8.0667596,
+        -34.8760814
+      ],
+      "distancia": 0.0657,
+      "tempo": 0.0049,
+      "custo": 0.0,
+      "esforco": 0.1478,
+      "risco": 0.003,
+      "peso": 0.0102,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0667596,
+        -34.8760814
+      ],
+      "destino": [
+        -8.0673927,
+        -34.8760942
+      ],
+      "distancia": 0.0756,
+      "tempo": 0.0057,
+      "custo": 0.0,
+      "esforco": 0.1701,
+      "risco": 0.0034,
+      "peso": 0.0118,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0673927,
+        -34.8760942
+      ],
+      "destino": [
+        -8.0685924,
+        -34.8764075
+      ],
+      "distancia": 0.1378,
+      "tempo": 0.0103,
+      "custo": 0.0,
+      "esforco": 0.3101,
+      "risco": 0.0062,
+      "peso": 0.0215,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0685924,
+        -34.8764075
+      ],
+      "destino": [
+        -8.0705667,
+        -34.8772781
+      ],
+      "distancia": 0.2397,
+      "tempo": 0.018,
+      "custo": 0.0,
+      "esforco": 0.5394,
+      "risco": 0.0108,
+      "peso": 0.0374,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0705667,
+        -34.8772781
+      ],
+      "destino": [
+        -8.0712652,
+        -34.877625
+      ],
+      "distancia": 0.0866,
+      "tempo": 0.0065,
+      "custo": 0.0,
+      "esforco": 0.1947,
+      "risco": 0.0039,
+      "peso": 0.0135,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0712652,
+        -34.877625
+      ],
+      "destino": [
+        -8.0717087,
+        -34.8780495
+      ],
+      "distancia": 0.0704,
+      "tempo": 0.0053,
+      "custo": 0.0,
+      "esforco": 0.1584,
+      "risco": 0.0032,
+      "peso": 0.0109,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0717087,
+        -34.8780495
+      ],
+      "destino": [
+        -8.0719999,
+        -34.8789101
+      ],
+      "distancia": 0.1003,
+      "tempo": 0.0075,
+      "custo": 0.0,
+      "esforco": 0.2257,
+      "risco": 0.0045,
+      "peso": 0.0156,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0719999,
+        -34.8789101
+      ],
+      "destino": [
+        -8.0719005,
+        -34.8801796
+      ],
+      "distancia": 0.1591,
+      "tempo": 0.0119,
+      "custo": 0.0,
+      "esforco": 0.3579,
+      "risco": 0.0072,
+      "peso": 0.0248,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0719005,
+        -34.8801796
+      ],
+      "destino": [
+        -8.0741903,
+        -34.8836566
+      ],
+      "distancia": 0.4847,
+      "tempo": 0.0364,
+      "custo": 0.0,
+      "esforco": 1.0907,
+      "risco": 0.0218,
+      "peso": 0.0757,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0741903,
+        -34.8836566
+      ],
+      "destino": [
+        -8.0746247,
+        -34.887184
+      ],
+      "distancia": 0.4534,
+      "tempo": 0.034,
+      "custo": 0.0,
+      "esforco": 1.0201,
+      "risco": 0.0204,
+      "peso": 0.0708,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0746247,
+        -34.887184
+      ],
+      "destino": [
+        -8.0748878,
+        -34.8878576
+      ],
+      "distancia": 0.0797,
+      "tempo": 0.006,
+      "custo": 0.0,
+      "esforco": 0.1794,
+      "risco": 0.0036,
+      "peso": 0.0124,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0748878,
+        -34.8878576
+      ],
+      "destino": [
+        -8.0753468,
+        -34.8890573
+      ],
+      "distancia": 0.1416,
+      "tempo": 0.0106,
+      "custo": 0.0,
+      "esforco": 0.3186,
+      "risco": 0.0064,
+      "peso": 0.0221,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0753468,
+        -34.8890573
+      ],
+      "destino": [
+        -8.0763399,
+        -34.8904098
+      ],
+      "distancia": 0.1958,
+      "tempo": 0.0147,
+      "custo": 0.0,
+      "esforco": 0.4406,
+      "risco": 0.0088,
+      "peso": 0.0305,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0763399,
+        -34.8904098
+      ],
+      "destino": [
+        -8.077176,
+        -34.8911678
+      ],
+      "distancia": 0.127,
+      "tempo": 0.0095,
+      "custo": 0.0,
+      "esforco": 0.2857,
+      "risco": 0.0057,
+      "peso": 0.0198,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.077176,
+        -34.8911678
+      ],
+      "destino": [
+        -8.0775643,
+        -34.8920256
+      ],
+      "distancia": 0.1038,
+      "tempo": 0.0078,
+      "custo": 0.0,
+      "esforco": 0.2337,
+      "risco": 0.0047,
+      "peso": 0.0162,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0775643,
+        -34.8920256
+      ],
+      "destino": [
+        -8.0775768,
+        -34.8920541
+      ],
+      "distancia": 0.0034,
+      "tempo": 0.0003,
+      "custo": 0.0,
+      "esforco": 0.0077,
+      "risco": 0.0002,
+      "peso": 0.0005,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0775768,
+        -34.8920541
+      ],
+      "destino": [
+        -8.0778142,
+        -34.8925714
+      ],
+      "distancia": 0.0628,
+      "tempo": 0.0047,
+      "custo": 0.0,
+      "esforco": 0.1412,
+      "risco": 0.0028,
+      "peso": 0.0097,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0778142,
+        -34.8925714
+      ],
+      "destino": [
+        -8.0779059,
+        -34.8926452
+      ],
+      "distancia": 0.013,
+      "tempo": 0.001,
+      "custo": 0.0,
+      "esforco": 0.0293,
+      "risco": 0.0006,
+      "peso": 0.002,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0779059,
+        -34.8926452
+      ],
+      "destino": [
+        -8.0804011,
+        -34.8924138
+      ],
+      "distancia": 0.2983,
+      "tempo": 0.0224,
+      "custo": 0.0,
+      "esforco": 0.6712,
+      "risco": 0.0134,
+      "peso": 0.0465,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0804011,
+        -34.8924138
+      ],
+      "destino": [
+        -8.0809743,
+        -34.8922099
+      ],
+      "distancia": 0.0676,
+      "tempo": 0.0051,
+      "custo": 0.0,
+      "esforco": 0.1521,
+      "risco": 0.003,
+      "peso": 0.0105,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0809743,
+        -34.8922099
+      ],
+      "destino": [
+        -8.0827513,
+        -34.8908395
+      ],
+      "distancia": 0.2498,
+      "tempo": 0.0187,
+      "custo": 0.0,
+      "esforco": 0.562,
+      "risco": 0.0112,
+      "peso": 0.039,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0827513,
+        -34.8908395
+      ],
+      "destino": [
+        -8.0848348,
+        -34.8903312
+      ],
+      "distancia": 0.2562,
+      "tempo": 0.0192,
+      "custo": 0.0,
+      "esforco": 0.5765,
+      "risco": 0.0115,
+      "peso": 0.04,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0848348,
+        -34.8903312
+      ],
+      "destino": [
+        -8.08742,
+        -34.8912753
+      ],
+      "distancia": 0.3057,
+      "tempo": 0.0229,
+      "custo": 0.0,
+      "esforco": 0.6878,
+      "risco": 0.0138,
+      "peso": 0.0477,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.08742,
+        -34.8912753
+      ],
+      "destino": [
+        -8.0881028,
+        -34.8914627
+      ],
+      "distancia": 0.079,
+      "tempo": 0.0237,
+      "custo": 0.0,
+      "esforco": 0.5924,
+      "risco": 0.0031,
+      "peso": 0.033,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "uber_moto",
+      "meio": "uber moto",
+      "origem": [
+        -8.0881028,
+        -34.8914627
+      ],
+      "destino": [
+        -8.0996052,
+        -34.8899798
+      ],
+      "distancia": 1.6128,
+      "tempo": 0.0403,
+      "custo": 0.0,
+      "esforco": 0.0,
+      "risco": 0.0639,
+      "peso": 0.1114,
+      "velocidade_media_kmh": 60.0,
+      "servico": "Uber"
+    },
+    {
+      "modo": "uber_moto",
+      "meio": "uber moto",
+      "origem": [
+        -8.0996052,
+        -34.8899798
+      ],
+      "destino": [
+        -8.1052008,
+        -34.8917701
+      ],
+      "distancia": 0.777,
+      "tempo": 0.0194,
+      "custo": 0.0,
+      "esforco": 0.0,
+      "risco": 0.0308,
+      "peso": 0.0536,
+      "velocidade_media_kmh": 60.0,
+      "servico": "Uber"
+    },
+    {
+      "modo": "uber_moto",
+      "meio": "uber moto",
+      "origem": [
+        -8.1052008,
+        -34.8917701
+      ],
+      "destino": [
+        -8.1098828,
+        -34.8995154
+      ],
+      "distancia": 1.0684,
+      "tempo": 0.0267,
+      "custo": 0.0,
+      "esforco": 0.0,
+      "risco": 0.0423,
+      "peso": 0.0738,
+      "velocidade_media_kmh": 60.0,
+      "servico": "Uber"
+    },
+    {
+      "modo": "uber_moto",
+      "meio": "uber moto",
+      "origem": [
+        -8.1098828,
+        -34.8995154
+      ],
+      "destino": [
+        -8.1152795,
+        -34.9006724
+      ],
+      "distancia": 0.6218,
+      "tempo": 0.0155,
+      "custo": 4.96,
+      "esforco": 0.0,
+      "risco": 0.0246,
+      "peso": 0.0429,
+      "velocidade_media_kmh": 60.0,
+      "servico": "Uber"
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.1152795,
+        -34.9006724
+      ],
+      "destino": [
+        -8.1154034,
+        -34.9004351
+      ],
+      "distancia": 0.0295,
+      "tempo": 0.0089,
+      "custo": 0.0,
+      "esforco": 0.2215,
+      "risco": 0.0012,
+      "peso": 0.0123,
+      "velocidade_media_kmh": 5.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.1154034,
+        -34.9004351
+      ],
+      "destino": [
+        -8.1162009,
+        -34.8989667
+      ],
+      "distancia": 0.1844,
+      "tempo": 0.0138,
+      "custo": 0.0,
+      "esforco": 0.4148,
+      "risco": 0.0083,
+      "peso": 0.0287,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.1162009,
+        -34.8989667
+      ],
+      "destino": [
+        -8.1170435,
+        -34.8994617
+      ],
+      "distancia": 0.1084,
+      "tempo": 0.0081,
+      "custo": 0.0,
+      "esforco": 0.2439,
+      "risco": 0.0049,
+      "peso": 0.0169,
+      "velocidade_media_kmh": 20.0
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.1170435,
+        -34.8994617
+      ],
+      "destino": [
+        -8.1179317,
+        -34.8999959
+      ],
+      "distancia": 0.1149,
+      "tempo": 0.0086,
+      "custo": 0.0,
+      "esforco": 0.2586,
+      "risco": 0.0052,
+      "peso": 0.0179,
+      "velocidade_media_kmh": 20.0
+    }
+  ],
+  "segments": [
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.0623949,
+        -34.8737916
+      ],
+      "destino": [
+        -8.08742,
+        -34.8912753
+      ],
+      "tempo": 0.3538,
+      "distancia": 4.7173,
+      "custo": 0.0,
+      "esforco": 10.6146,
+      "risco_medio": 0.0059,
+      "velocidade_media_kmh": 13.33,
+      "quantidade_arestas": 36
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.08742,
+        -34.8912753
+      ],
+      "destino": [
+        -8.0881028,
+        -34.8914627
+      ],
+      "tempo": 0.0237,
+      "distancia": 0.079,
+      "custo": 0.0,
+      "esforco": 0.5924,
+      "risco_medio": 0.0031,
+      "velocidade_media_kmh": 3.33,
+      "quantidade_arestas": 1
+    },
+    {
+      "modo": "uber_moto",
+      "meio": "uber moto",
+      "origem": [
+        -8.0881028,
+        -34.8914627
+      ],
+      "destino": [
+        -8.1152795,
+        -34.9006724
+      ],
+      "tempo": 0.1019,
+      "distancia": 4.08,
+      "custo": 4.96,
+      "esforco": 0.0,
+      "risco_medio": 0.0404,
+      "velocidade_media_kmh": 40.04,
+      "quantidade_arestas": 4,
+      "servico": "Uber"
+    },
+    {
+      "modo": "walk",
+      "meio": "walk",
+      "origem": [
+        -8.1152795,
+        -34.9006724
+      ],
+      "destino": [
+        -8.1154034,
+        -34.9004351
+      ],
+      "tempo": 0.0089,
+      "distancia": 0.0295,
+      "custo": 0.0,
+      "esforco": 0.2215,
+      "risco_medio": 0.0012,
+      "velocidade_media_kmh": 3.31,
+      "quantidade_arestas": 1
+    },
+    {
+      "modo": "bike",
+      "meio": "bike",
+      "origem": [
+        -8.1154034,
+        -34.9004351
+      ],
+      "destino": [
+        -8.1179317,
+        -34.8999959
+      ],
+      "tempo": 0.0305,
+      "distancia": 0.4077,
+      "custo": 0.0,
+      "esforco": 0.9173,
+      "risco_medio": 0.0061,
+      "velocidade_media_kmh": 13.37,
+      "quantidade_arestas": 3
+    }
+  ],
+  "resumo": {
+    "tempo_total": 0.5188,
+    "custo_total": 4.96,
+    "esforco_total": 12.3458,
+    "distancia_total": 9.3135,
+    "risco_medio": 0.0088,
+    "velocidade_media_total": 17.95
+  }
+}
