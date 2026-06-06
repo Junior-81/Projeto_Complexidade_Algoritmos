@@ -1,0 +1,6 @@
+condition,factor
+clear,1.0
+light_rain,1.2
+moderate_rain,1.5
+heavy_rain,2.0
+storm,2.5

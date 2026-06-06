@@ -1,0 +1,5 @@
+mode,km_per_liter,fixed_cost_per_km
+car,12.5,0
+moto,30,0
+bike,0,7
+walk,0,0

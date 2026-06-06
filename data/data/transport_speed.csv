@@ -1,0 +1,8 @@
+mode,speed_kmh
+walk,5
+bike,15
+car,40
+moto,45
+bus,25
+uber_car,35
+uber_moto,40

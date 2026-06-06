@@ -1,0 +1,192 @@
+{
+  "info": {
+    "name": "Motor de Rotas Multimodais - Recife",
+    "description": "Colecao para testar o backend de rotas multimodais. Contrato em ingles + camelCase. Use a variavel {{base_url}} (padrao http://localhost:8000) definida nas Variables da colecao. O endpoint e unico (POST /api/calculate); o modal e escolhido no campo initialMode (walk, bike, car, moto, bus, uber_car, uber_moto).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": ["{{base_url}}"],
+          "path": ["health"]
+        },
+        "description": "Verificacao simples de disponibilidade da API. Retorna {\"status\": \"ok\"}."
+      },
+      "response": []
+    },
+    {
+      "name": "Calculate - walk (payload do SDD)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": [-8.062742, -34.8739],\n  \"destination\": [-8.117809, -34.900231],\n  \"initialMode\": \"walk\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/calculate",
+          "host": ["{{base_url}}"],
+          "path": ["api", "calculate"]
+        },
+        "description": "Calcula a melhor rota multimodal. Retorna edges, segments, summary e routePoints. Esperado: HTTP 200."
+      },
+      "response": []
+    },
+    {
+      "name": "Calculate - bike",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": [-8.0623949, -34.8737916],\n  \"destination\": [-8.1179317, -34.8999959],\n  \"initialMode\": \"bike\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/calculate",
+          "host": ["{{base_url}}"],
+          "path": ["api", "calculate"]
+        },
+        "description": "Rota partindo de bicicleta. Esperado: HTTP 200."
+      },
+      "response": []
+    },
+    {
+      "name": "Calculate - car",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": [-8.062742, -34.8739],\n  \"destination\": [-8.117809, -34.900231],\n  \"initialMode\": \"car\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/calculate",
+          "host": ["{{base_url}}"],
+          "path": ["api", "calculate"]
+        },
+        "description": "Rota partindo de carro. Esperado: HTTP 200."
+      },
+      "response": []
+    },
+    {
+      "name": "Calculate - moto",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": [-8.062742, -34.8739],\n  \"destination\": [-8.117809, -34.900231],\n  \"initialMode\": \"moto\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/calculate",
+          "host": ["{{base_url}}"],
+          "path": ["api", "calculate"]
+        },
+        "description": "Rota partindo de moto. Esperado: HTTP 200."
+      },
+      "response": []
+    },
+    {
+      "name": "Calculate - bus",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": [-8.062742, -34.8739],\n  \"destination\": [-8.117809, -34.900231],\n  \"initialMode\": \"bus\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/calculate",
+          "host": ["{{base_url}}"],
+          "path": ["api", "calculate"]
+        },
+        "description": "Rota partindo de onibus. Esperado: HTTP 200."
+      },
+      "response": []
+    },
+    {
+      "name": "Calculate - uber_car",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": [-8.062742, -34.8739],\n  \"destination\": [-8.117809, -34.900231],\n  \"initialMode\": \"uber_car\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/calculate",
+          "host": ["{{base_url}}"],
+          "path": ["api", "calculate"]
+        },
+        "description": "Rota partindo de Uber carro. Esperado: HTTP 200."
+      },
+      "response": []
+    },
+    {
+      "name": "Calculate - uber_moto",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": [-8.062742, -34.8739],\n  \"destination\": [-8.117809, -34.900231],\n  \"initialMode\": \"uber_moto\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/calculate",
+          "host": ["{{base_url}}"],
+          "path": ["api", "calculate"]
+        },
+        "description": "Rota partindo de Uber moto. Esperado: HTTP 200."
+      },
+      "response": []
+    },
+    {
+      "name": "Edge case 400 - origin outside network (ocean)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": [-8.0, -34.0],\n  \"destination\": [-8.117809, -34.900231],\n  \"initialMode\": \"walk\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/calculate",
+          "host": ["{{base_url}}"],
+          "path": ["api", "calculate"]
+        },
+        "description": "Origin fora do bounding box da RM Recife (oceano). Esperado: HTTP 400 - \"Origin point is outside the road network\"."
+      },
+      "response": []
+    },
+    {
+      "name": "Edge case 422 - invalid initialMode",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"origin\": [-8.062742, -34.8739],\n  \"destination\": [-8.117809, -34.900231],\n  \"initialMode\": \"teletransporte\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/calculate",
+          "host": ["{{base_url}}"],
+          "path": ["api", "calculate"]
+        },
+        "description": "Modal de partida invalido. Esperado: HTTP 422 - validacao estrita do Pydantic."
+      },
+      "response": []
+    }
+  ]
+}

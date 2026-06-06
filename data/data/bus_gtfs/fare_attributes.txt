@@ -1,0 +1,7 @@
+fare_id,price,currency_type,payment_method,transfers,agency_id
+A,4.5,BRL,0,0,grctm
+G,3.0,BRL,0,0,grctm
+E3,5.8,BRL,0,0,grctm
+E1,8.7,BRL,0,0,grctm
+F,15.4,BRL,0,0,grctm
+Y,22.5,BRL,0,0,grctm

@@ -1,0 +1,5 @@
+tide_level,factor
+low,1.0
+normal,1.1
+high,1.3
+very_high,1.5
