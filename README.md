@@ -46,6 +46,9 @@ uv run alembic upgrade head
 
 # 5. Carregar os fatores (CSV -> banco)
 uv run load-data
+#    Alternativa: restaurar os dumps SQL (ver dumps/README.md)
+#    docker exec -i rotas_recife_db psql -U rotas -d rotas_recife < dumps/seed_factors.sql
+#    docker exec -i rotas_recife_db psql -U rotas -d rotas_recife < dumps/seed_gtfs.sql
 
 # 6. Rodar a API
 uv run uvicorn app.main:app --reload

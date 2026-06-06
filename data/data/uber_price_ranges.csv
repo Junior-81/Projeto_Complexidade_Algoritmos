@@ -1,3 +1,0 @@
-service,base_fare,km_min,km_max,min_min,min_max
-uber_car,3.0,1.10,1.60,0.20,0.40
-uber_moto,2.0,0.60,1.00,0.05,0.20

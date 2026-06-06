@@ -1,2 +1,0 @@
-feed_publisher_name,feed_publisher_url,feed_lang,feed_start_date,feed_end_date,feed_version,feed_contact_email,feed_contact_url
-Grande Recife Consórcio de Transporte Metropolitano,https://www.granderecife.pe.gov.br,pt,20260317,20260428,1.0,dcac@granderecife.pe.gov.br,https://www.granderecife.pe.gov.br

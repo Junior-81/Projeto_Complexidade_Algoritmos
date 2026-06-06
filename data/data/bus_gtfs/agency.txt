@@ -1,2 +1,0 @@
-agency_id,agency_name,agency_url,agency_timezone,agency_lang,agency_phone,agency_fare_url,agency_email
-grctm,Grande Recife Consórcio de Transporte Metropolitano,https://www.granderecife.pe.gov.br/,America/Recife,pt,+558131825506,https://www.granderecife.pe.gov.br/transporte/tarifas/,dcac@granderecife.pe.gov.br
