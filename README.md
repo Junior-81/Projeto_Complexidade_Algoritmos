@@ -17,6 +17,7 @@ de pastas, entities do PostgreSQL, schemas de I/O tipados e o endpoint
 
 - Python 3.12+ · **FastAPI** · **SQLModel** (SQLAlchemy + Pydantic)
 - **PostgreSQL** · **Alembic** (migrações) · `uv` (gerenciador de pacotes)
+- **Docker / Docker Compose** (forma recomendada de execução)
 
 ## Arquitetura
 
@@ -27,16 +28,47 @@ app/
   entities/      modelos SQLModel (banco) + schemas Pydantic (I/O)
   loaders/       ingestão dos CSV -> PostgreSQL
   graph/         construção do grafo + cálculo de risco/custo (stubs)
+deploy/          Dockerfile, docker-compose.yml e entrypoint do container
 ```
 
-## Setup
+## Como rodar (Docker — recomendado)
+
+Sobe **API + PostgreSQL** juntos. As migrações rodam automaticamente no start do
+container (ver `deploy/docker-entrypoint.sh`).
+
+```bash
+# Da raiz do projeto:
+docker compose -f deploy/docker-compose.yml up -d --build
+```
+
+- API: `http://localhost:8000` · docs interativas em `http://localhost:8000/docs`
+- PostgreSQL exposto no host em `localhost:5433`
+
+```bash
+# Acompanhar logs / parar
+docker compose -f deploy/docker-compose.yml logs -f api
+docker compose -f deploy/docker-compose.yml down
+```
+
+> A API sobe sem dados (o schema é criado pelas migrações; o cálculo retorna mock
+> e os pesos têm fallback neutro). Para popular os fatores e a rede GTFS, restaure
+> os dumps SQL (ver [dumps/README.md](dumps/README.md)):
+>
+> ```bash
+> docker exec -i rotas_recife_db psql -U rotas -d rotas_recife < dumps/seed_factors.sql
+> docker exec -i rotas_recife_db psql -U rotas -d rotas_recife < dumps/seed_gtfs.sql
+> ```
+
+## Desenvolvimento local (sem container da API)
+
+Alternativa para iterar com hot-reload, usando o Docker só para o banco:
 
 ```bash
 # 1. Instalar dependências
 uv sync
 
-# 2. Subir o PostgreSQL
-docker compose up -d
+# 2. Subir só o PostgreSQL
+docker compose -f deploy/docker-compose.yml up -d postgres
 
 # 3. Variáveis de ambiente
 cp .env.example .env
@@ -44,17 +76,12 @@ cp .env.example .env
 # 4. Criar o schema (migrações)
 uv run alembic upgrade head
 
-# 5. Carregar os fatores (CSV -> banco)
+# 5. Carregar os fatores (CSV -> banco) — ou restaurar os dumps (ver acima)
 uv run load-data
-#    Alternativa: restaurar os dumps SQL (ver dumps/README.md)
-#    docker exec -i rotas_recife_db psql -U rotas -d rotas_recife < dumps/seed_factors.sql
-#    docker exec -i rotas_recife_db psql -U rotas -d rotas_recife < dumps/seed_gtfs.sql
 
-# 6. Rodar a API
+# 6. Rodar a API com reload
 uv run uvicorn app.main:app --reload
 ```
-
-Documentação interativa em `http://localhost:8000/docs`.
 
 ## Endpoint
 
