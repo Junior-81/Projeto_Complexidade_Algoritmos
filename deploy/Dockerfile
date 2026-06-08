@@ -12,6 +12,7 @@ RUN uv sync --frozen --no-install-project --no-dev
 COPY . .
 RUN uv sync --frozen --no-dev \
     && cp deploy/docker-entrypoint.sh ./docker-entrypoint.sh \
+    && sed -i 's/\r$//' ./docker-entrypoint.sh \
     && chmod +x ./docker-entrypoint.sh
 
 ENV PATH="/app/.venv/bin:$PATH"
