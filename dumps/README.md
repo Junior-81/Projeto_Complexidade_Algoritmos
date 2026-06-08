@@ -19,7 +19,7 @@ criado pelas migrações Alembic:
 
 ```bash
 # 1. Banco no ar e schema criado
-docker-compose up -d
+docker compose -f deploy/docker-compose.yml up -d postgres
 uv run alembic upgrade head
 
 # 2. Restaurar os dados (banco recém-migrado / tabelas vazias)
