@@ -35,11 +35,16 @@ def test_calculate_retorna_estrutura_completa():
     assert data.segments, "deve haver ao menos um segmento"
     assert data.route_points, "deve haver pontos de rota para plotagem"
 
-    # Segmentos agrupam as arestas por modal.
-    total_edges = sum(s.edge_count for s in data.segments)
-    assert total_edges == len(data.edges)
+    # edges colapsa por modal: 1 aresta por trecho, alinhada 1:1 com os segments
+    # (so muda quando ha troca de modal).
+    assert len(data.edges) == len(data.segments)
+    for edge, seg in zip(data.edges, data.segments, strict=True):
+        assert edge.mode == seg.mode
+    # Arestas consecutivas nunca repetem o mesmo modal.
+    modes = [e.mode for e in data.edges]
+    assert all(a != b for a, b in zip(modes, modes[1:], strict=False))
 
-    # Resumo soma os totais das arestas.
+    # Resumo soma os totais das arestas (calculo inalterado pelo colapso).
     assert data.summary.total_cost == pytest.approx(
         sum(e.cost for e in data.edges), abs=1e-4
     )

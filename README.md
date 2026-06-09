@@ -8,10 +8,17 @@ fatores externos (velocidade do modal, crime, acidentes, alagamento, clima,
 maré).
 
 Projeto da disciplina de **Complexidade de Algoritmos**. Os algoritmos de
-roteamento (**A\*** para malha contínua e **Dijkstra** para a rede GTFS) são
-implementados na camada `services/`. Esta etapa entrega o *scaffold*: estrutura
-de pastas, entities do PostgreSQL, schemas de I/O tipados e o endpoint
-`POST /api/calculate` retornando um mock com o formato exato de saída.
+roteamento estão implementados na camada `services/`: **A\*** (com heurística de
+Haversine) para as pernas em modal contínuo e **Dijkstra** para a rede de ônibus.
+O grafo é montado **por proximidade espacial** a partir das coordenadas reais das
+~7.000 paradas do GTFS do Grande Recife — o dump não traz malha viária (OSM) nem
+`stop_times`, então a topologia vem das paradas e os **pesos vêm do banco**:
+velocidade do modal (`transport_speed`), risco de crime/acidente
+(`crime_rate`/`accident_rate`, 50/50) e custo de combustível/Uber/ônibus
+(`fuel_consumption`/`uber_price_ranges`). O endpoint `POST /api/calculate`
+retorna a rota multimodal real (acesso → ônibus → caminhada) com
+`edges`/`segments`/`summary`/`routePoints`. Se o banco estiver indisponível, o
+serviço degrada para um grafo sintético de contingência e pesos default, sem 500.
 
 ## Stack
 
@@ -27,7 +34,7 @@ app/
   services/      lógica de negócio, roteamento (A*/Dijkstra), pesos dinâmicos
   entities/      modelos SQLModel (banco) + schemas Pydantic (I/O)
   loaders/       ingestão dos CSV -> PostgreSQL
-  graph/         construção do grafo + cálculo de risco/custo (stubs)
+  graph/         construção do grafo (proximidade) + cálculo de risco/custo + geo
 deploy/          Dockerfile, docker-compose.yml e entrypoint do container
 ```
 
