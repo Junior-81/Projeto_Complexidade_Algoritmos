@@ -17,3 +17,5 @@ output/
 # GTFS pesado: stop_times.txt tem ~178MB (excede o limite de 100MB do GitHub)
 # e nao e carregado nesta fase. Mantido apenas localmente.
 data/data/bus_gtfs/stop_times.txt
+/data
+data.zip

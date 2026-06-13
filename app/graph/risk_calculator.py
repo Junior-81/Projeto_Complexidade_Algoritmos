@@ -1,33 +1,76 @@
-"""Calculo de risco de uma aresta (STUB).
-
-Risco combina dois fatores, cada um com peso 50%:
-  * crime   -> roubos registrados por modal (crime_rate);
-  * acidente -> mortes / envolvidos por modal (accident_rate).
-
-A normalizacao e a escala finais serao definidas na implementacao da matematica.
-"""
-
-CRIME_WEIGHT = 0.5
-ACCIDENT_WEIGHT = 0.5
-
+import pandas as pd
 
 class RiskCalculator:
-    """Compoe o risco de transitar por uma aresta de determinado modal."""
+    SAFETY_MULTIPLIERS = {
+        "walk": 1.3,
+        "bike": 1.2,
+        "moto": 1.4,
+        "car": 1.0,
+        "bus": 1.2,
+        "uber": 1.0,
+        "uber_car": 1.0,
+        "uber_moto": 1.1,
+    }
 
-    def __init__(
-        self,
-        crime_by_mode: dict[str, int] | None = None,
-        accident_by_mode: dict[str, tuple[int, int]] | None = None,
-    ) -> None:
-        # crime_by_mode: modal -> roubos.
-        self.crime_by_mode = crime_by_mode or {}
-        # accident_by_mode: modal -> (mortes, envolvidos).
-        self.accident_by_mode = accident_by_mode or {}
+    def __init__(self, crime_df: pd.DataFrame, accident_df: pd.DataFrame):
+        self.crime_df = crime_df if crime_df is not None else pd.DataFrame()
+        self.accident_df = accident_df if accident_df is not None else pd.DataFrame()
+        self.risk_profiles: dict[str, float] = {}
+        self._calculate_risks()
 
-    def risk_for_mode(self, mode: str, distance_km: float) -> float:
-        """Retorna o risco de uma aresta de `mode` com dado comprimento.
+    def _calculate_risks(self):
+        """Calcula riscos para cada modal."""
+        if not self.crime_df.empty:
+            crime_col = "mode" if "mode" in self.crime_df.columns else "modal"
+            max_robberies = self.crime_df["robberies"].max()
+            for _, row in self.crime_df.iterrows():
+                modal = str(row[crime_col]).lower()
+                robberies = float(row.get("robberies", 0))
+                crime_risk = robberies / max_robberies if max_robberies > 0 else 0
+                self.risk_profiles[modal] = (
+                    self.risk_profiles.get(modal, 0) + crime_risk * 0.5
+                )
 
-        TODO: normalizar crime e acidente, aplicar os pesos de 50% e escalar pelo
-        comprimento da aresta. Por enquanto e um esqueleto.
-        """
-        raise NotImplementedError("Calculo de risco ainda nao implementado.")
+        if not self.accident_df.empty:
+            accident_col = "mode" if "mode" in self.accident_df.columns else "modal"
+            for _, row in self.accident_df.iterrows():
+                modal = str(row[accident_col]).lower()
+                deaths = float(row.get("deaths", 0))
+                involved = float(row.get("involved", 1))
+                accident_risk = deaths / involved if involved > 0 else 0
+                self.risk_profiles[modal] = (
+                    self.risk_profiles.get(modal, 0) + accident_risk * 0.5
+                )
+
+        max_risk = max(self.risk_profiles.values()) if self.risk_profiles else 1
+        if max_risk > 1:
+            for modal in self.risk_profiles:
+                self.risk_profiles[modal] /= max_risk
+
+        defaults = {
+            "walk": 0.2,
+            "bike": 0.25,
+            "car": 0.3,
+            "moto": 0.35,
+            "bus": 0.15,
+            "uber": 0.18,
+            "uber_car": 0.2,
+            "uber_moto": 0.24,
+        }
+        for modal, default_risk in defaults.items():
+            if modal not in self.risk_profiles:
+                self.risk_profiles[modal] = default_risk
+
+    def get_risk(self, modal: str) -> float:
+        return self.risk_profiles.get(modal.lower(), 0.3)
+
+    def get_safety_multiplier(self, modal: str) -> float:
+        return self.SAFETY_MULTIPLIERS.get(modal.lower(), 1.0)
+
+    def get_adjusted_risk(self, modal: str, climate_factor: float = 1.0) -> float:
+        base_risk = self.get_risk(modal)
+        modal_multiplier = self.get_safety_multiplier(modal)
+        return base_risk * modal_multiplier * climate_factor
+
+    def get_all_risks(self) -> dict[str, float]:
+        return self.risk_profiles.copy()

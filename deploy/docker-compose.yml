@@ -29,9 +29,13 @@ services:
     environment:
       DATABASE_URL: postgresql+psycopg://rotas:rotas@postgres:5432/rotas_recife
       DATA_DIR: data/data
-      GRAPH_TIMEOUT_SECONDS: "10"
+      GRAPH_TIMEOUT_SECONDS: "30"
     ports:
       - "8000:8000"
+    volumes:
+      # Persiste o grafo OSMnx (base + multimodal) entre restarts: so a
+      # primeiríssima chamada paga o download/processamento (~1 min).
+      - rotas_graphcache:/app/app/output
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health').status==200 else 1)"]
       interval: 10s
@@ -41,3 +45,4 @@ services:
 
 volumes:
   rotas_pgdata:
+  rotas_graphcache:

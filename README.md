@@ -50,13 +50,15 @@ docker compose -f deploy/docker-compose.yml logs -f api
 docker compose -f deploy/docker-compose.yml down
 ```
 
-> A API sobe sem dados (o schema é criado pelas migrações; o cálculo retorna mock
-> e os pesos têm fallback neutro). Para popular os fatores e a rede GTFS, restaure
-> os dumps SQL (ver [dumps/README.md](dumps/README.md)):
+> A API sobe sem dados (o schema é criado pelas migrações; os pesos têm fallback
+> neutro). Para popular os fatores e a rede de ônibus, restaure os dumps SQL na
+> ordem abaixo (ver [dumps/README.md](dumps/README.md)):
 >
 > ```bash
 > docker exec -i rotas_recife_db psql -U rotas -d rotas_recife < dumps/seed_factors.sql
 > docker exec -i rotas_recife_db psql -U rotas -d rotas_recife < dumps/seed_gtfs.sql
+> # bus_stop_times (necessário para roteamento walk + bus), comprimido:
+> gunzip -c dumps/seed_stop_times.sql.gz | docker exec -i rotas_recife_db psql -U rotas -d rotas_recife
 > ```
 
 ## Desenvolvimento local (sem container da API)

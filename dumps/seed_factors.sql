@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict l8EqLJ0uLamW6LgKxsfnaBNoL2sgAgYrwcRd3nKf9yFqLAeyhCqwSV3T0P5pUw3
+\restrict QSjZIkbAMwpZOOv7elyOCPsfZwd6O6IRBnYh57cz6s2F7apcP4ZfxS3d2LWkord
 
 -- Dumped from database version 16.14 (Debian 16.14-1.pgdg13+1)
 -- Dumped by pg_dump version 16.14 (Debian 16.14-1.pgdg13+1)
@@ -77,8 +77,8 @@ ALTER TABLE public.fuel_consumption DISABLE TRIGGER ALL;
 COPY public.fuel_consumption (id, mode, km_per_liter, fixed_cost_per_km) FROM stdin;
 1	car	12.5	0
 2	moto	30	0
-3	bike	0	7
 4	walk	0	0
+3	bike	0	0
 \.
 
 
@@ -210,5 +210,5 @@ SELECT pg_catalog.setval('public.weather_factors_id_seq', 5, true);
 -- PostgreSQL database dump complete
 --
 
-\unrestrict l8EqLJ0uLamW6LgKxsfnaBNoL2sgAgYrwcRd3nKf9yFqLAeyhCqwSV3T0P5pUw3
+\unrestrict QSjZIkbAMwpZOOv7elyOCPsfZwd6O6IRBnYh57cz6s2F7apcP4ZfxS3d2LWkord
 
