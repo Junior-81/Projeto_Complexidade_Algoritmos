@@ -16,11 +16,10 @@ from pydantic.alias_generators import to_camel
 # Coordenada [latitude, longitude].
 Coordinate = tuple[float, float]
 
-# Modais aceitos como ponto de partida da viagem.
-InitialMode = Literal["walk", "bike", "car", "moto", "bus", "uber_car", "uber_moto"]
+InitialMode = Literal[
+    "walk", "bike", "car", "moto", "bus", "uber_car", "uber_moto", "auto"
+]
 
-# Bounding box aproximado da Regiao Metropolitana do Recife. Usado para detectar
-# coordenadas isoladas (no oceano, em rios ou fora da malha mapeada) -> erro 400.
 RECIFE_LAT_MIN, RECIFE_LAT_MAX = -8.40, -7.80
 RECIFE_LON_MIN, RECIFE_LON_MAX = -35.10, -34.80
 
@@ -43,17 +42,15 @@ class CamelModel(BaseModel):
     )
 
 
-# ---------------------------------------------------------------------------
-# Entrada
-# ---------------------------------------------------------------------------
-
-
 class CalculateRequest(CamelModel):
     """Payload de entrada do calculo de rota."""
 
     origin: Coordinate = Field(..., description="[latitude, longitude] de origem")
     destination: Coordinate = Field(..., description="[latitude, longitude] de destino")
     initial_mode: InitialMode = Field(..., description="Modal de partida")
+    # Override opcional da condicao climatica (clear/light_rain/moderate_rain/
+    # heavy_rain/storm). Se omitido, o clima atual vem da Open-Meteo.
+    weather: str | None = Field(default=None, description="Condicao climatica (override)")
 
     @field_validator("origin", "destination")
     @classmethod
@@ -133,3 +130,6 @@ class CalculateResponse(CamelModel):
     segments: list[Segment]
     summary: Summary
     route_points: list[list[float]]
+    # Modal efetivamente escolhido (relevante no modo "auto"); ecoa o pedido nos
+    # demais modos. Serializa como `chosenMode`.
+    chosen_mode: str | None = None

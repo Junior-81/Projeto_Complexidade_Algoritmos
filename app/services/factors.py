@@ -99,6 +99,18 @@ def load_factor_frames(session: Session) -> dict[str, pd.DataFrame]:
         }
 
 
+def load_weather_factors(session: Session) -> dict[str, float]:
+    """Le weather_factors -> {condicao: fator}. Vazio/erro -> {} (fallback 1.0)."""
+    try:
+        from app.entities.db_models import WeatherFactor
+
+        rows = session.exec(select(WeatherFactor)).all()
+        return {r.condition: float(r.factor) for r in rows}
+    except SQLAlchemyError as exc:
+        logger.warning("Falha ao carregar weather_factors: %s", exc)
+        return {}
+
+
 def load_bus_network(session: Session) -> dict:
     """Carrega a rede de onibus do Postgres para alimentar o grafo.
 

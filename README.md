@@ -97,11 +97,28 @@ uv run uvicorn app.main:app --reload
 }
 ```
 
-`initialMode` aceita: `walk`, `bike`, `car`, `moto`, `bus`, `uber_car`, `uber_moto`.
+`initialMode` aceita: `walk`, `bike`, `car`, `moto`, `bus`, `uber_car`,
+`uber_moto` e `auto`.
+
+- **modais únicos** (`car`/`moto`/`bike`/`uber_*`): rota inteira no modal;
+- **`walk`**: rota a pé; **`bus`**: multimodal **a pé + ônibus** (obriga usar
+  ônibus, com penalidade de embarque para evitar baldeações desnecessárias);
+- **`auto`**: calcula a rota de **todos** os modais e devolve a **melhor por
+  custo-benefício-tempo** — score `0.5·tempo + 0.3·custo + 0.2·risco` (o custo já
+  embute o esforço físico), cada métrica normalizada entre os candidatos.
+
+**Clima:** a condição atual vem da **Open-Meteo** (pela origem), classificada em
+`clear`/`light_rain`/`moderate_rain`/`heavy_rain`/`storm` → fator da tabela
+`weather_factors`. A chuva penaliza **por modal**: expostos (walk/bike/moto/
+uber_moto) sofrem o fator cheio (até 2,5× em tempestade), protegidos (car/
+uber_car/bus) sofrem menos (~1,6×, só o trânsito). Assim, sob chuva forte o
+`auto` migra de bike/moto para carro/ônibus. Campo opcional `weather` na
+requisição força a condição (útil para testes); sem ele, usa o clima real. Sem
+rede, cai em `clear` (neutro).
 
 Retorna `edges` (micro-segmentos rua a rua), `segments` (agrupados por modal),
-`summary` (totais da viagem) e `routePoints` (sequência de coordenadas para
-plotagem no mapa).
+`summary` (totais da viagem), `routePoints` (sequência de coordenadas) e
+`chosenMode` (o modal vencedor — útil no `auto`; ecoa o pedido nos demais).
 
 ## Testes
 

@@ -11,7 +11,12 @@ from app.graph.normalizer import Normalizer
 from app.graph.risk_calculator import RiskCalculator
 from app.services.astar_service import AStarMultimodal
 from app.services.dijkstra_service import DijkstraMultimodal
-from app.services.factors import load_bus_network, load_factor_frames
+from app.services import weather
+from app.services.factors import (
+    load_bus_network,
+    load_factor_frames,
+    load_weather_factors,
+)
 from app.services.path_reconstructor import PathReconstructor
 from app.entities.schemas import (
     CalculateRequest,
@@ -95,6 +100,7 @@ def _build_engine(session: Session) -> dict:
     builder.load_speed_data(frames["speed"])
 
     norm_params = _compute_norm_params(graph, builder, cost_calc, risk_calc)
+    weather_map = load_weather_factors(session)
     logger.info("Engine de roteamento pronto.")
 
     return {
@@ -103,7 +109,19 @@ def _build_engine(session: Session) -> dict:
         "cost_calc": cost_calc,
         "risk_calc": risk_calc,
         "norm_params": norm_params,
+        "weather_map": weather_map,
     }
+
+
+def _resolve_base_rain(req: CalculateRequest, engine: dict) -> float:
+    """Fator base de chuva: usa o override `weather` da requisicao, senao consulta
+    a Open-Meteo pela origem. Converte a condicao no fator via weather_map (DB).
+    """
+    weather_map: dict[str, float] = engine.get("weather_map", {})
+    condition = req.weather or weather.get_condition(req.origin[0], req.origin[1])
+    factor = weather_map.get(condition, 1.0)
+    logger.info("Clima: condicao=%s -> fator base=%.2f", condition, factor)
+    return factor
 
 
 def _get_engine(session: Session) -> dict:
@@ -131,8 +149,10 @@ def calculate(req: CalculateRequest, session: Session) -> CalculateResponse:
 
     # Build do grafo (potencialmente lento na 1a vez) fica FORA do timeout.
     engine = _get_engine(session)
+    # Clima tambem fora do timeout (chamada externa curta + cache TTL).
+    base_rain = _resolve_base_rain(req, engine)
     executor = ThreadPoolExecutor(max_workers=1)
-    future = executor.submit(_compute_route, req, engine)
+    future = executor.submit(_compute_route, req, engine, base_rain)
 
     try:
         return future.result(timeout=settings.graph_timeout_seconds)
@@ -187,33 +207,38 @@ def _resolve_modes(initial_mode: str) -> _SearchConfig:
     return _SearchConfig("walk", {"walk"})
 
 
-def _compute_route(req: CalculateRequest, engine: dict) -> CalculateResponse:
-    """Roda A* sobre o grafo e reconstroi a rota no contrato da API."""
-    builder: GraphBuilder = engine["builder"]
+# Modais comparados no modo "auto" (cada um vira um candidato; o melhor vence).
+_AUTO_CANDIDATES = ["walk", "bike", "car", "moto", "uber_car", "uber_moto", "bus"]
+
+
+def _route_for_mode(
+    engine: dict, start_node, goal_node, mode: str, base_rain: float = 1.0
+) -> dict | None:
+    """Roda a busca de UM modal e devolve o resultado reconstruido (chaves PT).
+
+    A chuva entra como `rain_factor` EFETIVO do modal: modos expostos (walk/bike/
+    moto/uber_moto) sofrem o fator cheio; protegidos (car/uber_car/bus) sofrem
+    menos. Devolve None se nao houver caminho viavel.
+    """
     graph = engine["graph"]
     cost_calc = engine["cost_calc"]
     risk_calc = engine["risk_calc"]
     norm_params = engine["norm_params"]
+    builder: GraphBuilder = engine["builder"]
 
-    start_node = builder.nearest_node(req.origin[0], req.origin[1])
-    goal_node = builder.nearest_node(req.destination[0], req.destination[1])
+    cfg = _resolve_modes(mode)
+    # Fator de chuva sensivel ao modal (no bus, o trecho a pe de acesso usa o
+    # fator do onibus -> aproximacao aceitavel, pois o acesso e curto).
+    rain = weather.effective_rain(mode, base_rain)
 
-    # Veiculo proprio -> viagem inteira no modal; bus -> multimodal walk+bus
-    # (bus_required forca usar onibus); walk -> so a pe.
-    cfg = _resolve_modes(req.initial_mode)
-
-    # Para multimodal (bus) usamos Dijkstra: a heuristica gulosa do A* (escala
-    # x100) retorna caminhos sub-otimos que andam quase tudo a pe. Dijkstra acha
-    # o de menor custo (anda pouco, anda de onibus). Para modal unico, o A*
-    # guloso e rapido e ja da um caminho bom.
+    # Multimodal (bus) -> Dijkstra (otimo); modal unico -> A* (guloso e rapido).
     algo_cls = DijkstraMultimodal if cfg.bus_required else AStarMultimodal
-    algo = algo_cls(graph, norm_params)
-    path = algo.search(
+    path = algo_cls(graph, norm_params).search(
         (start_node, cfg.start_mode),
         (goal_node, cfg.start_mode),
         cost_calc,
         risk_calc,
-        rain_factor=1.0,
+        rain_factor=rain,
         tide_factor=1.0,
         speed_getter=builder.get_speed,
         start_modal=cfg.start_mode,
@@ -223,22 +248,72 @@ def _compute_route(req: CalculateRequest, engine: dict) -> CalculateResponse:
         walk_penalty_factor=cfg.walk_penalty,
         boarding_penalty=cfg.boarding_penalty,
     )
-
     if not path:
-        raise RotaNaoEncontradaError("Route not found")
+        return None
 
-    reconstructor = PathReconstructor(
+    result = PathReconstructor(
         graph, cost_calc, risk_calc, norm_params,
-        rain_factor=1.0, tide_factor=1.0, speed_data=builder.speed_data,
-    )
-    result = reconstructor.reconstruct_route(path)
+        rain_factor=rain, tide_factor=1.0, speed_data=builder.speed_data,
+    ).reconstruct_route(path)
 
-    if not result["edges"]:
+    return result if result["edges"] else None
+
+
+def _normalize(values: list[float]) -> list[float]:
+    """Min-Max para [0,1]; se todos iguais, devolve 0 (nao desempata)."""
+    lo, hi = min(values), max(values)
+    span = hi - lo
+    if span == 0:
+        return [0.0 for _ in values]
+    return [(v - lo) / span for v in values]
+
+
+def _pick_best(candidates: list[tuple[str, dict]]) -> tuple[str, dict]:
+    """Escolhe o melhor candidato por custo-beneficio-tempo.
+
+    Score = 0.5*tempo + 0.3*custo + 0.2*risco (cada metrica normalizada entre os
+    candidatos). O 'custo' ja embute o esforco fisico (calculate_routing_cost).
+    Menor score vence.
+    """
+    resumos = [r["resumo"] for _, r in candidates]
+    t = _normalize([x["tempo_total"] for x in resumos])
+    c = _normalize([x["custo_total"] for x in resumos])
+    risk = _normalize([x["risco_medio"] for x in resumos])
+    scores = [0.5 * t[i] + 0.3 * c[i] + 0.2 * risk[i] for i in range(len(candidates))]
+    best_idx = min(range(len(candidates)), key=lambda i: scores[i])
+    return candidates[best_idx]
+
+
+def _compute_route(
+    req: CalculateRequest, engine: dict, base_rain: float = 1.0
+) -> CalculateResponse:
+    """Reconstroi a rota no contrato da API. Modo 'auto' compara todos os modais."""
+    builder: GraphBuilder = engine["builder"]
+    start_node = builder.nearest_node(req.origin[0], req.origin[1])
+    goal_node = builder.nearest_node(req.destination[0], req.destination[1])
+
+    if req.initial_mode == "auto":
+        candidates: list[tuple[str, dict]] = []
+        for mode in _AUTO_CANDIDATES:
+            result = _route_for_mode(engine, start_node, goal_node, mode, base_rain)
+            if result is not None:
+                candidates.append((mode, result))
+        if not candidates:
+            raise RotaNaoEncontradaError("Route not found")
+        chosen_mode, best = _pick_best(candidates)
+        logger.info(
+            "auto: %d candidatos -> escolhido '%s'",
+            len(candidates), chosen_mode,
+        )
+        return _to_response(best, chosen_mode=chosen_mode)
+
+    result = _route_for_mode(engine, start_node, goal_node, req.initial_mode, base_rain)
+    if result is None:
         raise RotaNaoEncontradaError("Route not found")
+    return _to_response(result, chosen_mode=req.initial_mode)
 
-    return _to_response(result)
 
-def _to_response(result: dict) -> CalculateResponse:
+def _to_response(result: dict, chosen_mode: str | None = None) -> CalculateResponse:
     edges = [_map_edge(e) for e in result["edges"]]
     segments = [_map_segment(s) for s in result["segments"]]
     summary = _map_summary(result["resumo"])
@@ -247,6 +322,7 @@ def _to_response(result: dict) -> CalculateResponse:
         segments=segments,
         summary=summary,
         route_points=_route_points(edges),
+        chosen_mode=chosen_mode,
     )
 
 
